@@ -8,11 +8,11 @@ namespace InsuranceApi.Services
 {
     public interface IAdminService
     {
-        Task Add(AdminDto admin);
+        Task Add(AdminDto adminDto);
         Task Delete(int id);
         Task<List<AdminDto>> GetAll();
         Task<AdminDto> GetById(int id);
-        Task Update(AdminDto admin);
+        Task Update(AdminDto adminDto);
     }
 
     public class AdminService : IAdminService
@@ -57,7 +57,7 @@ namespace InsuranceApi.Services
 
         public async Task Update(AdminDto adminDto)
         {
-            var found = await context.Admins.FirstOrDefaultAsync((adminTable) => 
+            var found = await context.Admins.FirstOrDefaultAsync((adminTable) =>
                 adminTable.AdminId == adminDto.AdminId);
             if (found != null)
             {
