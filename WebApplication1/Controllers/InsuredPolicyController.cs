@@ -1,27 +1,25 @@
-﻿using InsuranceApi.Data;
-using InsuranceApi.DTOs;
+﻿using InsuranceApi.DTOs;
 using InsuranceApi.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace InsuranceApi.Controllers
 {
-    public interface IAdminController
+    public interface IInsuredPolicyController
     {
-        Task<IActionResult> Add(AdminDto admin);
+        Task<IActionResult> Add(InsuredPolicyDto insuredPolicyDto);
         Task<IActionResult> Delete(int id);
         Task<IActionResult> GetAll();
         Task<IActionResult> GetById(int id);
-        Task<IActionResult> Update(AdminDto admin);
+        Task<IActionResult> Update(InsuredPolicyDto insuredPolicyDto);
     }
 
     [Route("api/[controller]")]
     [ApiController]
-    public class AdminController : ControllerBase, IAdminController
+    public class InsuredPolicyContoller : ControllerBase, IInsuredPolicyController
     {
-        private readonly IAdminService service;
-        public AdminController(IAdminService service)
+        private readonly IInsuredPolicyService service;
+        public InsuredPolicyContoller(IInsuredPolicyService service)
         {
             this.service = service;
         }
@@ -29,8 +27,8 @@ namespace InsuranceApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            List<AdminDto> admins = await service.GetAll();
-            return Ok(admins);
+            List<InsuredPolicyDto> insuredPolicyDtos = await service.GetAll();
+            return Ok(insuredPolicyDtos);
         }
 
         [HttpDelete]
@@ -49,18 +47,18 @@ namespace InsuranceApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(AdminDto admin)
+        public async Task<IActionResult> Add(InsuredPolicyDto insuredPolicyDto)
         {
-                await service.Add(admin);
-                return Ok();
+            await service.Add(insuredPolicyDto);
+            return Ok();
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(AdminDto admin)
+        public async Task<IActionResult> Update(InsuredPolicyDto insuredPolicyDto)
         {
             try
             {
-                await service.Update(admin);
+                await service.Update(insuredPolicyDto);
                 return Ok();
             }
             catch (NullReferenceException ex)
@@ -85,3 +83,4 @@ namespace InsuranceApi.Controllers
         }
     }
 }
+
