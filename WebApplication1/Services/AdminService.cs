@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace InsuranceApi.Service
+namespace InsuranceApi.Services
 {
     public interface IAdminService
     {

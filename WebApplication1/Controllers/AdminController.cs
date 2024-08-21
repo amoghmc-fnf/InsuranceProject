@@ -1,6 +1,6 @@
 ﻿using InsuranceApi.Data;
 using InsuranceApi.DTOs;
-using InsuranceApi.Service;
+using InsuranceApi.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

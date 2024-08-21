@@ -1,6 +1,5 @@
-
 using InsuranceApi.Data;
-using InsuranceApi.Service;
+using InsuranceApi.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace WebApplication1
