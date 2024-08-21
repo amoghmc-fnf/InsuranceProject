@@ -9,17 +9,17 @@ namespace InsuranceApi.Controllers
     public interface IAdminController
     {
         Task<IActionResult> Add(AdminDto admin);
-        Task<IActionResult> Delete(AdminDto admin);
+        Task<IActionResult> Delete(int id);
         Task<IActionResult> GetAllAdmins();
         Task<IActionResult> GetById(int id);
-        Task<IActionResult> Put(AdminDto admin);
+        Task<IActionResult> Update(AdminDto admin);
     }
 
     [Route("api/[controller]")]
     [ApiController]
     public class AdminController : ControllerBase, IAdminController
     {
-        private FnfProjectContext context;
+        private readonly FnfProjectContext context;
         public AdminController(FnfProjectContext context)
         {
             this.context = context;
@@ -41,9 +41,10 @@ namespace InsuranceApi.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(AdminDto admin)
+        [Route("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            var found = await context.Admins.FirstOrDefaultAsync((adm) => adm.AdminId == admin.AdminId);
+            var found = await context.Admins.FirstOrDefaultAsync((adm) => adm.AdminId == id);
             if (found != null)
             {
                 context.Admins.Remove(found);
@@ -65,7 +66,7 @@ namespace InsuranceApi.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(AdminDto admin)
+        public async Task<IActionResult> Update(AdminDto admin)
         {
             var found = await context.Admins.FirstOrDefaultAsync((adm) => adm.AdminId == admin.AdminId);
             if (found != null)
