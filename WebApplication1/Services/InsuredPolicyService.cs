@@ -50,7 +50,6 @@ namespace InsuranceApi.Services
         {
             InsuredPolicy insuredPolicyTable = new();
             ConvertToTable(insuredPolicyDto, insuredPolicyTable);
-
             context.InsuredPolicies.Add(insuredPolicyTable);
             await context.SaveChangesAsync();
             return;
@@ -63,6 +62,7 @@ namespace InsuranceApi.Services
             if (found != null)
             {
                 ConvertToTable(insuredPolicyDto, found);
+                await context.SaveChangesAsync();
                 return;
             }
             throw new NullReferenceException();
@@ -89,7 +89,7 @@ namespace InsuranceApi.Services
                 ApprovalStatus = insuredPolicyTable.ApprovalStatus,
                 RenewalStatus = insuredPolicyTable.RenewalStatus,
                 AdminId = insuredPolicyTable.AdminId,
-                ApprovalDate = insuredPolicyTable.ApprovalDate,
+                ApprovalDate = DateTime.Parse(insuredPolicyTable.ApprovalDate.ToString()),
             };
             return insuredPolicyDto;
         }
@@ -102,7 +102,7 @@ namespace InsuranceApi.Services
             insuredPolicyTable.ApprovalStatus = insuredPolicyDto.ApprovalStatus;
             insuredPolicyTable.RenewalStatus = insuredPolicyDto.RenewalStatus;
             insuredPolicyTable.AdminId = insuredPolicyDto.AdminId;
-            insuredPolicyTable.ApprovalDate = insuredPolicyDto.ApprovalDate;
+            insuredPolicyTable.ApprovalDate = DateOnly.FromDateTime(insuredPolicyDto.ApprovalDate);
             return;
         }
     }

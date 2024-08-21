@@ -10,6 +10,6 @@ namespace InsuranceApi.DTOs
         public string ApprovalStatus { get; set; } = null!;
         public string RenewalStatus { get; set; } = null!;
         public int AdminId { get; set; }
-        public DateOnly ApprovalDate { get; set; }
+        public DateTime ApprovalDate { get; set; }
     }
 }
