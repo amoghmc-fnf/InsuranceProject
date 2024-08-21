@@ -16,6 +16,7 @@ namespace WebApplication1
                 options.UseSqlServer(builder.Configuration.GetConnectionString("FnfTraining"));
             });
             builder.Services.AddTransient<IAdminService, AdminService>();
+            builder.Services.AddTransient<IInsuredPolicyService, InsuredPolicyService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
