@@ -40,7 +40,7 @@ namespace InsuranceApi.Controllers
                 await service.Delete(id);
                 return Ok();
             }
-            catch (NullReferenceException ex)
+            catch (NullReferenceException)
             {
                 return NotFound();
             }
@@ -61,7 +61,7 @@ namespace InsuranceApi.Controllers
                 await service.Update(insuredPolicyDto);
                 return Ok();
             }
-            catch (NullReferenceException ex)
+            catch (NullReferenceException)
             {
                 return NotFound();
             }
@@ -73,10 +73,10 @@ namespace InsuranceApi.Controllers
         {
             try
             {
-                await service.GetById(id);
-                return Ok();
+                var found = await service.GetById(id);
+                return Ok(found);
             }
-            catch (NullReferenceException ex)
+            catch (NullReferenceException)
             {
                 return NotFound();
             }

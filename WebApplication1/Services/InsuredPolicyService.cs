@@ -24,13 +24,13 @@ namespace InsuranceApi.Services
 
         public async Task<List<InsuredPolicyDto>> GetAll()
         {
-            List<InsuredPolicyDto> insuredPolicies = [];
-            await foreach (var insuredPolicy in context.InsuredPolicies)
+            List<InsuredPolicyDto> insuredPolicyDtos = [];
+            await foreach (var insuredPolicyTable in context.InsuredPolicies)
             {
-                var insuredPolicyDto = ConvertToDto(insuredPolicy); 
-                insuredPolicies.Add(insuredPolicyDto);
+                var insuredPolicyDto = ConvertToDto(insuredPolicyTable);
+                insuredPolicyDtos.Add(insuredPolicyDto);
             }
-            return insuredPolicies;
+            return insuredPolicyDtos;
         }
 
         public async Task Delete(int id)

@@ -25,21 +25,18 @@ namespace InsuranceApi.Services
 
         public async Task<List<AdminDto>> GetAll()
         {
-            List<AdminDto> admins = new List<AdminDto>();
-            await foreach (var admin in context.Admins)
+            List<AdminDto> adminDtos = new List<AdminDto>();
+            await foreach (var adminTable in context.Admins)
             {
-                AdminDto adminDto = new AdminDto();
-                adminDto.AdminId = admin.AdminId;
-                adminDto.Name = admin.Name;
-                adminDto.PasswordHash = admin.PasswordHash;
-                admins.Add(adminDto);
+                AdminDto adminDto = ConvertToDto(adminTable);
+                adminDtos.Add(adminDto);
             }
-            return admins;
+            return adminDtos;
         }
 
         public async Task Delete(int id)
         {
-            var found = await context.Admins.FirstOrDefaultAsync((adm) => adm.AdminId == id);
+            var found = await context.Admins.FirstOrDefaultAsync((adminTable) => adminTable.AdminId == id);
             if (found != null)
             {
                 context.Admins.Remove(found);
@@ -49,23 +46,22 @@ namespace InsuranceApi.Services
             throw new NullReferenceException();
         }
 
-        public async Task Add(AdminDto admin)
+        public async Task Add(AdminDto adminDto)
         {
             Admin adminTable = new Admin();
-            adminTable.Name = admin.Name;
-            adminTable.PasswordHash = admin.PasswordHash;
+            ConvertToTable(adminDto, adminTable);
             context.Admins.Add(adminTable);
             await context.SaveChangesAsync();
             return;
         }
 
-        public async Task Update(AdminDto admin)
+        public async Task Update(AdminDto adminDto)
         {
-            var found = await context.Admins.FirstOrDefaultAsync((adm) => adm.AdminId == admin.AdminId);
+            var found = await context.Admins.FirstOrDefaultAsync((adminTable) => 
+                adminTable.AdminId == adminDto.AdminId);
             if (found != null)
             {
-                found.Name = admin.Name;
-                found.PasswordHash = admin.PasswordHash;
+                ConvertToTable(adminDto, found);
                 await context.SaveChangesAsync();
                 return;
             }
@@ -74,18 +70,32 @@ namespace InsuranceApi.Services
 
         public async Task<AdminDto> GetById(int id)
         {
-            var found = await context.Admins.FirstOrDefaultAsync((adm) => adm.AdminId == id);
+            var found = await context.Admins.FirstOrDefaultAsync((adminTable) => adminTable.AdminId == id);
             if (found != null)
             {
-                AdminDto admin = new AdminDto()
-                {
-                    AdminId = found.AdminId,
-                    Name = found.Name,
-                    PasswordHash = found.PasswordHash
-                };
-                return admin;
+                var adminDto = ConvertToDto(found);
+                return adminDto;
             }
             throw new NullReferenceException();
+        }
+
+        private AdminDto ConvertToDto(Admin adminTable)
+        {
+            AdminDto adminDto = new()
+            {
+                AdminId = adminTable.AdminId,
+                Name = adminTable.Name,
+                PasswordHash = adminTable.PasswordHash,
+            };
+            return adminDto;
+        }
+
+        private void ConvertToTable(AdminDto adminDto, Admin adminTable)
+        {
+            adminTable.AdminId = adminDto.AdminId;
+            adminTable.Name = adminDto.Name;
+            adminTable.PasswordHash = adminDto.PasswordHash;
+            return;
         }
     }
 }
