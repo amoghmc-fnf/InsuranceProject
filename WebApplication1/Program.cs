@@ -23,6 +23,8 @@ namespace WebApplication1
             builder.Services.AddTransient<IInsuranceTypeService, InsuranceTypeService>();
             builder.Services.AddTransient<IPolicyHolderService, PolicyHolderService>();
             builder.Services.AddTransient<IPolicyService, PolicyService>();
+            builder.Services.AddTransient<IInsuredService, InsuredService>();
+            builder.Services.AddTransient<IHospitalService, HospitalService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

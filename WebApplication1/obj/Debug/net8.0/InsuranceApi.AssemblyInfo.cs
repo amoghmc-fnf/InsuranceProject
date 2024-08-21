@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("InsuranceApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+583b9ed60aff29f8ee43d4ab66872ef6e4833848")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ae98cd0aae5758409a062ae6456fae71fe481edc")]
 [assembly: System.Reflection.AssemblyProductAttribute("InsuranceApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("InsuranceApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
