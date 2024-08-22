@@ -4,16 +4,7 @@ using System.Net.Http.Json;
 
 namespace CustomerApp.Services
 {
-    public interface IAdminDtoService
-    {
-        Task Add(AdminDto employee);
-        Task Delete(int id);
-        Task<List<AdminDto>> GetAll();
-        Task<AdminDto> GetById(int id);
-        Task Update(AdminDto employee);
-    }
-
-    public class AdminDtoService : IAdminDtoService
+    public class AdminDtoService
     {
         private readonly HttpClient httpClient;
         public AdminDtoService(HttpClient httpClient)
@@ -36,7 +27,7 @@ namespace CustomerApp.Services
             await httpClient.PostAsJsonAsync<AdminDto>("Admin", employee);
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteById(int id)
         {
             await httpClient.DeleteAsync($"Admin/{id}");
         }
