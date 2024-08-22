@@ -135,3 +135,5 @@ C:\Users\6147952\source\repos\WebApplication1\WebApplication1\obj\Debug\net8.0\I
 C:\Users\6147952\source\repos\WebApplication1\WebApplication1\obj\Debug\net8.0\InsuranceApi.genruntimeconfig.cache
 C:\Users\6147952\source\repos\WebApplication1\WebApplication1\obj\Debug\net8.0\ref\InsuranceApi.dll
 C:\Users\6147952\source\repos\WebApplication1\WebApplication1\obj\Debug\net8.0\InsuranceApi.sourcelink.json
+C:\Users\6147952\source\repos\WebApplication1\WebApplication1\bin\Debug\net8.0\SharedModels.dll
+C:\Users\6147952\source\repos\WebApplication1\WebApplication1\bin\Debug\net8.0\SharedModels.pdb

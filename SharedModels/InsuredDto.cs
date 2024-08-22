@@ -1,8 +1,4 @@
-﻿using InsuranceApi.Data;
-using System.Text.Json.Serialization;
-using System.Text.Json;
-
-namespace InsuranceApi.DTOs
+﻿namespace InsuranceApi.DTOs
 {
 	public class InsuredDto
 	{

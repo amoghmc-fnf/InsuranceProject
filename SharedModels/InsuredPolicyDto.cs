@@ -1,6 +1,4 @@
-﻿using InsuranceApi.Data;
-
-namespace InsuranceApi.DTOs
+﻿namespace InsuranceApi.DTOs
 {
     public class InsuredPolicyDto
     {

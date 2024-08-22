@@ -1,5 +1,4 @@
-﻿using InsuranceApi.Data;
-
+﻿
 namespace InsuranceApi.DTOs
 {
     public class PaymentDto
