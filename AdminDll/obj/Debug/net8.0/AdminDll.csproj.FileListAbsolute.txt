@@ -1,0 +1,12 @@
+C:\Users\6147952\source\repos\WebApplication1\AdminDll\bin\Debug\net8.0\AdminDll.deps.json
+C:\Users\6147952\source\repos\WebApplication1\AdminDll\bin\Debug\net8.0\AdminDll.dll
+C:\Users\6147952\source\repos\WebApplication1\AdminDll\bin\Debug\net8.0\AdminDll.pdb
+C:\Users\6147952\source\repos\WebApplication1\AdminDll\obj\Debug\net8.0\AdminDll.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\6147952\source\repos\WebApplication1\AdminDll\obj\Debug\net8.0\AdminDll.AssemblyInfoInputs.cache
+C:\Users\6147952\source\repos\WebApplication1\AdminDll\obj\Debug\net8.0\AdminDll.AssemblyInfo.cs
+C:\Users\6147952\source\repos\WebApplication1\AdminDll\obj\Debug\net8.0\AdminDll.csproj.CoreCompileInputs.cache
+C:\Users\6147952\source\repos\WebApplication1\AdminDll\obj\Debug\net8.0\AdminDll.sourcelink.json
+C:\Users\6147952\source\repos\WebApplication1\AdminDll\obj\Debug\net8.0\AdminDll.dll
+C:\Users\6147952\source\repos\WebApplication1\AdminDll\obj\Debug\net8.0\refint\AdminDll.dll
+C:\Users\6147952\source\repos\WebApplication1\AdminDll\obj\Debug\net8.0\AdminDll.pdb
+C:\Users\6147952\source\repos\WebApplication1\AdminDll\obj\Debug\net8.0\ref\AdminDll.dll

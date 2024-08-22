@@ -1,0 +1,3 @@
+C:\Users\6147952\source\repos\WebApplication1\AdminDll\bin\Release\net8.0\publish\AdminModel.dll
+C:\Users\6147952\source\repos\WebApplication1\AdminDll\bin\Release\net8.0\publish\AdminModel.deps.json
+C:\Users\6147952\source\repos\WebApplication1\AdminDll\bin\Release\net8.0\publish\AdminModel.pdb
