@@ -16,10 +16,10 @@ namespace InsuranceApi.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class PolicyHolderContoller : ControllerBase, IPolicyHolderController
+    public class PolicyHolderController : ControllerBase, IPolicyHolderController
     {
         private readonly IPolicyHolderService service;
-        public PolicyHolderContoller(IPolicyHolderService service)
+        public PolicyHolderController(IPolicyHolderService service)
         {
             this.service = service;
         }

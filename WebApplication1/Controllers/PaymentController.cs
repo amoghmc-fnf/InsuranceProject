@@ -16,10 +16,10 @@ namespace InsuranceApi.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class PaymentContoller : ControllerBase, IPaymentController
+    public class PaymentController : ControllerBase, IPaymentController
     {
         private readonly IPaymentService service;
-        public PaymentContoller(IPaymentService service)
+        public PaymentController(IPaymentService service)
         {
             this.service = service;
         }
