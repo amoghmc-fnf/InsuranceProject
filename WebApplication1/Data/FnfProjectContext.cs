@@ -39,9 +39,6 @@ public partial class FnfProjectContext : DbContext
 
     public virtual DbSet<PolicyHolder> PolicyHolders { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Server=FNFIDVPRE20529\\SQLSERVER; Database=FnfProject; Trusted_Connection=True; TrustServerCertificate=True");
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Admin>(entity =>
