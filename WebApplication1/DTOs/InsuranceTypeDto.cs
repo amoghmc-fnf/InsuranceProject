@@ -6,5 +6,6 @@
         public string InsuranceType { get; set; } = null!;
         public string Description { get; set; } = null!;
         public decimal BaseRate { get; set; }
+        public int CoverageSize { get; set; }
     }
 }

@@ -17,7 +17,7 @@ public partial class InsuredPolicy
 
     public int AdminId { get; set; }
 
-    public DateOnly ApprovalDate { get; set; }
+    public DateOnly? ApprovalDate { get; set; }
 
     public virtual Admin Admin { get; set; } = null!;
 

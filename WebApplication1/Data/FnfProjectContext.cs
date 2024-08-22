@@ -189,10 +189,12 @@ public partial class FnfProjectContext : DbContext
 
             entity.HasOne(d => d.Illness).WithMany(p => p.InsuredIllnesses)
                 .HasForeignKey(d => d.IllnessId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__InsuredIl__Illne__5FB337D6");
 
             entity.HasOne(d => d.Insured).WithMany(p => p.InsuredIllnesses)
                 .HasForeignKey(d => d.InsuredId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__InsuredIl__Insur__5EBF139D");
         });
 

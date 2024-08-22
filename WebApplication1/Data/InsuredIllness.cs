@@ -11,7 +11,7 @@ public partial class InsuredIllness
 
     public int IllnessId { get; set; }
 
-    public virtual Illness? Illness { get; set; }
+    public virtual Illness Illness { get; set; } = null!;
 
-    public virtual Insured? Insured { get; set; }
+    public virtual Insured Insured { get; set; } = null!;
 }

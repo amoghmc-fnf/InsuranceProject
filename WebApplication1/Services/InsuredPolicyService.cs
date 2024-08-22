@@ -102,7 +102,7 @@ namespace InsuranceApi.Services
             insuredPolicyTable.ApprovalStatus = insuredPolicyDto.ApprovalStatus;
             insuredPolicyTable.RenewalStatus = insuredPolicyDto.RenewalStatus;
             insuredPolicyTable.AdminId = insuredPolicyDto.AdminId;
-            insuredPolicyTable.ApprovalDate = DateOnly.FromDateTime(insuredPolicyDto.ApprovalDate);
+            insuredPolicyTable.ApprovalDate = DateOnly.FromDateTime((DateTime)insuredPolicyDto.ApprovalDate);
             return;
         }
     }
