@@ -1,0 +1,12 @@
+C:\Users\6147952\source\repos\WebApplication1\UserModel\bin\Debug\net8.0\UserModel.deps.json
+C:\Users\6147952\source\repos\WebApplication1\UserModel\bin\Debug\net8.0\UserModel.dll
+C:\Users\6147952\source\repos\WebApplication1\UserModel\bin\Debug\net8.0\UserModel.pdb
+C:\Users\6147952\source\repos\WebApplication1\UserModel\obj\Debug\net8.0\UserModel.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\6147952\source\repos\WebApplication1\UserModel\obj\Debug\net8.0\UserModel.AssemblyInfoInputs.cache
+C:\Users\6147952\source\repos\WebApplication1\UserModel\obj\Debug\net8.0\UserModel.AssemblyInfo.cs
+C:\Users\6147952\source\repos\WebApplication1\UserModel\obj\Debug\net8.0\UserModel.csproj.CoreCompileInputs.cache
+C:\Users\6147952\source\repos\WebApplication1\UserModel\obj\Debug\net8.0\UserModel.sourcelink.json
+C:\Users\6147952\source\repos\WebApplication1\UserModel\obj\Debug\net8.0\UserModel.dll
+C:\Users\6147952\source\repos\WebApplication1\UserModel\obj\Debug\net8.0\refint\UserModel.dll
+C:\Users\6147952\source\repos\WebApplication1\UserModel\obj\Debug\net8.0\UserModel.pdb
+C:\Users\6147952\source\repos\WebApplication1\UserModel\obj\Debug\net8.0\ref\UserModel.dll

@@ -1,0 +1,12 @@
+C:\Users\6147952\source\repos\WebApplication1\PolicyModel\bin\Debug\net8.0\PolicyModel.deps.json
+C:\Users\6147952\source\repos\WebApplication1\PolicyModel\bin\Debug\net8.0\PolicyModel.dll
+C:\Users\6147952\source\repos\WebApplication1\PolicyModel\bin\Debug\net8.0\PolicyModel.pdb
+C:\Users\6147952\source\repos\WebApplication1\PolicyModel\obj\Debug\net8.0\PolicyModel.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\6147952\source\repos\WebApplication1\PolicyModel\obj\Debug\net8.0\PolicyModel.AssemblyInfoInputs.cache
+C:\Users\6147952\source\repos\WebApplication1\PolicyModel\obj\Debug\net8.0\PolicyModel.AssemblyInfo.cs
+C:\Users\6147952\source\repos\WebApplication1\PolicyModel\obj\Debug\net8.0\PolicyModel.csproj.CoreCompileInputs.cache
+C:\Users\6147952\source\repos\WebApplication1\PolicyModel\obj\Debug\net8.0\PolicyModel.sourcelink.json
+C:\Users\6147952\source\repos\WebApplication1\PolicyModel\obj\Debug\net8.0\PolicyModel.dll
+C:\Users\6147952\source\repos\WebApplication1\PolicyModel\obj\Debug\net8.0\refint\PolicyModel.dll
+C:\Users\6147952\source\repos\WebApplication1\PolicyModel\obj\Debug\net8.0\PolicyModel.pdb
+C:\Users\6147952\source\repos\WebApplication1\PolicyModel\obj\Debug\net8.0\ref\PolicyModel.dll
