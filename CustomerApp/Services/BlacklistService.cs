@@ -4,7 +4,16 @@ using System.Net.Http.Json;
 
 namespace CustomerApp.Services
 {
-    public class BlacklistDtoService
+    public interface IBlacklistDtoService
+    {
+        Task Add(BlacklistDto employee);
+        Task DeleteById(int id);
+        Task<List<BlacklistDto>> GetAll();
+        Task<BlacklistDto> GetById(int id);
+        Task Update(BlacklistDto employee);
+    }
+
+    public class BlacklistDtoService : IBlacklistDtoService
     {
         private readonly HttpClient httpClient;
         public BlacklistDtoService(HttpClient httpClient)

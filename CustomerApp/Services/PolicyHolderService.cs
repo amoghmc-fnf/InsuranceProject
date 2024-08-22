@@ -4,37 +4,46 @@ using System.Net.Http.Json;
 
 namespace CustomerApp.Services
 {
-    public class AdminDtoService
+    public interface IPolicyHolderDtoService
+    {
+        Task Add(PolicyHolderDto employee);
+        Task DeleteById(int id);
+        Task<List<PolicyHolderDto>> GetAll();
+        Task<PolicyHolderDto> GetById(int id);
+        Task Update(PolicyHolderDto employee);
+    }
+
+    public class PolicyHolderDtoService : IPolicyHolderDtoService
     {
         private readonly HttpClient httpClient;
-        public AdminDtoService(HttpClient httpClient)
+        public PolicyHolderDtoService(HttpClient httpClient)
         {
             this.httpClient = httpClient;
         }
 
-        public async Task<List<AdminDto>> GetAll()
+        public async Task<List<PolicyHolderDto>> GetAll()
         {
-            return await httpClient.GetFromJsonAsync<List<AdminDto>>("Admin");
+            return await httpClient.GetFromJsonAsync<List<PolicyHolderDto>>("PolicyHolder");
         }
 
-        public async Task<AdminDto> GetById(int id)
+        public async Task<PolicyHolderDto> GetById(int id)
         {
-            return await httpClient.GetFromJsonAsync<AdminDto>($"Admin/{id}");
+            return await httpClient.GetFromJsonAsync<PolicyHolderDto>($"PolicyHolder/{id}");
         }
 
-        public async Task Add(AdminDto employee)
+        public async Task Add(PolicyHolderDto employee)
         {
-            await httpClient.PostAsJsonAsync<AdminDto>("Admin", employee);
+            await httpClient.PostAsJsonAsync<PolicyHolderDto>("PolicyHolder", employee);
         }
 
         public async Task DeleteById(int id)
         {
-            await httpClient.DeleteAsync($"Admin/{id}");
+            await httpClient.DeleteAsync($"PolicyHolder/{id}");
         }
 
-        public async Task Update(AdminDto employee)
+        public async Task Update(PolicyHolderDto employee)
         {
-            await httpClient.PutAsJsonAsync<AdminDto>("Admin", employee);
+            await httpClient.PutAsJsonAsync<PolicyHolderDto>("PolicyHolder", employee);
         }
     }
 }

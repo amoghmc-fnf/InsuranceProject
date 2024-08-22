@@ -4,7 +4,16 @@ using System.Net.Http.Json;
 
 namespace CustomerApp.Services
 {
-    public class InsuredPolicyDtoService
+    public interface IInsuredPolicyDtoService
+    {
+        Task Add(InsuredPolicyDto employee);
+        Task DeleteById(int id);
+        Task<List<InsuredPolicyDto>> GetAll();
+        Task<InsuredPolicyDto> GetById(int id);
+        Task Update(InsuredPolicyDto employee);
+    }
+
+    public class InsuredPolicyDtoService : IInsuredPolicyDtoService
     {
         private readonly HttpClient httpClient;
         public InsuredPolicyDtoService(HttpClient httpClient)

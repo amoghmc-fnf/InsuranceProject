@@ -4,37 +4,46 @@ using System.Net.Http.Json;
 
 namespace CustomerApp.Services
 {
-    public class AdminDtoService
+    public interface IIllnessDtoService
+    {
+        Task Add(IllnessDto employee);
+        Task DeleteById(int id);
+        Task<List<IllnessDto>> GetAll();
+        Task<IllnessDto> GetById(int id);
+        Task Update(IllnessDto employee);
+    }
+
+    public class IllnessDtoService : IIllnessDtoService
     {
         private readonly HttpClient httpClient;
-        public AdminDtoService(HttpClient httpClient)
+        public IllnessDtoService(HttpClient httpClient)
         {
             this.httpClient = httpClient;
         }
 
-        public async Task<List<AdminDto>> GetAll()
+        public async Task<List<IllnessDto>> GetAll()
         {
-            return await httpClient.GetFromJsonAsync<List<AdminDto>>("Admin");
+            return await httpClient.GetFromJsonAsync<List<IllnessDto>>("Illness");
         }
 
-        public async Task<AdminDto> GetById(int id)
+        public async Task<IllnessDto> GetById(int id)
         {
-            return await httpClient.GetFromJsonAsync<AdminDto>($"Admin/{id}");
+            return await httpClient.GetFromJsonAsync<IllnessDto>($"Illness/{id}");
         }
 
-        public async Task Add(AdminDto employee)
+        public async Task Add(IllnessDto employee)
         {
-            await httpClient.PostAsJsonAsync<AdminDto>("Admin", employee);
+            await httpClient.PostAsJsonAsync<IllnessDto>("Illness", employee);
         }
 
         public async Task DeleteById(int id)
         {
-            await httpClient.DeleteAsync($"Admin/{id}");
+            await httpClient.DeleteAsync($"Illness/{id}");
         }
 
-        public async Task Update(AdminDto employee)
+        public async Task Update(IllnessDto employee)
         {
-            await httpClient.PutAsJsonAsync<AdminDto>("Admin", employee);
+            await httpClient.PutAsJsonAsync<IllnessDto>("Illness", employee);
         }
     }
 }
