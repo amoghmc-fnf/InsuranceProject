@@ -84,8 +84,9 @@ namespace InsuranceApi.Services
             InsuranceTypeDto insuranceTypeDto = new()
             {
                 InsuranceId = insuranceTypeTable.InsuranceId,
-                InsuranceType = insuranceTypeTable.InsuranceType1,
+                InsuranceType = insuranceTypeTable.Name,
                 Description = insuranceTypeTable.Description,
+                BaseRate = insuranceTypeTable.BaseRate,
             };
             return insuranceTypeDto;
         }
@@ -93,8 +94,9 @@ namespace InsuranceApi.Services
         private void ConvertToTable(InsuranceTypeDto insuranceTypeDto, InsuranceType insuranceTypeTable)
         {
             insuranceTypeTable.InsuranceId = insuranceTypeDto.InsuranceId;
-            insuranceTypeTable.InsuranceType1 = insuranceTypeDto.InsuranceType;
+            insuranceTypeTable.Name = insuranceTypeDto.InsuranceType;
             insuranceTypeTable.Description = insuranceTypeDto.Description;
+            insuranceTypeTable.BaseRate = insuranceTypeDto.BaseRate;
             return;
         }
     }

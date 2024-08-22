@@ -23,9 +23,13 @@ public partial class FnfProjectContext : DbContext
 
     public virtual DbSet<Hospital> Hospitals { get; set; }
 
+    public virtual DbSet<Illness> Illnesses { get; set; }
+
     public virtual DbSet<InsuranceType> InsuranceTypes { get; set; }
 
     public virtual DbSet<Insured> Insureds { get; set; }
+
+    public virtual DbSet<InsuredIllness> InsuredIllnesses { get; set; }
 
     public virtual DbSet<InsuredPolicy> InsuredPolicies { get; set; }
 
@@ -123,6 +127,19 @@ public partial class FnfProjectContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.Phone)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .IsFixedLength();
+        });
+
+        modelBuilder.Entity<Illness>(entity =>
+        {
+            entity.HasKey(e => e.IllnessId).HasName("PK__Illness__2BA575BB35CB09EA");
+
+            entity.ToTable("Illness");
+
+            entity.Property(e => e.Name).HasMaxLength(50);
         });
 
         modelBuilder.Entity<InsuranceType>(entity =>
@@ -132,10 +149,10 @@ public partial class FnfProjectContext : DbContext
             entity.ToTable("InsuranceType");
 
             entity.Property(e => e.InsuranceId).HasColumnName("InsuranceID");
-            entity.Property(e => e.InsuranceType1)
+            entity.Property(e => e.BaseRate).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.Name)
                 .HasMaxLength(255)
-                .IsUnicode(false)
-                .HasColumnName("InsuranceType");
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<Insured>(entity =>
@@ -158,6 +175,25 @@ public partial class FnfProjectContext : DbContext
                 .HasForeignKey(d => d.PolicyHolderId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Insured__PolicyH__4F7CD00D");
+        });
+
+        modelBuilder.Entity<InsuredIllness>(entity =>
+        {
+            entity.HasKey(e => e.InsuredIllnessId).HasName("PK__InsuredI__67B6BD8B1E1A6D91");
+
+            entity.ToTable("InsuredIllness");
+
+            entity.Property(e => e.InsuredIllnessId).HasColumnName("InsuredIllnessID");
+            entity.Property(e => e.IllnessId).HasColumnName("IllnessID");
+            entity.Property(e => e.InsuredId).HasColumnName("InsuredID");
+
+            entity.HasOne(d => d.Illness).WithMany(p => p.InsuredIllnesses)
+                .HasForeignKey(d => d.IllnessId)
+                .HasConstraintName("FK__InsuredIl__Illne__5FB337D6");
+
+            entity.HasOne(d => d.Insured).WithMany(p => p.InsuredIllnesses)
+                .HasForeignKey(d => d.InsuredId)
+                .HasConstraintName("FK__InsuredIl__Insur__5EBF139D");
         });
 
         modelBuilder.Entity<InsuredPolicy>(entity =>

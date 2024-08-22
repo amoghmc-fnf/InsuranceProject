@@ -86,6 +86,7 @@ namespace InsuranceApi.Services
                 HospitalId = hospitalTable.HospitalId,
                 Name = hospitalTable.Name,
                 Address = hospitalTable.Address,
+                Phone = hospitalTable.Phone,
             };
             return hospitalDto;
         }
@@ -95,6 +96,7 @@ namespace InsuranceApi.Services
             hospitalTable.HospitalId = hospitalDto.HospitalId;
             hospitalTable.Name = hospitalDto.Name;
             hospitalTable.Address = hospitalDto.Address;
+            hospitalTable.Phone = hospitalDto.Phone;
             return;
         }
     }

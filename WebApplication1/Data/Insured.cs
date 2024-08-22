@@ -17,6 +17,8 @@ public partial class Insured
 
     public DateOnly RegistrationDate { get; set; }
 
+    public virtual ICollection<InsuredIllness> InsuredIllnesses { get; set; } = new List<InsuredIllness>();
+
     public virtual ICollection<InsuredPolicy> InsuredPolicies { get; set; } = new List<InsuredPolicy>();
 
     public virtual PolicyHolder PolicyHolder { get; set; } = null!;

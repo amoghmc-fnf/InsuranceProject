@@ -10,11 +10,11 @@ namespace WebApplication1
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            builder.Services.AddDbContext<FnfProjectContext>(options =>
-            {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("FnfTraining"));
-            });
+           // Add services to the container.
+           builder.Services.AddDbContext<FnfProjectContext>(options =>
+           {
+               options.UseSqlServer(builder.Configuration.GetConnectionString("FnfProject"));
+           });
             builder.Services.AddTransient<IAdminService, AdminService>();
             builder.Services.AddTransient<IInsuredPolicyService, InsuredPolicyService>();
             builder.Services.AddTransient<IBlacklistService, BlacklistService>();
@@ -25,6 +25,8 @@ namespace WebApplication1
             builder.Services.AddTransient<IPolicyService, PolicyService>();
             builder.Services.AddTransient<IInsuredService, InsuredService>();
             builder.Services.AddTransient<IHospitalService, HospitalService>();
+            builder.Services.AddTransient<IIllnessService, IllnessService>();
+            builder.Services.AddTransient<IInsuredIllnessService, InsuredIllnessService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
