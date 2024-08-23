@@ -1,5 +1,4 @@
-﻿using InsuranceApi.DTOs;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Net.Http.Json;
 
 namespace CustomerApp.Services

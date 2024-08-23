@@ -12,7 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SharedModels\SharedModels.csproj" />
+    <ProjectReference Include="..\AdminDll\AdminModel.csproj" />
+    <ProjectReference Include="..\PolicyModel\PolicyModel.csproj" />
+    <ProjectReference Include="..\UserModel\UserModel.csproj" />
   </ItemGroup>
 
 </Project>
