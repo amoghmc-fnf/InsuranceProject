@@ -139,3 +139,4 @@ C:\Users\6147952\source\repos\WebApplication1\UserApi\obj\Debug\net8.0\refint\Us
 C:\Users\6147952\source\repos\WebApplication1\UserApi\obj\Debug\net8.0\UserApi.pdb
 C:\Users\6147952\source\repos\WebApplication1\UserApi\obj\Debug\net8.0\UserApi.genruntimeconfig.cache
 C:\Users\6147952\source\repos\WebApplication1\UserApi\obj\Debug\net8.0\ref\UserApi.dll
+C:\Users\6147952\source\repos\WebApplication1\UserApi\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

@@ -139,3 +139,4 @@ C:\Users\6147952\source\repos\WebApplication1\PolicyApi\obj\Debug\net8.0\refint\
 C:\Users\6147952\source\repos\WebApplication1\PolicyApi\obj\Debug\net8.0\PolicyApi.pdb
 C:\Users\6147952\source\repos\WebApplication1\PolicyApi\obj\Debug\net8.0\PolicyApi.genruntimeconfig.cache
 C:\Users\6147952\source\repos\WebApplication1\PolicyApi\obj\Debug\net8.0\ref\PolicyApi.dll
+C:\Users\6147952\source\repos\WebApplication1\PolicyApi\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
