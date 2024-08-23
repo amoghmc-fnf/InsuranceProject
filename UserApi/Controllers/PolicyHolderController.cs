@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UserDbService.Services;
 
@@ -13,6 +14,7 @@ namespace UserApi.Controllers
         Task<IActionResult> Update(PolicyHolderDto policyHolderDto);
     }
 
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PolicyHolderController : ControllerBase, IPolicyHolderController

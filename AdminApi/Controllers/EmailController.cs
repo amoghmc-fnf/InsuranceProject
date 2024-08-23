@@ -1,4 +1,5 @@
 ﻿using AdminDbService.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,7 @@ namespace InsuranceApi.Controllers
         Task<IActionResult> Update(EmailRecordDto admin);
     }
 
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class EmailRecordController : ControllerBase, IEmailRecordController
