@@ -19,6 +19,8 @@ public partial class FnfProjectContext : DbContext
 
     public virtual DbSet<Blacklist> Blacklists { get; set; }
 
+    public virtual DbSet<EmailRecord> EmailRecords { get; set; }
+
     public virtual DbSet<Hospital> Hospitals { get; set; }
 
     public virtual DbSet<Payment> Payments { get; set; }
@@ -55,6 +57,18 @@ public partial class FnfProjectContext : DbContext
                 .HasForeignKey(d => d.AdminId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Blacklist__Admin__4AB81AF0");
+        });
+
+        modelBuilder.Entity<EmailRecord>(entity =>
+        {
+            entity.HasKey(e => e.EmailRecordId).HasName("PK__EmailRec__DB8BE325450EF8B6");
+
+            entity.ToTable("EmailRecord");
+
+            entity.Property(e => e.EmailRecordId).HasColumnName("EmailRecordID");
+            entity.Property(e => e.FromEmail).HasMaxLength(255);
+            entity.Property(e => e.Subject).HasMaxLength(512);
+            entity.Property(e => e.ToEmail).HasMaxLength(255);
         });
 
         modelBuilder.Entity<Hospital>(entity =>

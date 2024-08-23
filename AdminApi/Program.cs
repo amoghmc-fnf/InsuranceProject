@@ -19,6 +19,7 @@ namespace AdminApi
             builder.Services.AddTransient<IBlacklistService, BlacklistService>();
             builder.Services.AddTransient<IHospitalService, HospitalService>();
             builder.Services.AddTransient<IPaymentService, PaymentService>();
+            builder.Services.AddTransient<IEmailRecordService, EmailRecordService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
