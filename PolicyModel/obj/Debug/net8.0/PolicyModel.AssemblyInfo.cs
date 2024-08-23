@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PolicyModel")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0d8431da8e184aa3c7795bed71a6fa1df94b7805")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+32f5793d44961e95326e7da77b9827dd93f45e7c")]
 [assembly: System.Reflection.AssemblyProductAttribute("PolicyModel")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PolicyModel")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
