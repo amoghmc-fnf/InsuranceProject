@@ -87,6 +87,8 @@ namespace PolicyDbService.Services
                 Description = insuranceTypeTable.Description,
                 BaseRate = insuranceTypeTable.BaseRate,
                 CoverageSize = insuranceTypeTable.CoverageSize,
+                MinAge = insuranceTypeTable.MinAge,
+                MaxAge = insuranceTypeTable.MaxAge,
             };
             return insuranceTypeDto;
         }
@@ -98,6 +100,8 @@ namespace PolicyDbService.Services
             insuranceTypeTable.Description = insuranceTypeDto.Description;
             insuranceTypeTable.BaseRate = insuranceTypeDto.BaseRate;
             insuranceTypeTable.CoverageSize = insuranceTypeDto.CoverageSize;
+            insuranceTypeTable.MinAge = insuranceTypeDto.MinAge;
+            insuranceTypeTable.MaxAge = insuranceTypeDto.MaxAge;
             return;
         }
     }

@@ -5,4 +5,6 @@
     public string Description { get; set; } = null!;
     public decimal BaseRate { get; set; }
     public int CoverageSize { get; set; }
+    public int MinAge { get; set; }
+    public int MaxAge { get; set; }
 }
