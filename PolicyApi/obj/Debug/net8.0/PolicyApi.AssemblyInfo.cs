@@ -14,7 +14,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PolicyApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+<<<<<<< HEAD
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+26f2531e857e2bfa66418b2ce52c5088204e89e7")]
+=======
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ee214656cc93813a5c2f4e68957815a2024edfb4")]
+>>>>>>> master
 [assembly: System.Reflection.AssemblyProductAttribute("PolicyApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PolicyApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

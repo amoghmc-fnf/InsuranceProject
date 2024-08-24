@@ -1,0 +1,1 @@
+git add .\AdminApi\* .\AdminDbService\* .\AdminDll\* .\UserApi\* .\UserDbService\* .\UserModel\* .\PolicyApi\* .\PolicyDbService\* .\PolicyModel\* .\JwtApi\*
