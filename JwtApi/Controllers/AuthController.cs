@@ -15,34 +15,39 @@ namespace JwtApi.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        private const string privateKey = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        private readonly string privateKey;
+        private readonly string symmetricKey;
+        private readonly int timeOut;
         public AuthController(IConfiguration configuration)
         {
             _configuration = configuration;
+            privateKey = _configuration.GetSection("PrivateKey").Value;
+            symmetricKey = _configuration.GetSection("SymmetricKey").Value;
+            timeOut = int.Parse(_configuration.GetSection("TimeOut").Value);
         }
 
-        [HttpPost("login")]
+        [HttpPost]
         public IActionResult Login([FromBody] UserLogin user)
         {
             // Validate the user credentials (this is just a dummy check, replace with your logic)
-            if (user.Username == "test" && user.Password == "password")
+            if (user.key == symmetricKey)
             {
-                var token = GenerateJwtToken(user.Username);
+                var token = GenerateJwtToken(user.key);
                 return Ok(new { token });
             }
 
             return Unauthorized();
         }
-        private string GenerateJwtToken(string username)
+        private string GenerateJwtToken(string userKey)
         {
             var key = Encoding.UTF8.GetBytes(privateKey);
             var tokenDesc = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
-            {
-                new Claim(ClaimTypes.Name, username)
-            }),
-                Expires = DateTime.UtcNow.AddHours(1),
+                {
+                    new Claim(ClaimTypes.Name, userKey)
+                }),
+                Expires = DateTime.UtcNow.AddHours(timeOut),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var tokenHandler = new JwtSecurityTokenHandler();
