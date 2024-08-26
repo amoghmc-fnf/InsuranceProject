@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PolicyApi.Models;
 using PolicyDbService.Services;
 
 namespace PolicyApi.Controllers
@@ -75,6 +76,21 @@ namespace PolicyApi.Controllers
             {
                 var found = await service.GetById(id);
                 return Ok(found);
+            }
+            catch (NullReferenceException)
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpPut]
+        [Route("{id}/status")]
+        public async Task<IActionResult> UpdateStatus(int id, [FromBody] ClaimUpdateStatusDto updateDto)
+        {
+            try
+            {
+                await service.UpdateStatus(id, updateDto.Status, updateDto.DispenseAmount);
+                return Ok();
             }
             catch (NullReferenceException)
             {

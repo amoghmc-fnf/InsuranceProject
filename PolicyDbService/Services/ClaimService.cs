@@ -10,6 +10,7 @@ namespace PolicyDbService.Services
         Task<List<ClaimDto>> GetAll();
         Task<ClaimDto> GetById(int id);
         Task Update(ClaimDto claimDto);
+        Task UpdateStatus(int id, string status, decimal dispenseAmount);
     }
 
     public class ClaimService : IClaimService
@@ -109,6 +110,21 @@ namespace PolicyDbService.Services
             claimTable.ClaimDate = DateOnly.FromDateTime(claimDto.ClaimDate);
             claimTable.HospitalId = claimDto.HospitalId;
             return;
+        }
+
+        public async Task UpdateStatus(int id, string status, decimal dispenseAmount)
+        {
+            var found = await context.Claims.FirstOrDefaultAsync(claim => claim.ClaimId == id);
+
+            if (found != null)
+            {
+                found.ClaimStatus = status;
+                found.DispenseAmount = dispenseAmount;
+                await context.SaveChangesAsync();
+                return;
+            }
+
+            throw new NullReferenceException($"Claim with ID {id} not found.");
         }
     }
 }

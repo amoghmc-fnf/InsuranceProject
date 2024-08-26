@@ -10,6 +10,7 @@ namespace PolicyDbService.Services
         Task<List<InsuredPolicyDto>> GetAll();
         Task<InsuredPolicyDto> GetById(int id);
         Task Update(InsuredPolicyDto insuredPolicyDto);
+        Task UpdateApprovalStatus(int id, string approvalStatus);
     }
 
     public class InsuredPolicyService : IInsuredPolicyService
@@ -61,6 +62,19 @@ namespace PolicyDbService.Services
             if (found != null)
             {
                 ConvertToTable(insuredPolicyDto, found);
+                await context.SaveChangesAsync();
+                return;
+            }
+            throw new NullReferenceException();
+        }
+
+        public async Task UpdateApprovalStatus(int id, string approvalStatus)
+        {
+            var found = await context.InsuredPolicies.FirstOrDefaultAsync(ip => ip.InsuredPolicyId == id);
+            if (found != null)
+            {
+                found.ApprovalStatus = approvalStatus;
+                context.InsuredPolicies.Update(found);
                 await context.SaveChangesAsync();
                 return;
             }

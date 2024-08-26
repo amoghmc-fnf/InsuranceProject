@@ -12,6 +12,7 @@ namespace PolicyApi.Controllers
         Task<IActionResult> GetAll();
         Task<IActionResult> GetById(int id);
         Task<IActionResult> Update(InsuredPolicyDto insuredPolicyDto);
+        Task<IActionResult> UpdateApprovalStatus(int id, [FromBody] string approvalStatus);
     }
 
     [Route("api/[controller]")]
@@ -75,6 +76,21 @@ namespace PolicyApi.Controllers
             {
                 var found = await service.GetById(id);
                 return Ok(found);
+            }
+            catch (NullReferenceException)
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpPut]
+        [Route("{id}/ApprovalStatus")]
+        public async Task<IActionResult> UpdateApprovalStatus(int id, [FromBody] string approvalStatus)
+        {
+            try
+            {
+                await service.UpdateApprovalStatus(id, approvalStatus);
+                return Ok();
             }
             catch (NullReferenceException)
             {
