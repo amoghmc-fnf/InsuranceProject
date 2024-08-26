@@ -10,6 +10,7 @@ namespace UserDbService.Services
         Task<List<PolicyHolderDto>> GetAll();
         Task<PolicyHolderDto> GetById(int id);
         Task Update(PolicyHolderDto policyHolderDto);
+        Task UpdateStatus(int id, int status);
     }
 
     public class PolicyHolderService : IPolicyHolderService
@@ -103,6 +104,18 @@ namespace UserDbService.Services
             policyHolderTable.Phone = policyHolderDto.Phone;
             policyHolderTable.Status = policyHolderDto.Status;
             return;
+        }
+
+        public async Task UpdateStatus(int id, int status)
+        {
+            var found = await context.PolicyHolders.FirstOrDefaultAsync(ph => ph.PolicyHolderId == id);
+            if (found != null)
+            {
+                found.Status = status;
+                await context.SaveChangesAsync();
+                return;
+            }
+            throw new NullReferenceException();
         }
     }
 }

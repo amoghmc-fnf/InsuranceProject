@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("UserDbService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7f60aac9caf4897bb0c256ff8a00fae1791d0ae4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cceff87c2e9864c1767b9d9c36913f0a2bbc6aed")]
 [assembly: System.Reflection.AssemblyProductAttribute("UserDbService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("UserDbService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

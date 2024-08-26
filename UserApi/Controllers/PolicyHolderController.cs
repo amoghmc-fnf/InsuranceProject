@@ -12,6 +12,7 @@ namespace UserApi.Controllers
         Task<IActionResult> GetAll();
         Task<IActionResult> GetById(int id);
         Task<IActionResult> Update(PolicyHolderDto policyHolderDto);
+        Task<IActionResult> UpdateStatus(int id, [FromBody] int status);
     }
 
     [Route("api/[controller]")]
@@ -81,6 +82,22 @@ namespace UserApi.Controllers
                 return NotFound();
             }
         }
+
+        [HttpPut]
+        [Route("{id}/status")]
+        public async Task<IActionResult> UpdateStatus(int id, [FromBody] int status)
+        {
+            try
+            {
+                await service.UpdateStatus(id, status);
+                return Ok();
+            }
+            catch (NullReferenceException)
+            {
+                return NotFound();
+            }
+        }
+
     }
 }
 
