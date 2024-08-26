@@ -82,20 +82,18 @@ public partial class FnfProjectContext : DbContext
             entity.HasOne(d => d.Policy).WithMany(p => p.InsuredPolicies)
                 .HasForeignKey(d => d.PolicyId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__InsuredPo__Polic__52593CB8");
+                .HasConstraintName("FK__InsuredPo__Polic__160F4887");
         });
 
         modelBuilder.Entity<Policy>(entity =>
         {
-            entity.HasKey(e => e.PolicyId).HasName("PK__Policy__2E133944FDFB5CF9");
+            entity.HasKey(e => e.PolicyId).HasName("PK__Policy__2E13394418BF7D3F");
 
             entity.ToTable("Policy");
 
-            entity.HasIndex(e => e.PolicyNumber, "UQ__Policy__46DA015755325948").IsUnique();
+            entity.HasIndex(e => e.PolicyNumber, "UQ__Policy__46DA01573F7658B0").IsUnique();
 
-            entity.Property(e => e.PolicyId)
-                .ValueGeneratedNever()
-                .HasColumnName("PolicyID");
+            entity.Property(e => e.PolicyId).HasColumnName("PolicyID");
             entity.Property(e => e.InsuranceTypeId).HasColumnName("InsuranceTypeID");
             entity.Property(e => e.PolicyNumber)
                 .HasMaxLength(50)
@@ -105,7 +103,7 @@ public partial class FnfProjectContext : DbContext
             entity.HasOne(d => d.InsuranceType).WithMany(p => p.Policies)
                 .HasForeignKey(d => d.InsuranceTypeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Policy__Insuranc__5535A963");
+                .HasConstraintName("FK__Policy__Insuranc__0E6E26BF");
         });
 
         OnModelCreatingPartial(modelBuilder);
