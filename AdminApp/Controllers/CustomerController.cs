@@ -2,15 +2,16 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using AdminApp.Services;
+using CustomerApp.Services;
 
 namespace AdminApp.Controllers
 {
     [EnableCors("AllowSpecificOrigin")]  // Ensure CORS policy is applied
     public class CustomerController : Controller
     {
-        private readonly PolicyHolderService _policyHolderService;
+        private readonly IPolicyHolderService _policyHolderService;
 
-        public CustomerController(PolicyHolderService policyHolderService)
+        public CustomerController(IPolicyHolderService policyHolderService)
         {
             _policyHolderService = policyHolderService;
         }

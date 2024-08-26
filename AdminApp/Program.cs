@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AdminApp.Services;
+using CustomerApp.Services;
 
 namespace AdminApp
 {
@@ -31,7 +32,7 @@ namespace AdminApp
                 client.BaseAddress = new Uri("http://localhost:5133/api/");
             });
 
-            builder.Services.AddHttpClient<PolicyHolderService>(client =>
+            builder.Services.AddHttpClient<IPolicyHolderService, PolicyHolderService>(client =>
             {
                 client.BaseAddress = new Uri("http://localhost:5049/api/");
             });
@@ -42,6 +43,10 @@ namespace AdminApp
             builder.Services.AddHttpClient<IPolicyRequestService, PolicyRequestService>(client =>
             {
                 client.BaseAddress = new Uri("http://localhost:5133/api/");
+            });
+            builder.Services.AddHttpClient<IInsuredDtoService, InsuredDtoService>(client =>
+            {
+                client.BaseAddress = new Uri("http://localhost:5049/api/");
             });
 
             // Configure CORS

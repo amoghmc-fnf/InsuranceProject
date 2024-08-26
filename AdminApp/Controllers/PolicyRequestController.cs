@@ -4,17 +4,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AdminApp.Services;
+using CustomerApp.Services;
 
 namespace AdminApp.Controllers
 {
     public class PolicyRequestController : Controller
     {
         private readonly IPolicyRequestService _policyRequestService;
+        private readonly IPolicyHolderService _policyHolderService;
+        private readonly IInsuredDtoService _insuredDtoService;
         private readonly ILogger<PolicyRequestController> _logger;
 
-        public PolicyRequestController(IPolicyRequestService policyRequestService, ILogger<PolicyRequestController> logger)
+        public PolicyRequestController(IInsuredDtoService insuredService, IPolicyRequestService policyRequestService, IPolicyHolderService policyHolderService, ILogger<PolicyRequestController> logger)
         {
             _policyRequestService = policyRequestService;
+            _insuredDtoService = insuredService;
+            _policyHolderService = policyHolderService;
             _logger = logger;
         }
 
@@ -25,7 +30,8 @@ namespace AdminApp.Controllers
 
             foreach (var policy in insuredPolicies)
             {
-                var policyHolder = await _policyRequestService.GetPolicyHolderAsync(policy.InsuredId);
+                var insured = await _insuredDtoService.GetById(policy.InsuredId);
+                var policyHolder = await _policyHolderService.GetById(insured.PolicyHolderId);
                 if (policyHolder != null)
                 {
                     policyRequests.Add(new PolicyRequestViewModel
@@ -60,7 +66,9 @@ namespace AdminApp.Controllers
                 return NotFound();
             }
 
-            var policyHolder = await _policyRequestService.GetPolicyHolderAsync(insuredPolicy.InsuredId);
+            var insured = await _insuredDtoService.GetById(insuredPolicy.InsuredId);
+            var policyHolder = await _policyHolderService.GetById(insured.PolicyHolderId);
+
             var policy = await _policyRequestService.GetPolicyAsync(insuredPolicy.PolicyId);
             var payments = await _policyRequestService.GetPaymentsByInsuredPolicyIdAsync(insuredPolicy.InsuredPolicyId);
 

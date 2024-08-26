@@ -9,10 +9,6 @@
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
-      "Id": "C:\\Users\\6147952\\source\\repos\\WebApplication1\\AdminApp\\wwwroot\\favicon.ico",
-      "PackagePath": "staticwebassets\\favicon.ico"
-    },
-    {
       "Id": "C:\\Users\\6147952\\source\\repos\\WebApplication1\\AdminApp\\wwwroot\\images\\CompanyLogo-removebg-preview.png",
       "PackagePath": "staticwebassets\\images\\CompanyLogo-removebg-preview.png"
     },

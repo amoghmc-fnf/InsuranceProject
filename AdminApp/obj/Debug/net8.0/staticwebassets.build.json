@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Yru67COMurlHTfrxxBoD4t3GIpZDG2WZfjpinUcFYYc=",
+  "Hash": "jVQg6aDivLZjYa5EKd+0DhEQeP9klLsFNlx6HZVBsyo=",
   "Source": "AdminApp",
   "BasePath": "_content/AdminApp",
   "Mode": "Default",
@@ -72,25 +72,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
-    },
-    {
-      "Identity": "C:\\Users\\6147952\\source\\repos\\WebApplication1\\AdminApp\\wwwroot\\favicon.ico",
-      "SourceId": "AdminApp",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\6147952\\source\\repos\\WebApplication1\\AdminApp\\wwwroot\\",
-      "BasePath": "_content/AdminApp",
-      "RelativePath": "favicon.ico",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
       "Identity": "C:\\Users\\6147952\\source\\repos\\WebApplication1\\AdminApp\\wwwroot\\images\\CompanyLogo.png",
