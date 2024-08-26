@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CustomerApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+def7d1335c7ae5f2c39f3b70171544e75c77ba09")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+121c845b3be3ef99f9f259483a1561ba0f38542c")]
 [assembly: System.Reflection.AssemblyProductAttribute("CustomerApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CustomerApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

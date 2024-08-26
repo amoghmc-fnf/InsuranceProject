@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "CustomerApp",
   "resources": {
-    "hash": "sha256-uMUW8APM6X/I5vnZPypoSUglDtADNhxWPnhcmqhljyE=",
+    "hash": "sha256-fZbAuj+FqsKUUzuda9wIgtMFRklZ95GfjcISFXO449c=",
     "jsModuleNative": {
       "dotnet.native.8.0.8.kegrbw6w9p.js": "sha256-juC5sA7gHTLXFEhAKgdM2/RavswpwCtDfjYGsAz2FXg="
     },
@@ -208,16 +208,16 @@
       "mscorlib.wasm": "sha256-Gz8PyW2/fwihe5ul81OwmRUrU71r+KtbyRw6xlOGD+Q=",
       "netstandard.wasm": "sha256-jMTqIQzoDS810lyhZpMO5eEC36EzntXqSVn+2qwkOMQ=",
       "System.Private.CoreLib.wasm": "sha256-NFj5WE5VLP2LptZIRJCUIc1AMk06FmxpsSILfPISwAw=",
-      "AdminModel.wasm": "sha256-dQW8yseF43mzDojXR0x6FoXx0ZH6lWyQoXypKud0XKc=",
-      "PolicyModel.wasm": "sha256-FhP3kE7kJKMCOkC+GrO71y6l6gT6KeGHM61xHtIpByo=",
-      "UserModel.wasm": "sha256-9JaVEtg0ARfTQhCW1EoFaqjD1sAieGuiG2su/0XqD8U=",
-      "CustomerApp.wasm": "sha256-mSldVeZCqbf5RqUvKJWVDTc1pHfSemV5ELqBfbUwsKE="
+      "AdminModel.wasm": "sha256-rNpPMJAWo7k9D1CE0i8A75ggKtFj2yDE80mrQgCrYL8=",
+      "PolicyModel.wasm": "sha256-ohmFcgj+kmVJ3eQYzgCzy7HpI4FzuKaDW7Ed9FEdroo=",
+      "UserModel.wasm": "sha256-Q8cPF9Mw+GdNs5zgpfXYW3a8afgIuJYuvlDKrDHBMBI=",
+      "CustomerApp.wasm": "sha256-xissoA+8gDO3v55fZ1wWP9u+IyEn1BTIwqL49D/pcaU="
     },
     "pdb": {
-      "AdminModel.pdb": "sha256-aZdLY0bz0j2oOp/Rc25NQgiQZGbaITc9qijMlFVWTxg=",
-      "PolicyModel.pdb": "sha256-z8uUJ5JUXuuYusmvOmNm2xWj6IvA8/otGUB5XE4DAbs=",
-      "UserModel.pdb": "sha256-W/9I7xSWdOAd34i4xwqI/WmC9dgXBsD74QYaWK0tetk=",
-      "CustomerApp.pdb": "sha256-zn8irLxriqJGpQabZfmGg/r5JwmDL8Zv7fYPOxiFXOM="
+      "AdminModel.pdb": "sha256-cXrktQmFFuZ83JEDNrTfVsVqs+gyOIhbeWnBSIImG6c=",
+      "PolicyModel.pdb": "sha256-Utsk6+ViPDs2u7x2N4iaxIUSm7PNXDgrFejosNVQq+w=",
+      "UserModel.pdb": "sha256-+1uLvXy2Y03hP1IV9iENDNuQt8fPjqaPMVT+tTgy+No=",
+      "CustomerApp.pdb": "sha256-F70rpBUcNu90u3vN06qTgldnmHU+jw8qZfQIXM/AK9U="
     }
   },
   "cacheBootResources": true,
