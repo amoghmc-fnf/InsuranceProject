@@ -14,7 +14,6 @@ namespace UserApi.Controllers
         Task<IActionResult> Update(InsuredDto insuredDto);
     }
 
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class InsuredController : ControllerBase, IInsuredController

@@ -14,7 +14,6 @@ namespace InsuranceApi.Controllers
         Task<IActionResult> Update(EmailRecordDto admin);
     }
 
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class EmailRecordController : ControllerBase, IEmailRecordController

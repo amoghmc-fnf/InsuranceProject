@@ -14,7 +14,6 @@ namespace PolicyApi.Controllers
         Task<IActionResult> Update(PolicyDto policyDto);
     }
 
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PolicyController : ControllerBase, IPolicyController

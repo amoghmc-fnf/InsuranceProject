@@ -14,7 +14,6 @@ namespace InsuranceApi.Controllers
         Task<IActionResult> Update(BlacklistDto blacklistDto);
     }
 
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BlacklistController : ControllerBase, IBlacklistController

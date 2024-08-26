@@ -14,7 +14,6 @@ namespace PolicyApi.Controllers
         Task<IActionResult> Update(ClaimDto claimDto);
     }
 
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ClaimController : ControllerBase, IClaimController

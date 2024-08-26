@@ -14,7 +14,6 @@ namespace InsuranceApi.Controllers
         Task<IActionResult> Update(HospitalDto hospital);
     }
 
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class HospitalController : ControllerBase, IHospitalController

@@ -14,7 +14,6 @@ namespace UserApi.Controllers
         Task<IActionResult> Update(IllnessDto admin);
     }
 
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class IllnessController : ControllerBase, IIllnessController
