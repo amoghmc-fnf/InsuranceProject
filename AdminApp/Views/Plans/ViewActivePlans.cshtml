@@ -1,0 +1,110 @@
+﻿@using System.Text.Json
+@model List<InsuranceTypeDto>
+
+@{
+    ViewData["Title"] = "View Active Plans";
+}
+
+<h2>Active Plans</h2>
+
+<div class="row">
+    @foreach (var plan in Model)
+    {
+        <div class="col-md-3 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>@plan.InsuranceType</strong></h5>
+                    <p class="card-text"><strong>Description:</strong><br>@plan.Description</p>
+                    <p class="card-text"><strong>Base Rate:</strong> @plan.BaseRate</p>
+                    <p class="card-text"><strong>Coverage Size:</strong> @plan.CoverageSize</p>
+                    <button class="btn btn-warning" onclick="showUpdateModal(@plan.InsuranceId)">Update Details</button>
+                    <button class="btn btn-danger" onclick="deletePlan(@plan.InsuranceId)">Delete</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Update Plan Modal -->
+<div class="modal fade" id="updatePlanModal" tabindex="-1" aria-labelledby="updatePlanModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updatePlanModalLabel">Update Plan Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="updatePlanForm">
+                    <div class="mb-3">
+                        <label for="insuranceType" class="form-label">Insurance Type</label>
+                        <input type="text" class="form-control" id="insuranceType" name="InsuranceType">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="Description"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="baseRate" class="form-label">Base Rate</label>
+                        <input type="number" class="form-control" id="baseRate" name="BaseRate">
+                    </div>
+                    <div class="mb-3">
+                        <label for="coverageSize" class="form-label">Coverage Size</label>
+                        <input type="number" class="form-control" id="coverageSize" name="CoverageSize">
+                    </div>
+                    <input type="hidden" id="insuranceId" name="InsuranceId">
+                    <button type="button" class="btn btn-primary" onclick="updatePlanDetails()">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showUpdateModal(insuranceId) {
+        // Find the plan details using JavaScript, not Razor syntax
+        const plan = @Html.Raw(JsonSerializer.Serialize(Model));
+        const selectedPlan = plan.find(p => p.InsuranceId === insuranceId);
+        if (selectedPlan) {
+            document.getElementById('insuranceType').value = selectedPlan.InsuranceType;
+            document.getElementById('description').value = selectedPlan.Description;
+            document.getElementById('baseRate').value = selectedPlan.BaseRate;
+            document.getElementById('coverageSize').value = selectedPlan.CoverageSize;
+            document.getElementById('insuranceId').value = selectedPlan.InsuranceId;
+        }
+        $('#updatePlanModal').modal('show');
+    }
+
+    async function updatePlanDetails() {
+        const form = document.getElementById('updatePlanForm');
+        const data = new FormData(form);
+        const jsonData = {};
+        data.forEach((value, key) => { jsonData[key] = value });
+
+        const response = await fetch('/Plans/UpdatePlan', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jsonData)
+        });
+
+        if (response.ok) {
+            $('#updatePlanModal').modal('hide');
+            location.reload(); // Reload the page to reflect changes
+        } else {
+            alert('Failed to update plan');
+        }
+    }
+
+    async function deletePlan(insuranceId) {
+        const response = await fetch(`/Plans/DeletePlan/${insuranceId}`, {
+            method: 'DELETE'
+        });
+
+        if (response.ok) {
+            location.reload(); // Reload the page to reflect changes
+        } else {
+            alert('Failed to delete plan');
+        }
+    }
+</script>

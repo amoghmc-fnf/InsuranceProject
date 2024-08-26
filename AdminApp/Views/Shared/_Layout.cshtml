@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WebApplication1</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebApplication1.styles.css" asp-append-version="true" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> <!-- Added Font Awesome -->
+</head>
+
+<body>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container-fluid">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                        <img src="~/images/CompanyLogo.png" alt="Company Logo" style="height: 40px;" />
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1 justify-content-end">
+                            <!-- Dashboard -->
+                            <li class="nav-item mx-2">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Dashboard">
+                                    <i class="fa fa-dashboard" aria-hidden="true"></i> Dashboard
+                                </a>
+                            </li>
+
+                            <!-- Customers -->
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-black" href="#" id="manageCustomersDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-users" aria-hidden="true"></i> Customers
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="manageCustomersDropdown">
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Customer" asp-action="ManageCustomers">Manage Customers</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- Policies -->
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="PolicyRequest" asp-action="Index">
+                                    <i class="fas fa-file-alt"></i> Policy Request
+                                </a>
+                            </li>
+
+
+                            <!-- Plans -->
+                            <li class="nav-item dropdown mx-2">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdownPlans" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-file-text-o" aria-hidden="true"></i> Plans
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownPlans">
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Plans" asp-action="ManagePlans">Manage Plans</a></li>
+                                </ul>
+                            </li>
+
+                            <!-- Claims -->
+                            <li class="nav-item dropdown mx-2">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" id="claimDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Claims
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="claimDropdown">
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Claim" asp-action="ManageClaims">Manage Claims</a></li>
+                                </ul>
+                            </li>
+
+                            <!-- Dropdown for Hospitals -->
+                            <li class="nav-item dropdown mx-2">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" id="hospitalDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-hospital-o" aria-hidden="true"></i> Hospitals
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="hospitalDropdown">
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Hospital" asp-action="ManageHospitals">Manage Hospitals</a></li>
+                                </ul>
+                            </li>
+
+                            <!-- Profile Section -->
+                            <li class="nav-item dropdown mx-2">
+                                <a class="nav-link dropdown-toggle text-dark d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <div class="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center" style="width: 35px; height: 35px;">
+                                        <h5>@User.Identity.Name[0]</h5>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Profile">Profile</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+    }
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - WebApplication1 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+<script>
+    function ConfirmLogout() {
+        if (confirm("Are you sure you want to logout?")) {
+            window.location.href = '@Url.Action("Logout", "Account")';
+        }
+    }
+</script>

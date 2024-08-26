@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Manage Plans";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <!-- Card 1: View Active Plans -->
+        <div class="col-md-6">
+            <div class="card text-center shadow-lg mb-4">
+                <div class="card-body">
+                    <div class="icon mb-3">
+                        <i class="fas fa-list fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="card-title">View Active Plans</h5>
+                    <p class="card-text">View all currently active insurance plans and manage them.</p>
+                    <a asp-controller="Plans" asp-action="ViewActivePlans" class="btn btn-primary">View Plans</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2: Add New Plan -->
+        <div class="col-md-6">
+            <div class="card text-center shadow-lg mb-4">
+                <div class="card-body">
+                    <div class="icon mb-3">
+                        <i class="fas fa-plus-circle fa-3x text-success"></i>
+                    </div>
+                    <h5 class="card-title">Add New Plan</h5>
+                    <p class="card-text">Create and add new insurance plans to the system.</p>
+                    <a asp-controller="Plans" asp-action="AddNewPlan" class="btn btn-success">Add Plan</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Load Font Awesome for icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">

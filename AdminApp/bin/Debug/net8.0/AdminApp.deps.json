@@ -1,0 +1,58 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "AdminApp/1.0.0": {
+        "dependencies": {
+          "AdminModel": "1.0.0",
+          "PolicyModel": "1.0.0",
+          "UserModel": "1.0.0"
+        },
+        "runtime": {
+          "AdminApp.dll": {}
+        }
+      },
+      "AdminModel/1.0.0": {
+        "runtime": {
+          "AdminModel.dll": {}
+        }
+      },
+      "PolicyModel/1.0.0": {
+        "runtime": {
+          "PolicyModel.dll": {}
+        }
+      },
+      "UserModel/1.0.0": {
+        "runtime": {
+          "UserModel.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "AdminApp/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AdminModel/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "PolicyModel/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "UserModel/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

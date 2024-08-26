@@ -1,0 +1,109 @@
+﻿@model List<PolicyHolderDto>
+
+@{
+    ViewData["Title"] = "Manage Customers";
+}
+
+<h2>Manage Customers</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Policy Holder ID</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var policyHolder in Model)
+        {
+            <tr>
+                <td>@policyHolder.PolicyHolderId</td>
+                <td>@policyHolder.Name</td>
+                <td>@policyHolder.Address</td>
+                <td>@policyHolder.Phone</td>
+                <td>@policyHolder.Email</td>
+                <td>
+                    @if (policyHolder.Status == 1)
+                    {
+                        <span>Active</span>
+                    }
+                    else
+                    {
+                        <span>Blocked</span>
+                    }
+                </td>
+                <td>
+                    <button class="btn toggle-button @(policyHolder.Status == 1 ? "btn-primary" : "btn-secondary")" onclick="toggleStatus(@policyHolder.PolicyHolderId, @policyHolder.Status)">
+                        <span class="toggle-slider @(policyHolder.Status == 1 ? "active" : "inactive")"></span>
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<style>
+    .toggle-button {
+        position: relative;
+        width: 60px;
+        height: 34px;
+        border: none;
+        border-radius: 34px;
+        cursor: pointer;
+        outline: none;
+        background-color: grey; /* Default background */
+        transition: background-color 0.3s;
+    }
+
+    .btn-primary {
+        background-color: blue;
+    }
+
+    .btn-secondary {
+        background-color: grey;
+    }
+
+    .toggle-slider {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: white;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .toggle-button.btn-primary .toggle-slider {
+        transform: translateX(26px);
+    }
+
+    .toggle-button.btn-secondary .toggle-slider {
+        transform: translateX(0);
+    }
+</style>
+
+<script>
+    async function toggleStatus(id, currentStatus) {
+        let newStatus = currentStatus === 1 ? 0 : 1; // Assuming status is binary (active/inactive)
+
+        const response = await fetch(`/PolicyHolder/${id}/status`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newStatus)
+        });
+
+        if (response.ok) {
+            location.reload(); // Reload the page to reflect changes
+        } else {
+            alert('Failed to update status');
+        }
+    }
+</script>

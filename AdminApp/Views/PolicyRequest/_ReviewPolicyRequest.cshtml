@@ -1,0 +1,80 @@
+﻿@model AdminApp.Controllers.ReviewPolicyRequestViewModel
+
+<div>
+    <h4>Review Policy Request</h4>
+    <hr />
+    <div class="form-group">
+        <label>Policy Holder Name:</label>
+        <p>@Model.PolicyHolderName</p>
+    </div>
+    <div class="form-group">
+        <label>Contact Number:</label>
+        <p>@Model.ContactNo</p>
+    </div>
+    <div class="form-group">
+        <label>Insured ID:</label>
+        <p>@Model.InsuredId</p>
+    </div>
+    <div class="form-group">
+        <label>Insured Policy ID:</label>
+        <p>@Model.InsuredPolicyId</p>
+    </div>
+    <div class="form-group">
+        <label>Policy ID:</label>
+        <p>@Model.PolicyId</p>
+    </div>
+    <div class="form-group">
+        <label>Admin ID:</label>
+        <p>@Model.AdminId</p>
+    </div>
+    <div class="form-group">
+        <label>Premium Amount:</label>
+        <p>@Model.PremiumAmount.ToString("C")</p>
+    </div>
+    <div class="form-group">
+        <label>Payment ID:</label>
+        <p>@Model.PaymentId</p>
+    </div>
+    <div class="form-group">
+        <label>Payment Amount:</label>
+        <p>@Model.PaymentAmount.ToString("C")</p>
+    </div>
+    <div class="form-group">
+        <label>Payment Date:</label>
+        <p>@Model.PaymentDate?.ToString("yyyy-MM-dd")</p>
+    </div>
+
+    <hr />
+
+    <div class="form-group">
+        <button class="btn btn-success" onclick="updateApprovalStatus(@Model.InsuredPolicyId, 'Approved')">Accept</button>
+        <button class="btn btn-danger" onclick="updateApprovalStatus(@Model.InsuredPolicyId, 'Rejected')">Reject</button>
+        <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+    </div>
+</div>
+
+@Html.AntiForgeryToken() <!-- Add the anti-forgery token here -->
+@section Scripts {
+    <script>
+        function updateApprovalStatus(insuredPolicyId, approvalStatus) {
+            var token = $('input[name="__RequestVerificationToken"]').val();
+            $.ajax({
+                url: '@Url.Action("UpdateApprovalStatus", "PolicyRequest")',
+                type: 'POST',
+                data: {
+                    __RequestVerificationToken: token,
+                    insuredPolicyId: insuredPolicyId,
+                    approvalStatus: approvalStatus
+                },
+                success: function (result) {
+                    $('#reviewModal').modal('hide');
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', xhr.responseText); // Log the error for debugging
+                    alert('Error: ' + xhr.responseText);
+                }
+            });
+        }
+    </script>
+}

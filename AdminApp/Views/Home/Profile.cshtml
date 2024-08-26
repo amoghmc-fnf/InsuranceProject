@@ -1,0 +1,17 @@
+﻿@model AdminApp.Models.Admin
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="card mt-4">
+    <div class="card-header">
+        Admin Profile
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Name: @Model.Name</h5>
+        <p class="card-text">Admin ID: @Model.AdminId</p>
+    </div>
+</div>
