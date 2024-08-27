@@ -1,53 +1,96 @@
 ﻿@model List<PolicyHolderDto>
-
 @{
     ViewData["Title"] = "Manage Customers";
 }
 
-<h2>Manage Customers</h2>
+<h2 class="page-title">Manage Customers</h2>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Policy Holder ID</th>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Status</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var policyHolder in Model)
-        {
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="thead-custom">
             <tr>
-                <td>@policyHolder.PolicyHolderId</td>
-                <td>@policyHolder.Name</td>
-                <td>@policyHolder.Address</td>
-                <td>@policyHolder.Phone</td>
-                <td>@policyHolder.Email</td>
-                <td>
-                    @if (policyHolder.Status == 1)
-                    {
-                        <span>Active</span>
-                    }
-                    else
-                    {
-                        <span>Blocked</span>
-                    }
-                </td>
-                <td>
-                    <button class="btn toggle-button @(policyHolder.Status == 1 ? "btn-primary" : "btn-secondary")" onclick="toggleStatus(@policyHolder.PolicyHolderId, @policyHolder.Status)">
-                        <span class="toggle-slider @(policyHolder.Status == 1 ? "active" : "inactive")"></span>
-                    </button>
-                </td>
+                <th>Policy Holder ID</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Action</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var policyHolder in Model)
+            {
+                <tr>
+                    <td>@policyHolder.PolicyHolderId</td>
+                    <td>@policyHolder.Name</td>
+                    <td>@policyHolder.Address</td>
+                    <td>@policyHolder.Phone</td>
+                    <td>@policyHolder.Email</td>
+                    <td>
+                        @if (policyHolder.Status == 1)
+                        {
+                            <span class="status-label status-active">Active</span>
+                        }
+                        else
+                        {
+                            <span class="status-label status-blocked">Blocked</span>
+                        }
+                    </td>
+                    <td>
+                        <button class="btn toggle-button @(policyHolder.Status == 1 ? "btn-primary" : "btn-secondary")" onclick="toggleStatus(@policyHolder.PolicyHolderId, @policyHolder.Status)">
+                            <span class="toggle-slider @(policyHolder.Status == 1 ? "active" : "inactive")"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 <style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .page-title {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: #333;
+        text-align: center;
+    }
+
+    .table-responsive {
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #f9f9f9;
+    }
+
+    .thead-custom {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .status-label {
+        padding: 5px 10px;
+        border-radius: 15px;
+        color: white;
+        font-weight: bold;
+    }
+
+    .status-active {
+        background-color: #28a745;
+    }
+
+    .status-blocked {
+        background-color: #dc3545;
+    }
+
     .toggle-button {
         position: relative;
         width: 60px;
@@ -56,8 +99,8 @@
         border-radius: 34px;
         cursor: pointer;
         outline: none;
+        transition: background-color 0.3s ease, transform 0.3s ease;
         background-color: grey; /* Default background */
-        transition: background-color 0.3s;
     }
 
     .btn-primary {
@@ -77,14 +120,21 @@
         border-radius: 50%;
         background-color: white;
         transition: transform 0.3s ease, background-color 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
     .toggle-button.btn-primary .toggle-slider {
         transform: translateX(26px);
+        background-color: lightgreen;
     }
 
     .toggle-button.btn-secondary .toggle-slider {
         transform: translateX(0);
+        background-color: lightcoral;
+    }
+
+    .toggle-button:hover .toggle-slider {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
 </style>
 

@@ -1,17 +1,94 @@
 ﻿@model AdminApp.Models.Admin
-
 @{
     ViewData["Title"] = "Profile";
+    // Extract the initials from the admin's name
+    var nameParts = Model.Name.Split(' ');
+    var initials = nameParts.Length > 1
+        ? $"{nameParts[0][0]}{nameParts[1][0]}"
+        : $"{nameParts[0][0]}";
 }
 
-<h2>@ViewData["Title"]</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f2f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-<div class="card mt-4">
-    <div class="card-header">
-        Admin Profile
+        .card-profile {
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: #fff;
+            border-bottom: 0;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .card-text {
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        .profile-initials {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: #007bff;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 800px;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center mb-4">@ViewData["Title"]</h2>
+
+        <div class="card card-profile mx-auto">
+            <div class="card-header text-center">
+                Admin Profile
+            </div>
+            <div class="card-body text-center">
+                <!-- Initials Badge -->
+                <div class="profile-initials">
+                    @initials
+                </div>
+
+                <!-- Admin Details -->
+                <h5 class="card-title">Name: @Model.Name</h5>
+                <p class="card-text">Admin ID: @Model.AdminId</p>
+            </div>
+        </div>
     </div>
-    <div class="card-body">
-        <h5 class="card-title">Name: @Model.Name</h5>
-        <p class="card-text">Admin ID: @Model.AdminId</p>
-    </div>
-</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

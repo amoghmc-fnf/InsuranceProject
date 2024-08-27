@@ -1,54 +1,81 @@
 ﻿@model List<ClaimDto>
+
 @{
     ViewData["Title"] = "Manage Claims";
 }
 
-<h2>Manage Claims</h2>
+<h2 class="page-title">Manage Claims</h2>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Claim ID</th>
-            <th>Claim Status</th>
-            <th>Dispense Amount</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var claim in Model)
-        {
+<div class="table-responsive" >
+    <table class="table table-striped table-hover">
+        <thead class="thead-custom">
             <tr>
-                <td>@claim.ClaimId</td>
-                <td>@claim.ClaimStatus</td>
-                <td>@claim.DispenseAmount</td>
-                <td>
-                    <button class="btn btn-primary" onclick="openReviewModal(@claim.ClaimId)">Review</button>
-                    <form asp-action="UpdateClaimStatus" method="post" style="display:inline">
-                        <input type="hidden" name="claimId" value="@claim.ClaimId" />
-                        <input type="hidden" name="status" value="Rejected" />
-                        <input type="hidden" name="dispenseAmount" value="0" />
-                        <button type="submit" class="btn btn-danger">Reject</button>
-                    </form>
-                </td>
+                <th>Claim ID</th>
+                <th>Claim Date</th>
+                <th>Claim Amount</th>
+                <th>Document Type</th>
+                <th>Proof Document</th>
+                <th>Claim Status</th>
+                <th>Dispense Amount</th>
+                <th>Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var claim in Model)
+            {
+                <tr>
+                    <td>@claim.ClaimId</td>
+                    <td>@claim.ClaimDate</td>
+                    <td>@claim.ClaimAmount</td>
+                    <td>@claim.DocumentType</td>
+                    <td>@claim.DocumentPath</td>
+                    <td>
+                        @if (claim.ClaimStatus == "Approved")
+                        {
+                            <span class="status-label status-active">Approved</span>
+                        }
+                        else if (claim.ClaimStatus == "Rejected")
+                        {
+                            <span class="status-label status-blocked">Rejected</span>
+                        }
+                        else
+                        {
+                            <span class="status-label status-pending">Pending</span>
+                        }
+                    </td>
+                    <td>@claim.DispenseAmount</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="openReviewModal(@claim.ClaimId)">
+                            Review
+                        </button>
+                        <form asp-action="UpdateClaimStatus" method="post" style="display:inline">
+                            <input type="hidden" name="claimId" value="@claim.ClaimId" />
+                            <input type="hidden" name="status" value="Rejected" />
+                            <input type="hidden" name="dispenseAmount" value="0" />
+                            <button type="submit" class="btn btn-secondary btn-sm">Reject</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title" id="reviewModalLabel">Review Claim</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+
             <div class="modal-body">
                 <form asp-action="UpdateClaimStatus" method="post">
                     <input type="hidden" id="claimId" name="claimId" />
                     <div class="form-group">
-                        <label for="dispenseAmount">Dispense Amount</label>
+                        <label for="dispenseAmount">Enter the Dispense Amount</label>
                         <input type="number" class="form-control" id="dispenseAmount" name="dispenseAmount" />
                     </div>
                     <input type="hidden" name="status" value="Approved" />
@@ -59,9 +86,88 @@
     </div>
 </div>
 
-<script>
-    function openReviewModal(claimId) {
-        document.getElementById("claimId").value = claimId;
-        $('#reviewModal').modal('show');
+@section Scripts {
+    <script>
+        function openReviewModal(claimId) {
+            document.getElementById("claimId").value = claimId;
+            $('#reviewModal').modal('show');
+        }
+    </script>
+}
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-</script>
+
+    .page-title {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: #333;
+        text-align: center;
+    }
+
+    .table-responsive {
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #f9f9f9;
+    }
+
+    .thead-custom {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .status-label {
+        padding: 5px 10px;
+        border-radius: 15px;
+        color: white;
+        font-weight: bold;
+    }
+
+    .status-active {
+        background-color: #28a745;
+    }
+
+    .status-blocked {
+        background-color: #dc3545;
+    }
+
+    .status-pending {
+        background-color: #ffc107;
+    }
+
+    .btn-primary {
+        background-color: blue;
+    }
+
+    .btn-secondary {
+        background-color: grey;
+    }
+
+    .btn-sm {
+        padding: 5px 10px;
+        font-size: 0.875rem;
+        border-radius: 5px;
+    }
+
+    .modal-content {
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease;
+    }
+
+    .modal.fade .modal-dialog {
+        transition: transform 0.3s ease-out;
+        transform: translateY(-100px);
+    }
+
+    .modal.show .modal-dialog {
+        transform: translateY(0);
+    }
+</style>

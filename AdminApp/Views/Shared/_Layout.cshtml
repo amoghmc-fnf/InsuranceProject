@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,14 +9,119 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebApplication1.styles.css" asp-append-version="true" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> <!-- Added Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        /* Navbar brand logo with rotation */
+        .navbar-brand img {
+            transition: transform 0.5s ease;
+        }
+
+        /* Navbar link hover with bounce effect */
+        .nav-link {
+            color: black !important;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+            .nav-link:hover {
+                color: #007bff !important;
+                transform: translateY(-5px) scale(1.05);
+            }
+
+        .nav-item.active .nav-link {
+            border-bottom: 2px solid #007bff;
+        }
+
+        /* Dropdown menu with sliding effect */
+        .dropdown-menu {
+            background-color: white;
+            border: none;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+            transform: translateY(10px);
+            display: block;
+            pointer-events: none;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .dropdown-item {
+            color: black !important;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+            .dropdown-item:hover {
+                background-color: #f8f9fa;
+                color: #007bff !important;
+            }
+
+        /* Profile circle advanced hover effects */
+        .nav-link.dropdown-toggle .rounded-circle {
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .nav-link.dropdown-toggle:hover .rounded-circle {
+            background-color: #007bff;
+            transform: scale(1.2) rotate(360deg);
+            box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+        }
+
+        /* Footer styling with underline animation */
+        footer {
+            background-color: white;
+            color: black;
+            padding: 20px 0;
+        }
+
+            footer a {
+                color: #007bff;
+                transition: color 0.3s ease;
+                text-decoration: none;
+                position: relative;
+            }
+
+                footer a:after {
+                    content: "";
+                    position: absolute;
+                    width: 0;
+                    height: 2px;
+                    display: block;
+                    background: #007bff;
+                    transition: width 0.3s;
+                    bottom: 0;
+                    left: 0;
+                }
+
+                footer a:hover {
+                    color: black;
+                }
+
+                    footer a:hover:after {
+                        width: 100%;
+                    }
+
+        /* Button hover effect with glow */
+        .btn-hover-glow {
+            background-color: #007bff;
+            color: white;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+            .btn-hover-glow:hover {
+                box-shadow: 0 0 15px rgba(0, 123, 255, 0.75);
+                transform: scale(1.1);
+            }
+    </style>
 </head>
 
 <body>
     @if (User.Identity.IsAuthenticated)
     {
         <header>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <nav class="navbar navbar-expand-sm navbar-light border-bottom box-shadow mb-3">
                 <div class="container-fluid">
                     <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                         <img src="~/images/CompanyLogo.png" alt="Company Logo" style="height: 40px;" />
@@ -29,14 +135,21 @@
                         <ul class="navbar-nav flex-grow-1 justify-content-end">
                             <!-- Dashboard -->
                             <li class="nav-item mx-2">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Dashboard">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Dashboard">
                                     <i class="fa fa-dashboard" aria-hidden="true"></i> Dashboard
+                                </a>
+                            </li>
+
+                            <!-- Plans -->
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Plans" asp-action="ManagePlans">
+                                    <i class="fa fa-file-text-o" aria-hidden="true"></i> Manage Plans
                                 </a>
                             </li>
 
                             <!-- Customers -->
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-black" href="#" id="manageCustomersDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="#" id="manageCustomersDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa fa-users" aria-hidden="true"></i> Customers
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="manageCustomersDropdown">
@@ -47,35 +160,21 @@
                             </li>
                             <!-- Policies -->
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="PolicyRequest" asp-action="Index">
+                                <a class="nav-link" asp-controller="PolicyRequest" asp-action="Index">
                                     <i class="fas fa-file-alt"></i> Policy Request
                                 </a>
                             </li>
 
-
-                            <!-- Plans -->
-                            <li class="nav-item dropdown mx-2">
-                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdownPlans" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-file-text-o" aria-hidden="true"></i> Plans
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownPlans">
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Plans" asp-action="ManagePlans">Manage Plans</a></li>
-                                </ul>
-                            </li>
-
                             <!-- Claims -->
-                            <li class="nav-item dropdown mx-2">
-                                <a class="nav-link dropdown-toggle text-dark" href="#" id="claimDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Claims
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Claim" asp-action="ManageClaims">
+                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Manage Claims
                                 </a>
-                                <ul class="dropdown-menu" aria-labelledby="claimDropdown">
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Claim" asp-action="ManageClaims">Manage Claims</a></li>
-                                </ul>
                             </li>
 
                             <!-- Dropdown for Hospitals -->
                             <li class="nav-item dropdown mx-2">
-                                <a class="nav-link dropdown-toggle text-dark" href="#" id="hospitalDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="#" id="hospitalDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa fa-hospital-o" aria-hidden="true"></i> Hospitals
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="hospitalDropdown">
@@ -85,7 +184,7 @@
 
                             <!-- Profile Section -->
                             <li class="nav-item dropdown mx-2">
-                                <a class="nav-link dropdown-toggle text-dark d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <div class="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center" style="width: 35px; height: 35px;">
                                         <h5>@User.Identity.Name[0]</h5>
                                     </div>
@@ -109,20 +208,12 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - WebApplication1 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2024 - Pro Medico Insurance - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    @RenderSection("Scripts", required: false)
 </body>
-</html>
 
-<script>
-    function ConfirmLogout() {
-        if (confirm("Are you sure you want to logout?")) {
-            window.location.href = '@Url.Action("Logout", "Account")';
-        }
-    }
-</script>
+</html>
