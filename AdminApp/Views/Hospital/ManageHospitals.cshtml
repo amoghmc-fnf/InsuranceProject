@@ -94,7 +94,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="editHospitalPhone" class="form-label">Phone</label>
-                        <input type="text" class="form-control" id="editHospitalPhone" name="Phone" required />
+                        <input type="number" class="form-control" id="editHospitalPhone" name="Phone" required />
                     </div>
                     <button type="submit" class="btn btn-primary">Update Hospital</button>
                 </form>
@@ -112,14 +112,14 @@
     function editHospital(hospitalId) {
         // Ensure the modal can find the hospital data
         var hospitals = @Html.Raw(Json.Serialize(Model));
-        var selectedHospital = hospitals.find(h => h.HospitalId === hospitalId);
+        var selectedHospital = hospitals.find(h => h.hospitalId === hospitalId);
 
         // Populate modal fields with hospital data
         if (selectedHospital) {
-            document.getElementById('editHospitalId').value = selectedHospital.HospitalId;
-            document.getElementById('editHospitalName').value = selectedHospital.Name;
-            document.getElementById('editHospitalAddress').value = selectedHospital.Address;
-            document.getElementById('editHospitalPhone').value = selectedHospital.Phone;
+            document.getElementById('editHospitalId').value = selectedHospital.hospitalId;
+            document.getElementById('editHospitalName').value = selectedHospital.name;
+            document.getElementById('editHospitalAddress').value = selectedHospital.address;
+            document.getElementById('editHospitalPhone').value = selectedHospital.phone;
 
             // Show the modal
             var editModal = new bootstrap.Modal(document.getElementById('editHospitalModal'));

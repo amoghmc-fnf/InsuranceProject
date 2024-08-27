@@ -25,16 +25,15 @@ namespace AdminApp.Services
             return hospitals;
         }
 
-        public async Task<List<Hospital>>AddHospitalAsync(Hospital hospital)
+        public async Task AddHospitalAsync(Hospital hospital)
         {
             var response = await _httpClient.PostAsJsonAsync("Hospital", hospital);
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<List<Hospital>>();
         }
 
         public async Task UpdateHospitalAsync(Hospital hospital)
         {
-            var response = await _httpClient.PutAsJsonAsync($"Hospital/{hospital.HospitalId}", hospital);
+            var response = await _httpClient.PutAsJsonAsync("Hospital", hospital);
             response.EnsureSuccessStatusCode();
         }
 
@@ -48,7 +47,7 @@ namespace AdminApp.Services
     public interface IHospitalService
     {
         Task<List<Hospital>> GetAllHospitalsAsync();
-        Task<List<Hospital>> AddHospitalAsync(Hospital hospital);
+        Task AddHospitalAsync(Hospital hospital);
         Task UpdateHospitalAsync(Hospital hospital);
         Task DeleteHospitalAsync(int hospitalId);
     }
