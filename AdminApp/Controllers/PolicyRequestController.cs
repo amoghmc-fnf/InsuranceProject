@@ -12,11 +12,11 @@ namespace AdminApp.Controllers
         private readonly IPolicyRequestService _policyRequestService;
         private readonly IPolicyHolderService _policyHolderService;
         private readonly IPaymentService _paymentService;
-        private readonly IInsuredDtoService _insuredDtoService;
+        private readonly IInsuredService _insuredDtoService;
         private readonly ILogger<PolicyRequestController> _logger;
 
         public PolicyRequestController(
-            IInsuredDtoService insuredService, 
+            IInsuredService insuredService, 
             IPolicyRequestService policyRequestService, 
             IPolicyHolderService policyHolderService,
             IPaymentService paymentService,

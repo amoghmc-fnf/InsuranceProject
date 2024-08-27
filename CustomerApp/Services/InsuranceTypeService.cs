@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 
 namespace CustomerApp.Services
 {
-    public interface IInsuranceTypeDtoService
+    public interface IInsuranceTypeService
     {
         Task Add(InsuranceTypeDto employee);
         Task DeleteById(int id);
@@ -12,10 +12,10 @@ namespace CustomerApp.Services
         Task Update(InsuranceTypeDto employee);
     }
 
-    public class InsuranceTypeDtoService : IInsuranceTypeDtoService
+    public class InsuranceTypeService : IInsuranceTypeService
     {
         private readonly HttpClient httpClient;
-        public InsuranceTypeDtoService(HttpClient httpClient)
+        public InsuranceTypeService(HttpClient httpClient)
         {
             this.httpClient = httpClient;
         }

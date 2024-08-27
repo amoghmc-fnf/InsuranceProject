@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 
 namespace CustomerApp.Services
 {
-    public interface IPolicyHolderDtoService
+    public interface IPolicyHolderService
     {
         Task Add(PolicyHolderDto employee);
         Task DeleteById(int id);
@@ -12,10 +12,10 @@ namespace CustomerApp.Services
         Task Update(PolicyHolderDto employee);
     }
 
-    public class PolicyHolderDtoService : IPolicyHolderDtoService
+    public class PolicyHolderService : IPolicyHolderService
     {
         private readonly HttpClient httpClient;
-        public PolicyHolderDtoService(HttpClient httpClient)
+        public PolicyHolderService(HttpClient httpClient)
         {
             this.httpClient = httpClient;
         }

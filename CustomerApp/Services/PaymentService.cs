@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 
 namespace CustomerApp.Services
 {
-    public interface IPaymentDtoService
+    public interface IPaymentService
     {
         Task Add(PaymentDto employee);
         Task DeleteById(int id);
@@ -12,10 +12,10 @@ namespace CustomerApp.Services
         Task Update(PaymentDto employee);
     }
 
-    public class PaymentDtoService : IPaymentDtoService
+    public class PaymentService : IPaymentService
     {
         private readonly HttpClient httpClient;
-        public PaymentDtoService(HttpClient httpClient)
+        public PaymentService(HttpClient httpClient)
         {
             this.httpClient = httpClient;
         }
