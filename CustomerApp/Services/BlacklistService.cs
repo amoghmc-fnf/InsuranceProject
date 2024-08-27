@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 
 namespace CustomerApp.Services
 {
-    public interface IBlacklistDtoService
+    public interface IBlacklistService
     {
         Task Add(BlacklistDto employee);
         Task DeleteById(int id);
@@ -12,10 +12,10 @@ namespace CustomerApp.Services
         Task Update(BlacklistDto employee);
     }
 
-    public class BlacklistDtoService : IBlacklistDtoService
+    public class BlacklistService : IBlacklistService
     {
         private readonly HttpClient httpClient;
-        public BlacklistDtoService(HttpClient httpClient)
+        public BlacklistService(HttpClient httpClient)
         {
             this.httpClient = httpClient;
         }

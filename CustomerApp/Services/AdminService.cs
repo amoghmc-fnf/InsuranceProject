@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 
 namespace CustomerApp.Services
 {
-    public interface IAdminDtoService
+    public interface IAdminService
     {
         Task Add(AdminDto employee);
         Task Delete(int id);
@@ -12,10 +12,10 @@ namespace CustomerApp.Services
         Task Update(AdminDto employee);
     }
 
-    public class AdminDtoService : IAdminDtoService
+    public class AdminService : IAdminService
     {
         private readonly HttpClient httpClient;
-        public AdminDtoService(HttpClient httpClient)
+        public AdminService(HttpClient httpClient)
         {
             this.httpClient = httpClient;
         }
