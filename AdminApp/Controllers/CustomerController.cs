@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using AdminApp.Services;
-using CustomerApp.Services;
 
 namespace AdminApp.Controllers
 {

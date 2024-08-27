@@ -1,5 +1,4 @@
-﻿using CustomerApp.Services;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -30,12 +29,6 @@ namespace AdminApp.Services
             return await response.Content.ReadFromJsonAsync<PolicyDto>();
         }
 
-        public async Task<List<PaymentDto>> GetPaymentsByInsuredPolicyIdAsync(int insuredPolicyId)
-        {
-            var response = await _httpClient.GetAsync($"Payment?insuredPolicyId={insuredPolicyId}");
-            response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<List<PaymentDto>>();
-        }
 
         public async Task<bool> UpdateApprovalStatusAsync(int insuredPolicyId, string approvalStatus)
         {
@@ -49,6 +42,5 @@ public interface IPolicyRequestService
 {
     Task<List<InsuredPolicyDto>> GetInsuredPoliciesAsync();
     Task<PolicyDto> GetPolicyAsync(int policyId);
-    Task<List<PaymentDto>> GetPaymentsByInsuredPolicyIdAsync(int insuredPolicyId);
     Task<bool> UpdateApprovalStatusAsync(int insuredPolicyId, string approvalStatus);
 }

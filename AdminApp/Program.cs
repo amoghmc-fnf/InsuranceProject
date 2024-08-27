@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AdminApp.Services;
-using CustomerApp.Services;
 
 namespace AdminApp
 {
@@ -17,37 +16,7 @@ namespace AdminApp
             builder.Services.AddControllersWithViews();
 
             // Register services with HTTP client
-            builder.Services.AddHttpClient<IAdminService, AdminService>(client =>
-            {
-                client.BaseAddress = new Uri("http://localhost:5101/api/");
-            });
-
-            builder.Services.AddHttpClient<IHospitalService, HospitalService>(client =>
-            {
-                client.BaseAddress = new Uri("http://localhost:5101/api/");
-            });
-
-            builder.Services.AddHttpClient<IClaimService, ClaimService>(client =>
-            {
-                client.BaseAddress = new Uri("http://localhost:5133/api/");
-            });
-
-            builder.Services.AddHttpClient<IPolicyHolderService, PolicyHolderService>(client =>
-            {
-                client.BaseAddress = new Uri("http://localhost:5049/api/");
-            });
-            builder.Services.AddHttpClient<IInsuranceService, InsuranceService>(client =>
-            {
-                client.BaseAddress = new Uri("http://localhost:5133/api/");
-            });
-            builder.Services.AddHttpClient<IPolicyRequestService, PolicyRequestService>(client =>
-            {
-                client.BaseAddress = new Uri("http://localhost:5133/api/");
-            });
-            builder.Services.AddHttpClient<IInsuredDtoService, InsuredDtoService>(client =>
-            {
-                client.BaseAddress = new Uri("http://localhost:5049/api/");
-            });
+            AddHttpClients(builder);
 
             // Configure CORS
             builder.Services.AddCors(options =>
@@ -94,6 +63,45 @@ namespace AdminApp
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
+        }
+
+        private static void AddHttpClients(WebApplicationBuilder builder)
+        {
+            builder.Services.AddHttpClient<IAdminService, AdminService>(client =>
+            {
+                client.BaseAddress = new Uri("http://localhost:5101/api/");
+            });
+
+            builder.Services.AddHttpClient<IHospitalService, HospitalService>(client =>
+            {
+                client.BaseAddress = new Uri("http://localhost:5101/api/");
+            });
+
+            builder.Services.AddHttpClient<IClaimService, ClaimService>(client =>
+            {
+                client.BaseAddress = new Uri("http://localhost:5133/api/");
+            });
+
+            builder.Services.AddHttpClient<IPolicyHolderService, PolicyHolderService>(client =>
+            {
+                client.BaseAddress = new Uri("http://localhost:5049/api/");
+            });
+            builder.Services.AddHttpClient<IInsuranceService, InsuranceService>(client =>
+            {
+                client.BaseAddress = new Uri("http://localhost:5133/api/");
+            });
+            builder.Services.AddHttpClient<IPolicyRequestService, PolicyRequestService>(client =>
+            {
+                client.BaseAddress = new Uri("http://localhost:5133/api/");
+            });
+            builder.Services.AddHttpClient<IInsuredDtoService, InsuredDtoService>(client =>
+            {
+                client.BaseAddress = new Uri("http://localhost:5049/api/");
+            });
+            builder.Services.AddHttpClient<IPaymentService, PaymentService>(client =>
+            {
+                client.BaseAddress = new Uri("http://localhost:5101/api/");
+            });
         }
     }
 }

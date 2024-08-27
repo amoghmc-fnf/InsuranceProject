@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Json;
 
-namespace CustomerApp.Services
+namespace AdminApp.Services
 {
     public interface IInsuredDtoService
     {

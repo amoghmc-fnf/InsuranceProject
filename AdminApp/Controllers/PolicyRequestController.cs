@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AdminApp.Services;
-using CustomerApp.Services;
 
 namespace AdminApp.Controllers
 {
@@ -12,14 +11,21 @@ namespace AdminApp.Controllers
     {
         private readonly IPolicyRequestService _policyRequestService;
         private readonly IPolicyHolderService _policyHolderService;
+        private readonly IPaymentService _paymentService;
         private readonly IInsuredDtoService _insuredDtoService;
         private readonly ILogger<PolicyRequestController> _logger;
 
-        public PolicyRequestController(IInsuredDtoService insuredService, IPolicyRequestService policyRequestService, IPolicyHolderService policyHolderService, ILogger<PolicyRequestController> logger)
+        public PolicyRequestController(
+            IInsuredDtoService insuredService, 
+            IPolicyRequestService policyRequestService, 
+            IPolicyHolderService policyHolderService,
+            IPaymentService paymentService,
+            ILogger<PolicyRequestController> logger)
         {
             _policyRequestService = policyRequestService;
             _insuredDtoService = insuredService;
             _policyHolderService = policyHolderService;
+            _paymentService = paymentService;
             _logger = logger;
         }
 
@@ -70,7 +76,7 @@ namespace AdminApp.Controllers
             var policyHolder = await _policyHolderService.GetById(insured.PolicyHolderId);
 
             var policy = await _policyRequestService.GetPolicyAsync(insuredPolicy.PolicyId);
-            var payments = await _policyRequestService.GetPaymentsByInsuredPolicyIdAsync(insuredPolicy.InsuredPolicyId);
+            var payments = await _paymentService.GetPaymentsByInsuredPolicyIdAsync(insuredPolicy.InsuredPolicyId);
 
             var viewModel = new ReviewPolicyRequestViewModel
             {
@@ -81,9 +87,9 @@ namespace AdminApp.Controllers
                 PolicyId = insuredPolicy.PolicyId,
                 AdminId = insuredPolicy.AdminId,
                 PremiumAmount = policy?.PremiumAmount ?? 0,
-                PaymentId = payments.FirstOrDefault()?.PaymentId ?? 0,
-                PaymentAmount = payments.FirstOrDefault()?.PaymentAmount ?? 0,
-                PaymentDate = payments.FirstOrDefault()?.PaymentDate ?? null
+                PaymentId = payments?.PaymentId ?? 0,
+                PaymentAmount = payments?.PaymentAmount ?? 0,
+                PaymentDate = payments?.PaymentDate ?? null
             };
 
             return PartialView("_ReviewPolicyRequest", viewModel);
