@@ -16,6 +16,8 @@
                     <h5 class="card-title"><strong>@plan.InsuranceType</strong></h5>
                     <p class="card-text"><strong>Description:</strong><br>@plan.Description</p>
                     <p class="card-text"><strong>Base Rate:</strong> @plan.BaseRate</p>
+                    <p class="card-text"><strong>Min Age:</strong> @plan.MinAge</p>
+                    <p class="card-text"><strong>Max Age:</strong> @plan.MaxAge</p>
                     <p class="card-text"><strong>Coverage Size:</strong> @plan.CoverageSize</p>
                     <button class="btn btn-warning" onclick="showUpdateModal(@plan.InsuranceId)">Update Details</button>
                     <button class="btn btn-danger" onclick="deletePlan(@plan.InsuranceId)">Delete</button>
@@ -48,6 +50,14 @@
                         <input type="number" class="form-control" id="baseRate" name="BaseRate">
                     </div>
                     <div class="mb-3">
+                        <label for="minAge" class="form-label">Min Age</label>
+                        <input type="number" class="form-control" id="minAge" name="minAge">
+                    </div>
+                    <div class="mb-3">
+                        <label for="maxAge" class="form-label">Max Age</label>
+                        <input type="number" class="form-control" id="maxAge" name="maxAge">
+                    </div>
+                    <div class="mb-3">
                         <label for="coverageSize" class="form-label">Coverage Size</label>
                         <input type="number" class="form-control" id="coverageSize" name="CoverageSize">
                     </div>
@@ -68,6 +78,8 @@
             document.getElementById('insuranceType').value = selectedPlan.InsuranceType;
             document.getElementById('description').value = selectedPlan.Description;
             document.getElementById('baseRate').value = selectedPlan.BaseRate;
+            document.getElementById('minAge').value = selectedPlan.MinAge;
+            document.getElementById('maxAge').value = selectedPlan.MaxAge;
             document.getElementById('coverageSize').value = selectedPlan.CoverageSize;
             document.getElementById('insuranceId').value = selectedPlan.InsuranceId;
         }
