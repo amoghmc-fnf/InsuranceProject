@@ -64,7 +64,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="hospitalPhone" class="form-label">Phone</label>
-                        <input type="text" class="form-control" id="hospitalPhone" name="Phone" required />
+                        <input type="number" class="form-control" id="hospitalPhone" name="Phone" required />
                     </div>
                     <button type="submit" class="btn btn-primary">Add Hospital</button>
                 </form>
@@ -119,7 +119,7 @@
             document.getElementById('editHospitalId').value = selectedHospital.hospitalId;
             document.getElementById('editHospitalName').value = selectedHospital.name;
             document.getElementById('editHospitalAddress').value = selectedHospital.address;
-            document.getElementById('editHospitalPhone').value = selectedHospital.phone;
+            document.getElementById('editHospitalPhone').value = Number(selectedHospital.phone);
 
             // Show the modal
             var editModal = new bootstrap.Modal(document.getElementById('editHospitalModal'));
