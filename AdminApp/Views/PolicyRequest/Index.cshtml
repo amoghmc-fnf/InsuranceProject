@@ -4,35 +4,37 @@
     ViewData["Title"] = "Policy Requests";
 }
 
-<h2>Policy Requests</h2>
+<h2 class="page-title">Policy Requests</h2>
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Insured Policy ID</th>
-            <th>PolicyHolder Name</th>
-            <th>Contact No</th>
-            <th>Approval Status</th>
-            <th>Approval Date</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead class="thead-custom">
             <tr>
-                <td>@item.InsuredPolicyId</td>
-                <td>@item.Name</td>
-                <td>@item.ContactNo</td>
-                <td>@item.ApprovalStatus</td>
-                <td>@item.ApprovalDate?.ToString("yyyy-MM-dd")</td>
-                <td>
-                    <button class="btn btn-info" onclick="reviewPolicy(@item.InsuredPolicyId)">Review</button>
-                </td>
+                <th>Insured Policy ID</th>
+                <th>PolicyHolder Name</th>
+                <th>Contact No</th>
+                <th>Approval Status</th>
+                <th>Approval Date</th>
+                <th>Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.InsuredPolicyId</td>
+                    <td>@item.Name</td>
+                    <td>@item.ContactNo</td>
+                    <td>@item.ApprovalStatus</td>
+                <td>@item.ApprovalDate?.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        <button class="btn btn-info review-button" onclick="reviewPolicy(@item.InsuredPolicyId)">Review</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel" aria-hidden="true">
