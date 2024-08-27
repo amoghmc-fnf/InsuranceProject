@@ -6,6 +6,7 @@ namespace CustomerApp.Services
     public interface IPaymentService
     {
         Task Add(PaymentDto employee);
+        Task<PaymentDto> AddAndGet(PaymentDto employee);
         Task DeleteById(int id);
         Task<List<PaymentDto>> GetAll();
         Task<PaymentDto> GetById(int id);
@@ -33,6 +34,12 @@ namespace CustomerApp.Services
         public async Task Add(PaymentDto employee)
         {
             await httpClient.PostAsJsonAsync<PaymentDto>("Payment", employee);
+        }
+
+        public async Task<PaymentDto> AddAndGet(PaymentDto employee)
+        {
+            var response = await httpClient.PostAsJsonAsync<PaymentDto>("Payment", employee);
+            return await response.Content.ReadFromJsonAsync<PaymentDto>();
         }
 
         public async Task DeleteById(int id)

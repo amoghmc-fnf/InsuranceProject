@@ -5,7 +5,7 @@ namespace AdminDbService.Services
 {
     public interface IPaymentService
     {
-        Task Add(PaymentDto paymentDto);
+        Task<PaymentDto> Add(PaymentDto paymentDto);
         Task Delete(int id);
         Task<List<PaymentDto>> GetAll();
         Task<PaymentDto> GetById(int id);
@@ -45,13 +45,14 @@ namespace AdminDbService.Services
             throw new NullReferenceException();
         }
 
-        public async Task Add(PaymentDto paymentDto)
+        public async Task<PaymentDto> Add(PaymentDto paymentDto)
         {
             Payment paymentTable = new();
             ConvertToTable(paymentDto, paymentTable);
             context.Payments.Add(paymentTable);
             await context.SaveChangesAsync();
-            return;
+            paymentDto.PaymentId = paymentTable.PaymentId;
+            return paymentDto;
         }
 
         public async Task Update(PaymentDto paymentDto)

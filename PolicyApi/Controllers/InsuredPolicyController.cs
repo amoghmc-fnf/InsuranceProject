@@ -50,8 +50,8 @@ namespace PolicyApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(InsuredPolicyDto insuredPolicyDto)
         {
-            await service.Add(insuredPolicyDto);
-            return Ok();
+            InsuredPolicyDto addedInsuredPolicyDto = await service.Add(insuredPolicyDto);
+            return Ok(addedInsuredPolicyDto);
         }
 
         [HttpPut]

@@ -5,7 +5,7 @@ namespace UserDbService.Services
 {
     public interface IInsuredService
     {
-        Task Add(InsuredDto insuredDto);
+        Task<InsuredDto> Add(InsuredDto insuredDto);
         Task Delete(int id);
         Task<List<InsuredDto>> GetAll();
         Task<InsuredDto> GetById(int id);
@@ -45,13 +45,14 @@ namespace UserDbService.Services
             throw new NullReferenceException();
         }
 
-        public async Task Add(InsuredDto insuredDto)
+        public async Task<InsuredDto> Add(InsuredDto insuredDto)
         {
             Insured insuredTable = new();
             ConvertToTable(insuredDto, insuredTable);
             context.Insureds.Add(insuredTable);
             await context.SaveChangesAsync();
-            return;
+            insuredDto.InsuredId = insuredTable.InsuredId;
+            return insuredDto;
         }
 
         public async Task Update(InsuredDto insuredDto)

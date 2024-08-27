@@ -5,7 +5,7 @@ namespace PolicyDbService.Services
 {
     public interface IPolicyService
     {
-        Task Add(PolicyDto policyDto);
+        Task<PolicyDto> Add(PolicyDto policyDto);
         Task Delete(int id);
         Task<List<PolicyDto>> GetAll();
         Task<PolicyDto> GetById(int id);
@@ -45,13 +45,14 @@ namespace PolicyDbService.Services
             throw new NullReferenceException();
         }
 
-        public async Task Add(PolicyDto policyDto)
+        public async Task<PolicyDto> Add(PolicyDto policyDto)
         {
             Policy policyTable = new();
             ConvertToTable(policyDto, policyTable);
             context.Policies.Add(policyTable);
             await context.SaveChangesAsync();
-            return;
+            policyDto.PolicyId = policyTable.PolicyId;
+            return policyDto;
         }
 
         public async Task Update(PolicyDto policyDto)

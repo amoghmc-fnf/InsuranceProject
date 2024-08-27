@@ -49,8 +49,8 @@ namespace InsuranceApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(PaymentDto paymentDto)
         {
-            await service.Add(paymentDto);
-            return Ok();
+            PaymentDto addedPaymentDto = await service.Add(paymentDto);
+            return Ok(addedPaymentDto);
         }
 
         [HttpPut]

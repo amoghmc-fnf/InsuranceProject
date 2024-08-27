@@ -6,6 +6,7 @@ namespace CustomerApp.Services
     public interface IInsuredPolicyService
     {
         Task Add(InsuredPolicyDto employee);
+        Task<InsuredPolicyDto> AddAndGet(InsuredPolicyDto employee);
         Task DeleteById(int id);
         Task<List<InsuredPolicyDto>> GetAll();
         Task<InsuredPolicyDto> GetById(int id);
@@ -33,6 +34,12 @@ namespace CustomerApp.Services
         public async Task Add(InsuredPolicyDto employee)
         {
             await httpClient.PostAsJsonAsync<InsuredPolicyDto>("InsuredPolicy", employee);
+        }
+
+        public async Task<InsuredPolicyDto> AddAndGet(InsuredPolicyDto employee)
+        {
+            var response = await httpClient.PostAsJsonAsync<InsuredPolicyDto>("InsuredPolicy", employee);
+            return await response.Content.ReadFromJsonAsync<InsuredPolicyDto>();
         }
 
         public async Task DeleteById(int id)

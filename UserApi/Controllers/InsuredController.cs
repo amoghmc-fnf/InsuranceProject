@@ -49,8 +49,8 @@ namespace UserApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(InsuredDto insuredDto)
         {
-            await service.Add(insuredDto);
-            return Ok();
+            InsuredDto addedInsuredDto = await service.Add(insuredDto);
+            return Ok(addedInsuredDto);
         }
 
         [HttpPut]
