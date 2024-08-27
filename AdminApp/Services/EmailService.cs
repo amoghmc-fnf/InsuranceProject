@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Json;
 
-namespace CustomerApp.Services
+namespace AdminApp.Services
 {
     public interface IEmailRecordService
     {
@@ -22,27 +22,27 @@ namespace CustomerApp.Services
 
         public async Task<List<EmailRecordDto>> GetAll()
         {
-            return await httpClient.GetFromJsonAsync<List<EmailRecordDto>>("Policy");
+            return await httpClient.GetFromJsonAsync<List<EmailRecordDto>>("EmailRecord");
         }
 
         public async Task<EmailRecordDto> GetById(int id)
         {
-            return await httpClient.GetFromJsonAsync<EmailRecordDto>($"Policy/{id}");
+            return await httpClient.GetFromJsonAsync<EmailRecordDto>($"EmailRecord/{id}");
         }
 
         public async Task Add(EmailRecordDto employee)
         {
-            await httpClient.PostAsJsonAsync<EmailRecordDto>("Policy", employee);
+            await httpClient.PostAsJsonAsync<EmailRecordDto>("EmailRecord", employee);
         }
 
         public async Task Delete(int id)
         {
-            await httpClient.DeleteAsync($"Policy/{id}");
+            await httpClient.DeleteAsync($"EmailRecord/{id}");
         }
 
         public async Task Update(EmailRecordDto employee)
         {
-            await httpClient.PutAsJsonAsync<EmailRecordDto>("Policy", employee);
+            await httpClient.PutAsJsonAsync<EmailRecordDto>("EmailRecord", employee);
         }
     }
 }

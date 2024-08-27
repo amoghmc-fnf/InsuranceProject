@@ -5,11 +5,11 @@ namespace AdminDbService.Services
 {
     public interface IEmailRecordService
     {
-        Task Add(EmailRecordDto adminDto);
+        Task Add(EmailRecordDto emailRecordDto);
         Task Delete(int id);
         Task<List<EmailRecordDto>> GetAll();
         Task<EmailRecordDto> GetById(int id);
-        Task Update(EmailRecordDto adminDto);
+        Task Update(EmailRecordDto emailRecordDto);
     }
 
     public class EmailRecordService : IEmailRecordService
@@ -22,18 +22,18 @@ namespace AdminDbService.Services
 
         public async Task<List<EmailRecordDto>> GetAll()
         {
-            List<EmailRecordDto> adminDtos = new List<EmailRecordDto>();
-            await foreach (var adminTable in context.EmailRecords)
+            List<EmailRecordDto> emailRecordDtos = new List<EmailRecordDto>();
+            await foreach (var emailRecordTable in context.EmailRecords)
             {
-                EmailRecordDto adminDto = ConvertToDto(adminTable);
-                adminDtos.Add(adminDto);
+                EmailRecordDto emailRecordDto = ConvertToDto(emailRecordTable);
+                emailRecordDtos.Add(emailRecordDto);
             }
-            return adminDtos;
+            return emailRecordDtos;
         }
 
         public async Task Delete(int id)
         {
-            var found = await context.EmailRecords.FirstOrDefaultAsync((adminTable) => adminTable.EmailRecordId == id);
+            var found = await context.EmailRecords.FirstOrDefaultAsync((emailRecordTable) => emailRecordTable.EmailRecordId == id);
             if (found != null)
             {
                 context.EmailRecords.Remove(found);
@@ -43,22 +43,22 @@ namespace AdminDbService.Services
             throw new NullReferenceException();
         }
 
-        public async Task Add(EmailRecordDto adminDto)
+        public async Task Add(EmailRecordDto emailRecordDto)
         {
-            EmailRecord adminTable = new EmailRecord();
-            ConvertToTable(adminDto, adminTable);
-            context.EmailRecords.Add(adminTable);
+            EmailRecord emailRecordTable = new EmailRecord();
+            ConvertToTable(emailRecordDto, emailRecordTable);
+            context.EmailRecords.Add(emailRecordTable);
             await context.SaveChangesAsync();
             return;
         }
 
-        public async Task Update(EmailRecordDto adminDto)
+        public async Task Update(EmailRecordDto emailRecordDto)
         {
-            var found = await context.EmailRecords.FirstOrDefaultAsync((adminTable) =>
-                adminTable.EmailRecordId == adminDto.EmailRecordId);
+            var found = await context.EmailRecords.FirstOrDefaultAsync((emailRecordTable) =>
+                emailRecordTable.EmailRecordId == emailRecordDto.EmailRecordId);
             if (found != null)
             {
-                ConvertToTable(adminDto, found);
+                ConvertToTable(emailRecordDto, found);
                 await context.SaveChangesAsync();
                 return;
             }
@@ -67,33 +67,35 @@ namespace AdminDbService.Services
 
         public async Task<EmailRecordDto> GetById(int id)
         {
-            var found = await context.EmailRecords.FirstOrDefaultAsync((adminTable) => adminTable.EmailRecordId == id);
+            var found = await context.EmailRecords.FirstOrDefaultAsync((emailRecordTable) => emailRecordTable.EmailRecordId == id);
             if (found != null)
             {
-                var adminDto = ConvertToDto(found);
-                return adminDto;
+                var emailRecordDto = ConvertToDto(found);
+                return emailRecordDto;
             }
             throw new NullReferenceException();
         }
 
-        private EmailRecordDto ConvertToDto(EmailRecord adminTable)
+        private EmailRecordDto ConvertToDto(EmailRecord emailRecordTable)
         {
-            EmailRecordDto adminDto = new()
+            EmailRecordDto emailRecordDto = new()
             {
-                EmailRecordId = adminTable.EmailRecordId,
-                FromEmail = adminTable.FromEmail,
-                ToEmail = adminTable.ToEmail,
-                Subject = adminTable.Subject,
+                EmailRecordId = emailRecordTable.EmailRecordId,
+                FromEmail = emailRecordTable.FromEmail,
+                ToEmail = emailRecordTable.ToEmail,
+                Subject = emailRecordTable.Subject,
+                Content = emailRecordTable.Content,
             };
-            return adminDto;
+            return emailRecordDto;
         }
 
-        private void ConvertToTable(EmailRecordDto adminDto, EmailRecord adminTable)
+        private void ConvertToTable(EmailRecordDto emailRecordDto, EmailRecord emailRecordTable)
         {
-            adminTable.EmailRecordId = adminDto.EmailRecordId;
-            adminTable.FromEmail = adminDto.FromEmail;
-            adminTable.ToEmail = adminDto.ToEmail;
-            adminTable.Subject = adminDto.Subject;
+            emailRecordTable.EmailRecordId = emailRecordDto.EmailRecordId;
+            emailRecordTable.FromEmail = emailRecordDto.FromEmail;
+            emailRecordTable.ToEmail = emailRecordDto.ToEmail;
+            emailRecordTable.Subject = emailRecordDto.Subject;
+            emailRecordTable.Content = emailRecordDto.Content;
             return;
         }
     }

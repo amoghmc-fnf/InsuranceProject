@@ -102,6 +102,10 @@ namespace AdminApp
             {
                 client.BaseAddress = new Uri("http://localhost:5101/api/");
             });
+            builder.Services.AddHttpClient<IEmailRecordService, EmailRecordService> (client =>
+            {
+                client.BaseAddress = new Uri("http://localhost:5101/api/");
+            });
         }
     }
 }

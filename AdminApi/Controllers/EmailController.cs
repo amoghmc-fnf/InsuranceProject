@@ -7,11 +7,11 @@ namespace InsuranceApi.Controllers
 {
     public interface IEmailRecordController
     {
-        Task<IActionResult> Add(EmailRecordDto admin);
+        Task<IActionResult> Add(EmailRecordDto emailRecord);
         Task<IActionResult> Delete(int id);
         Task<IActionResult> GetAll();
         Task<IActionResult> GetById(int id);
-        Task<IActionResult> Update(EmailRecordDto admin);
+        Task<IActionResult> Update(EmailRecordDto emailRecord);
     }
 
     [Route("api/[controller]")]
@@ -27,8 +27,8 @@ namespace InsuranceApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            List<EmailRecordDto> admins = await service.GetAll();
-            return Ok(admins);
+            List<EmailRecordDto> emailRecords = await service.GetAll();
+            return Ok(emailRecords);
         }
 
         [HttpDelete]
@@ -47,18 +47,18 @@ namespace InsuranceApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(EmailRecordDto admin)
+        public async Task<IActionResult> Add(EmailRecordDto emailRecord)
         {
-                await service.Add(admin);
+                await service.Add(emailRecord);
                 return Ok();
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(EmailRecordDto admin)
+        public async Task<IActionResult> Update(EmailRecordDto emailRecord)
         {
             try
             {
-                await service.Update(admin);
+                await service.Update(emailRecord);
                 return Ok();
             }
             catch (NullReferenceException)
