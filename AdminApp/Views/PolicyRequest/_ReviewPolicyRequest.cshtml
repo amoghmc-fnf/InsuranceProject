@@ -1,31 +1,41 @@
 ﻿@model AdminApp.Controllers.ReviewPolicyRequestViewModel
 
 <div>
-    <h4>Review Policy Request</h4>
-    <hr />
     <div class="form-group">
         <label>Policy Holder Name:</label>
         <p>@Model.PolicyHolderName</p>
+    </div>
+    <div class="form-group">
+        <label>Insured Name:</label>
+        <p>@Model.InsuredName</p>
+    </div>
+    <div class="form-group">
+        <label>Insured Gender:</label>
+        <p>@Model.InsuredGender</p>
+    </div>
+    <div class="form-group">
+        <label>Insured Date of birth:</label>
+        <p>@Model.InsuredDob.ToString("yyyy-MM-dd")</p>
     </div>
     <div class="form-group">
         <label>Contact Number:</label>
         <p>@Model.ContactNo</p>
     </div>
     <div class="form-group">
-        <label>Insured ID:</label>
-        <p>@Model.InsuredId</p>
+        <label>Policy Number:</label>
+        <p>@Model.PolicyNumber</p>
     </div>
     <div class="form-group">
-        <label>Insured Policy ID:</label>
-        <p>@Model.InsuredPolicyId</p>
+        <label>Policy Start:</label>
+        <p>@Model.PolicyStart.ToString("yyyy-MM-dd")</p>
     </div>
     <div class="form-group">
-        <label>Policy ID:</label>
-        <p>@Model.PolicyId</p>
+        <label>Policy End:</label>
+        <p>@Model.PolicyEnd.ToString("yyyy-MM-dd")</p>
     </div>
     <div class="form-group">
-        <label>Admin ID:</label>
-        <p>@Model.AdminId</p>
+        <label>Insurance Type:</label>
+        <p>@Model.InsuranceType</p>
     </div>
     <div class="form-group">
         <label>Premium Amount:</label>

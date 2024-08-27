@@ -15,6 +15,7 @@ namespace AdminApp.Controllers
         private readonly IInsuredService _insuredDtoService;
         private readonly IInsuredPolicyService _insuredPolicyService;
         private readonly IEmailRecordService _emailRecordService;
+        private readonly IInsuranceTypeService _insuranceTypeService;
         private readonly ILogger<PolicyRequestController> _logger;
 
         public PolicyRequestController(
@@ -24,6 +25,7 @@ namespace AdminApp.Controllers
             IPaymentService paymentService,
             IInsuredPolicyService insuredPolicyService,
             IEmailRecordService emailRecordService,
+            IInsuranceTypeService insuranceTypeService,
             ILogger<PolicyRequestController> logger)
         {
             _policyRequestService = policyRequestService;
@@ -32,6 +34,7 @@ namespace AdminApp.Controllers
             _paymentService = paymentService;
             _emailRecordService = emailRecordService;
             _insuredPolicyService = insuredPolicyService;
+            _insuranceTypeService = insuranceTypeService;
             _logger = logger;
         }
 
@@ -82,15 +85,23 @@ namespace AdminApp.Controllers
             var policyHolder = await _policyHolderService.GetById(insured.PolicyHolderId);
 
             var policy = await _policyRequestService.GetPolicyAsync(insuredPolicy.PolicyId);
+            var insuranceType = await _insuranceTypeService.GetById(policy.InsuranceTypeId);
             var payments = await _paymentService.GetPaymentsByInsuredPolicyIdAsync(insuredPolicy.InsuredPolicyId);
 
             var viewModel = new ReviewPolicyRequestViewModel
             {
                 PolicyHolderName = policyHolder?.Name ?? "N/A",
-                ContactNo = policyHolder?.Phone ??"N/A",
+                ContactNo = policyHolder?.Phone ?? "N/A",
                 InsuredId = insuredPolicy.InsuredId,
+                InsuredName = insured.Name,
+                InsuredGender = insured.Gender,
+                InsuredDob = insured.Dob,
                 InsuredPolicyId = insuredPolicy.InsuredPolicyId,
                 PolicyId = insuredPolicy.PolicyId,
+                PolicyNumber = policy.PolicyNumber,
+                PolicyStart = policy.StartDate,
+                PolicyEnd = policy.EndDate,
+                InsuranceType = insuranceType.InsuranceType,
                 AdminId = insuredPolicy.AdminId,
                 PremiumAmount = policy?.PremiumAmount ?? 0,
                 PaymentId = payments?.PaymentId ?? 0,
@@ -162,6 +173,13 @@ namespace AdminApp.Controllers
     {
         public string PolicyHolderName { get; set; }
         public int InsuredId { get; set; }
+        public string InsuredName { get ; set; }
+        public string InsuredGender { get ; set; }
+        public DateTime InsuredDob { get ; set; }
+        public string PolicyNumber { get; set; }
+        public DateTime PolicyStart { get; set; }
+        public DateTime PolicyEnd { get; set; }
+        public string InsuranceType { get; set; }
         public int InsuredPolicyId { get; set; }
         public int PolicyId { get; set; }
         public int AdminId { get; set; }

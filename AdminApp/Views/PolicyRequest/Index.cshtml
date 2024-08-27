@@ -10,10 +10,7 @@
     <thead>
         <tr>
             <th>Insured Policy ID</th>
-            <th>Insured ID</th>
-            <th>Policy ID</th>
-            <th>Policy Holder ID</th>
-            <th>Name</th>
+            <th>PolicyHolder Name</th>
             <th>Contact No</th>
             <th>Approval Status</th>
             <th>Approval Date</th>
@@ -25,13 +22,10 @@
         {
             <tr>
                 <td>@item.InsuredPolicyId</td>
-                <td>@item.InsuredId</td>
-                <td>@item.PolicyId</td>
-                <td>@item.PolicyHolderId</td>
                 <td>@item.Name</td>
                 <td>@item.ContactNo</td>
                 <td>@item.ApprovalStatus</td>
-                <td>@item.ApprovalDate?.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                <td>@item.ApprovalDate?.ToString("yyyy-MM-dd")</td>
                 <td>
                     <button class="btn btn-info" onclick="reviewPolicy(@item.InsuredPolicyId)">Review</button>
                 </td>

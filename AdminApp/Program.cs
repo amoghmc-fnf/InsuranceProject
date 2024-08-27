@@ -82,6 +82,11 @@ namespace AdminApp
                 client.BaseAddress = new Uri("http://localhost:5133/api/");
             });
 
+            builder.Services.AddHttpClient<IInsuranceTypeService, InsuranceTypeService>(client =>
+            {
+                client.BaseAddress = new Uri("http://localhost:5133/api/");
+            });
+
             builder.Services.AddHttpClient<IInsuredPolicyService, InsuredPolicyService>(client =>
             {
                 client.BaseAddress = new Uri("http://localhost:5133/api/");
