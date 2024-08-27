@@ -13,6 +13,8 @@ namespace AdminApp.Controllers
         private readonly IPolicyHolderService _policyHolderService;
         private readonly IPaymentService _paymentService;
         private readonly IInsuredService _insuredDtoService;
+        private readonly IInsuredPolicyService _insuredPolicyService;
+        private readonly IEmailRecordService _emailRecordService;
         private readonly ILogger<PolicyRequestController> _logger;
 
         public PolicyRequestController(
@@ -20,12 +22,16 @@ namespace AdminApp.Controllers
             IPolicyRequestService policyRequestService, 
             IPolicyHolderService policyHolderService,
             IPaymentService paymentService,
+            IInsuredPolicyService insuredPolicyService,
+            IEmailRecordService emailRecordService,
             ILogger<PolicyRequestController> logger)
         {
             _policyRequestService = policyRequestService;
             _insuredDtoService = insuredService;
             _policyHolderService = policyHolderService;
             _paymentService = paymentService;
+            _emailRecordService = emailRecordService;
+            _insuredPolicyService = insuredPolicyService;
             _logger = logger;
         }
 
@@ -115,6 +121,20 @@ namespace AdminApp.Controllers
             var success = await _policyRequestService.UpdateApprovalStatusAsync(insuredPolicyId, approvalStatus);
             if (success)
             {
+                var insuredPolicyDto = await _insuredPolicyService.GetById(insuredPolicyId);
+                var insuredId = insuredPolicyDto.InsuredId;
+                var insured = await _insuredDtoService.GetById(insuredId);
+                var policHolderId = insured.PolicyHolderId;
+                var policyHolderDto = await _policyHolderService.GetById(policHolderId);
+                var policy = await _policyRequestService.GetPolicyAsync(insuredPolicyDto.PolicyId);
+                EmailRecordDto email = new()
+                {
+                    FromEmail = "policydept@promedico.com",
+                    ToEmail = policyHolderDto.Email,
+                    Subject = "Policy Update",
+                    Content = $"Your policy with policy ID: {policy.PolicyNumber} has been updated to {approvalStatus}."
+                };
+                await _emailRecordService.Add(email);
                 _logger.LogInformation($"Approval status updated to '{approvalStatus}' for InsuredPolicyId: {insuredPolicyId}");
                 return Json(new { success = true });
             }
