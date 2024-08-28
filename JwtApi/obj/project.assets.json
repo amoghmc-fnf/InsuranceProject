@@ -219,6 +219,16 @@
             "related": ".xml"
           }
         }
+      },
+      "JwtModels/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/JwtModels.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/JwtModels.dll": {}
+        }
       }
     }
   },
@@ -727,10 +737,16 @@
         "system.identitymodel.tokens.jwt.7.1.2.nupkg.sha512",
         "system.identitymodel.tokens.jwt.nuspec"
       ]
+    },
+    "JwtModels/1.0.0": {
+      "type": "project",
+      "path": "../JwtModels/JwtModels.csproj",
+      "msbuildProject": "../JwtModels/JwtModels.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "JwtModels >= 1.0.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 8.0.8",
       "Swashbuckle.AspNetCore >= 6.4.0"
     ]
@@ -767,7 +783,11 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\6147952\\source\\repos\\WebApplication1\\JwtModels\\JwtModels.csproj": {
+              "projectPath": "C:\\Users\\6147952\\source\\repos\\WebApplication1\\JwtModels\\JwtModels.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

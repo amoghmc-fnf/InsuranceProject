@@ -39,3 +39,5 @@ C:\Users\6147952\source\repos\WebApplication1\JwtApi\obj\Debug\net8.0\refint\Jwt
 C:\Users\6147952\source\repos\WebApplication1\JwtApi\obj\Debug\net8.0\JwtApi.pdb
 C:\Users\6147952\source\repos\WebApplication1\JwtApi\obj\Debug\net8.0\JwtApi.genruntimeconfig.cache
 C:\Users\6147952\source\repos\WebApplication1\JwtApi\obj\Debug\net8.0\ref\JwtApi.dll
+C:\Users\6147952\source\repos\WebApplication1\JwtApi\bin\Debug\net8.0\JwtModels.dll
+C:\Users\6147952\source\repos\WebApplication1\JwtApi\bin\Debug\net8.0\JwtModels.pdb

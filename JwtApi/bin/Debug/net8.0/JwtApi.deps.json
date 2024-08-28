@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v8.0": {
       "JwtApi/1.0.0": {
         "dependencies": {
+          "JwtModels": "1.0.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.8",
           "Swashbuckle.AspNetCore": "6.4.0"
         },
@@ -149,6 +150,11 @@
             "fileVersion": "7.1.2.41121"
           }
         }
+      },
+      "JwtModels/1.0.0": {
+        "runtime": {
+          "JwtModels.dll": {}
+        }
       }
     }
   },
@@ -255,6 +261,11 @@
       "sha512": "sha512-Thhbe1peAmtSBFaV/ohtykXiZSOkx59Da44hvtWfIMFofDA3M3LaVyjstACf2rKGn4dEDR2cUpRAZ0Xs/zB+7Q==",
       "path": "system.identitymodel.tokens.jwt/7.1.2",
       "hashPath": "system.identitymodel.tokens.jwt.7.1.2.nupkg.sha512"
+    },
+    "JwtModels/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

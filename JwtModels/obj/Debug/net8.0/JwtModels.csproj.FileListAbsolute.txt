@@ -1,0 +1,12 @@
+C:\Users\6147952\source\repos\WebApplication1\JwtModels\bin\Debug\net8.0\JwtModels.deps.json
+C:\Users\6147952\source\repos\WebApplication1\JwtModels\bin\Debug\net8.0\JwtModels.dll
+C:\Users\6147952\source\repos\WebApplication1\JwtModels\bin\Debug\net8.0\JwtModels.pdb
+C:\Users\6147952\source\repos\WebApplication1\JwtModels\obj\Debug\net8.0\JwtModels.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\6147952\source\repos\WebApplication1\JwtModels\obj\Debug\net8.0\JwtModels.AssemblyInfoInputs.cache
+C:\Users\6147952\source\repos\WebApplication1\JwtModels\obj\Debug\net8.0\JwtModels.AssemblyInfo.cs
+C:\Users\6147952\source\repos\WebApplication1\JwtModels\obj\Debug\net8.0\JwtModels.csproj.CoreCompileInputs.cache
+C:\Users\6147952\source\repos\WebApplication1\JwtModels\obj\Debug\net8.0\JwtModels.sourcelink.json
+C:\Users\6147952\source\repos\WebApplication1\JwtModels\obj\Debug\net8.0\JwtModels.dll
+C:\Users\6147952\source\repos\WebApplication1\JwtModels\obj\Debug\net8.0\refint\JwtModels.dll
+C:\Users\6147952\source\repos\WebApplication1\JwtModels\obj\Debug\net8.0\JwtModels.pdb
+C:\Users\6147952\source\repos\WebApplication1\JwtModels\obj\Debug\net8.0\ref\JwtModels.dll

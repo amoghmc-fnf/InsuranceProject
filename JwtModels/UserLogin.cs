@@ -1,4 +1,4 @@
-﻿namespace JwtApi.Models
+﻿namespace JwtModels
 {
     public class UserLogin
     {
