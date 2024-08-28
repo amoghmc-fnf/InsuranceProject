@@ -14,6 +14,7 @@ namespace InsuranceApi.Controllers
         Task<IActionResult> Update(AdminDto admin);
     }
 
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AdminController : ControllerBase, IAdminController

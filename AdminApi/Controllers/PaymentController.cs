@@ -14,6 +14,7 @@ namespace InsuranceApi.Controllers
         Task<IActionResult> Update(PaymentDto paymentDto);
     }
 
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PaymentController : ControllerBase, IPaymentController
