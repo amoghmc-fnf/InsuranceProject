@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Json;
+using MyClientApp.Client;
 
 namespace MyClientApp.Services
 {
@@ -18,6 +19,7 @@ namespace MyClientApp.Services
         public InsuranceTypeService(HttpClient httpClient)
         {
             this.httpClient = httpClient;
+            httpClient.BaseAddress = new Uri(Program.Configuration["PolicyApiUrl"]);
         }
 
         public async Task<List<InsuranceTypeDto>> GetAll()

@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MyClientAppApi.Data;
+using System.Net.Http;
 using UserDbService.Data;
 
 namespace UserDbService.Services
@@ -10,7 +12,9 @@ namespace UserDbService.Services
         Task<List<PolicyHolderDto>> GetAll();
         Task<PolicyHolderDto> GetById(int id);
         Task Update(PolicyHolderDto policyHolderDto);
+        Task<LoginDto> ValidateUser(string email, string password);
         Task UpdateStatus(int id, int status);
+        Task<PolicyHolder> GetPolicyHolderByEmailAsync(string email);
     }
 
     public class PolicyHolderService : IPolicyHolderService
@@ -117,5 +121,77 @@ namespace UserDbService.Services
             }
             throw new NullReferenceException();
         }
+
+        public async Task<LoginDto> ValidateUser(string email, string password)
+        {
+
+            // Fetch the user by email
+            var user = await context.PolicyHolders.Where(u => u.Email == email).FirstOrDefaultAsync();
+            if (user == null)
+            {
+                return null;
+            }
+
+
+            // Verify the password (assuming passwords are stored as hashes)
+            if (user.PasswordHash != password)
+            {
+                return null;
+            }
+            var userDTo = new LoginDto
+            {
+
+                Email = user.Email,
+
+
+            };
+            return userDTo;
+        }
+
+        private bool VerifyPasswordHash(string password, byte[] storedHash)
+        {
+            using (var hmac = new System.Security.Cryptography.HMACSHA512())
+            {
+                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                for (int i = 0; i < computedHash.Length; i++)
+                {
+                    if (computedHash[i] != storedHash[i]) return false;
+                }
+            }
+            return true;
+        }
+
+
+        // Optional: Implement this method if you want to use JWT for authentication
+        public string GenerateToken(LoginDto user)
+        {
+            return null;
+            // Implementation for generating a JWT token
+        }
+
+        public async Task<PolicyHolderDto> GetPolicyHolderByEmailAsync(string email)
+        {
+            return await context.PolicyHolders
+                .Where(ph => ph.Email == email)
+                .Select(ph => new PolicyHolderDto
+                {
+                    PolicyHolderId = ph.PolicyHolderId,
+                    Email = ph.Email,
+                    // map other necessary fields
+                })
+                .FirstOrDefaultAsync();
+        }
+
+        async Task<PolicyHolder> IPolicyHolderService.GetPolicyHolderByEmailAsync(string email)
+        {
+            return await context.PolicyHolders.Where(ph => ph.Email == email).Select(ph => new PolicyHolder
+            {
+                PolicyHolderId = ph.PolicyHolderId,
+                Email = ph.Email
+            }).FirstOrDefaultAsync();
+        }
+
+        
     }
 }
+

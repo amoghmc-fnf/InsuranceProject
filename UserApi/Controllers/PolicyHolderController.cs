@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MyClientAppApi.Data;
 using UserDbService.Services;
 
 namespace UserApi.Controllers
@@ -13,6 +14,9 @@ namespace UserApi.Controllers
         Task<IActionResult> GetById(int id);
         Task<IActionResult> Update(PolicyHolderDto policyHolderDto);
         Task<IActionResult> UpdateStatus(int id, [FromBody] int status);
+
+        
+        Task<ActionResult<PolicyHolderDto>> GetPolicyHolderByEmail(string email);
     }
 
     [Route("api/[controller]")]
@@ -98,6 +102,31 @@ namespace UserApi.Controllers
             }
         }
 
+        [HttpGet("getByEmail")]
+        public async Task<ActionResult<PolicyHolderDto>> GetPolicyHolderByEmail(string email)
+        {
+            var policyHolder = await service.GetPolicyHolderByEmailAsync(email);
+
+            if (policyHolder == null)
+            {
+                return NotFound("Policy holder not found with the given email.");
+            }
+
+            return Ok(policyHolder);
+        }
+        [HttpPost("authenticate")]
+        public async Task<IActionResult> Authenticate([FromBody] LoginDto loginModel)
+        {
+            var user = await service.ValidateUser(loginModel.Email, loginModel.PasswordHash);
+
+            if (user == null)
+            {
+                // Optional: Generate a token if you're using JWT
+                return Unauthorized();
+            }
+
+            return Ok(user);
+        }
     }
 }
 

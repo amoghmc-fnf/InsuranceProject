@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "TMdOMdltqTGpE4eTnt2OA8ZW1EdtU2U31xrOPomi2RY=",
+  "Hash": "aZles0YNVYna0ojrSnlzHIDKRiobjJI5i+YPS24rCGU=",
   "Source": "MyClientApp",
   "BasePath": "/",
   "Mode": "Root",
@@ -8147,6 +8147,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\6147952\\source\\repos\\WebApplication1\\ClientApp\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\MyClientApp.bundle.scp.css"
+    },
+    {
+      "Identity": "C:\\Users\\6147952\\source\\repos\\WebApplication1\\ClientApp\\wwwroot\\appsettings.json",
+      "SourceId": "MyClientApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\6147952\\source\\repos\\WebApplication1\\ClientApp\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "appsettings.json",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "WasmResource",
+      "AssetTraitValue": "settings",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\appsettings.json"
     },
     {
       "Identity": "C:\\Users\\6147952\\source\\repos\\WebApplication1\\ClientApp\\wwwroot\\css\\app.css",

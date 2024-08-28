@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "MyClientApp",
   "resources": {
-    "hash": "sha256-sKfC/Ez8Nj32B01pLsSrg6/rYXHcsLojBQEqPvtqwS8=",
+    "hash": "sha256-zzQT34gWHFO/LL7BZBJNDjEliEJqTOmA+m/a4eYqPyY=",
     "jsModuleNative": {
       "dotnet.native.8.0.8.kegrbw6w9p.js": "sha256-juC5sA7gHTLXFEhAKgdM2/RavswpwCtDfjYGsAz2FXg="
     },
@@ -209,22 +209,25 @@
       "mscorlib.wasm": "sha256-Gz8PyW2/fwihe5ul81OwmRUrU71r+KtbyRw6xlOGD+Q=",
       "netstandard.wasm": "sha256-jMTqIQzoDS810lyhZpMO5eEC36EzntXqSVn+2qwkOMQ=",
       "System.Private.CoreLib.wasm": "sha256-NFj5WE5VLP2LptZIRJCUIc1AMk06FmxpsSILfPISwAw=",
-      "AdminModel.wasm": "sha256-p7db1LVOW4JTL79Orl+cWN4bqGHIKFZBp43oYUm95ss=",
-      "JwtModels.wasm": "sha256-bOa1hplKIp+FRp5OtZJsxvn4Dzdu2ODONEyQhUbsaLE=",
-      "PolicyModel.wasm": "sha256-h9Oyz7tAauz4hMQA+NXmfOD14Ky6CWiTpcRHJX8O2Hw=",
-      "UserModel.wasm": "sha256-fPEWyzdmiXSwHeet17XNn84r/+xlu8sYG3cG+kag0tc=",
-      "MyClientApp.wasm": "sha256-y7AtJxTGxXnu45Svt6sCvfd0Q4fyuQVxtB3mjsMI7Es="
+      "AdminModel.wasm": "sha256-hukg4rN3Pkyy0QRja9wrtLD8csa1F7pltA6O+/fIIrI=",
+      "JwtModels.wasm": "sha256-1lh4k/voqEPeUv+R5bJkOQk1JCBWMsqJIj3rqZibrt0=",
+      "PolicyModel.wasm": "sha256-wTpnjkW/62u3GdXY0VgxOD5+6KBK0cO4XJ9BsimsETE=",
+      "UserModel.wasm": "sha256-QsImBAaL56YRxHglbF6NFKjKZxfWacTijIVKxDWC4l8=",
+      "MyClientApp.wasm": "sha256-FDsWjQHhnjWkosRU8a9zGv5UXRPdorCaqSn8XY/cKW4="
     },
     "pdb": {
-      "AdminModel.pdb": "sha256-4088GJjhZesm04LpX6IXXHQ8qMTBUrRzkIc1epe5SjI=",
-      "JwtModels.pdb": "sha256-exIZBmZo2F90ZMu6iALLfoyyYTFIZqqiDioAQCG6YLI=",
-      "PolicyModel.pdb": "sha256-vn75f7jda/VOfd8gv7uptGf2MsanjJoSYNiJQg1jLLg=",
-      "UserModel.pdb": "sha256-bOM7WfX+UNd5KQvoBh/epEBtS2LNY8vgaNIa07zdFuo=",
-      "MyClientApp.pdb": "sha256-Ep1LrD4L9SyPL3XSXcIHBzArCUdXQRtgfzXEB7fe67s="
+      "AdminModel.pdb": "sha256-139iiben9m+Vjux/uea0vx8tFQtNwOpuYvx9kEcjMZA=",
+      "JwtModels.pdb": "sha256-hFL7k+Sf8z8RidOLb9orBBrr3AoCSgoHXKPyWHrO20g=",
+      "PolicyModel.pdb": "sha256-snQyljRqqSRFYd1D/UGxfULMJE7ZZRV+jarG/pkshTQ=",
+      "UserModel.pdb": "sha256-BYz/MHAnt0CfJEuk6Da6N5Gger0t+LFOaD7XELsM5r8=",
+      "MyClientApp.pdb": "sha256-AbHU80fTgnul4w2+PXCFsuLAuQA1LY2TT38EHl5MEnE="
     }
   },
   "cacheBootResources": true,
   "debugLevel": -1,
+  "appsettings": [
+    "../appsettings.json"
+  ],
   "globalizationMode": "sharded",
   "extensions": {
     "blazor": {}

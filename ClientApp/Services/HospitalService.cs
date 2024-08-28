@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using MyClientApp.Client;
 using System.Net.Http.Json;
 
 namespace MyClientApp.Services
@@ -18,6 +19,8 @@ namespace MyClientApp.Services
         public HospitalService(HttpClient httpClient)
         {
             this.httpClient = httpClient;
+            httpClient.BaseAddress = new Uri(Program.Configuration["AdminApiUrl"]);
+
         }
 
         public async Task<List<HospitalDto>> GetAll()

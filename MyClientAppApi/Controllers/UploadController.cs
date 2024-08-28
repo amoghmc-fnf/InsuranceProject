@@ -15,7 +15,7 @@ namespace InsuranceApi.Controllers
         public UploadController()
         {
             // Set the path where files should be uploaded
-            _uploadPath = @"C:\Users\6147958\source\repos\FnfProject\InsuranceApi\ClaimDocuments\";
+            _uploadPath = @"C:\Users\6147952\source\repos\WebApplication1\MyClientAppApi\ClaimDocument\";
         }
 
         [HttpPost]

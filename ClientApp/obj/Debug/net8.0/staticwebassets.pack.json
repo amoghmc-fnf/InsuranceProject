@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets\\MyClientApp.styles.css"
     },
     {
+      "Id": "C:\\Users\\6147952\\source\\repos\\WebApplication1\\ClientApp\\wwwroot\\appsettings.json",
+      "PackagePath": "staticwebassets\\appsettings.json"
+    },
+    {
       "Id": "C:\\Users\\6147952\\source\\repos\\WebApplication1\\ClientApp\\wwwroot\\css\\app.css",
       "PackagePath": "staticwebassets\\css\\app.css"
     },

@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using MyClientApp.Client;
 
 namespace MyClientApp.Services
 {
@@ -24,6 +25,7 @@ namespace MyClientApp.Services
         public PolicyHolderDtoService(HttpClient httpClient)
         {
             this.httpClient = httpClient;
+            httpClient.BaseAddress = new Uri(Program.Configuration["UserApiUrl"]);
         }
 
         public async Task<List<PolicyHolderDto>> GetAll()

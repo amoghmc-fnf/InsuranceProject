@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Json;
+using MyClientApp.Client;
 
 namespace MyClientApp.Services
 {
@@ -19,6 +20,7 @@ namespace MyClientApp.Services
         public PaymentService(HttpClient httpClient)
         {
             this.httpClient = httpClient;
+            httpClient.BaseAddress = new Uri(Program.Configuration["AdminApiUrl"]);
         }
 
         public async Task<List<PaymentDto>> GetAll()

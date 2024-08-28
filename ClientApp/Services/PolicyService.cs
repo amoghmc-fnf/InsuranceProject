@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using MyClientApp.Client;
 using System.Net.Http.Json;
 
 namespace MyClientApp.Services
@@ -19,6 +20,7 @@ namespace MyClientApp.Services
         public PolicyService(HttpClient httpClient)
         {
             this.httpClient = httpClient;
+            httpClient.BaseAddress = new Uri(Program.Configuration["PolicyApiUrl"]);
         }
 
         public async Task<List<PolicyDto>> GetAll()

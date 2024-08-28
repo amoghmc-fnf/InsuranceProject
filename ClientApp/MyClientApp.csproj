@@ -13,6 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\appsettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\images\ad1.jpg" />
     <None Include="wwwroot\images\ad2.jpeg" />
     <None Include="wwwroot\images\ad3.jpg" />

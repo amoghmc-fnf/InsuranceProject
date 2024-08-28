@@ -22,6 +22,7 @@ namespace UserApi.Controllers
         public IllnessController(IIllnessService service)
         {
             this.service = service;
+            
         }
 
         [HttpGet]

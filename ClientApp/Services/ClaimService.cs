@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using MyClientApp.Client;
+using System.Net.Http;
 using System.Net.Http.Json;
 
 namespace MyClientApp.Services
@@ -18,6 +19,7 @@ namespace MyClientApp.Services
         public ClaimService(HttpClient httpClient)
         {
             this.httpClient = httpClient;
+            httpClient.BaseAddress = new Uri(Program.Configuration["PolicyApiUrl"]);
         }
 
         public async Task<List<ClaimDto>> GetAll()
