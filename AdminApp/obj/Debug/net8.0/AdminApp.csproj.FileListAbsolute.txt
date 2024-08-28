@@ -39,3 +39,4 @@ C:\Users\6147952\source\repos\WebApplication1\AdminApp\obj\Debug\net8.0\AdminApp
 C:\Users\6147952\source\repos\WebApplication1\AdminApp\obj\Debug\net8.0\AdminApp.csproj.Up2Date
 C:\Users\6147952\source\repos\WebApplication1\AdminApp\bin\Debug\net8.0\JwtModels.dll
 C:\Users\6147952\source\repos\WebApplication1\AdminApp\bin\Debug\net8.0\JwtModels.pdb
+C:\Users\6147952\source\repos\WebApplication1\AdminApp\bin\Debug\net8.0\Newtonsoft.Json.dll
