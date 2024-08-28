@@ -4,17 +4,29 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
 using AdminApp.Models;
+using JwtModels;
 
 namespace AdminApp.Services
 {
     public class AdminService : IAdminService
     {
         private readonly HttpClient _httpClient;
+        //private readonly IAuthService _authService;
 
-        public AdminService(HttpClient httpClient)
+        public AdminService(HttpClient httpClient) /*IAuthService authService)*/
         {
             _httpClient = httpClient;
+            //_authService = authService;
+            //AddTokenJwtTokenHeader();
         }
+
+        //public async Task AddTokenJwtTokenHeader()
+        //{
+        //    var result = await _authService.GetJwtToken(new UserLogin { Key = "secretPassword" });
+        //    var tokenInfo = JsonSerializer.Deserialize<TokenInfo>(result);
+        //    Console.WriteLine(tokenInfo);
+        //    _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", tokenInfo.Token);
+        //}
 
         public async Task<Admin> GetAdminByIdAsync(int adminId)
         {

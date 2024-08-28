@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AdminApp.Services;
+using Microsoft.AspNetCore.Authentication;
 
 namespace AdminApp
 {
@@ -70,6 +71,11 @@ namespace AdminApp
             var AdminApiUrl = builder.Configuration.GetSection("AdminApiUrl").Value;
             var PolicyApiUrl = builder.Configuration.GetSection("PolicyApiUrl").Value;
             var UserApiUrl = builder.Configuration.GetSection("UserApiUrl").Value;
+            var JwtApiUrl = builder.Configuration.GetSection("JwtApiUrl").Value;
+            builder.Services.AddHttpClient<IAuthService, AuthService>(client =>
+            {
+                client.BaseAddress = new Uri(JwtApiUrl);
+            });
             builder.Services.AddHttpClient<IAdminService, AdminService>(client =>
             {
                 client.BaseAddress = new Uri(AdminApiUrl);

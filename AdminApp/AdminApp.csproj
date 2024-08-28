@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AdminDll\AdminModel.csproj" />
+    <ProjectReference Include="..\JwtModels\JwtModels.csproj" />
     <ProjectReference Include="..\PolicyModel\PolicyModel.csproj" />
     <ProjectReference Include="..\UserModel\UserModel.csproj" />
   </ItemGroup>

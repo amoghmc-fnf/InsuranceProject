@@ -9,6 +9,7 @@
       "AdminApp/1.0.0": {
         "dependencies": {
           "AdminModel": "1.0.0",
+          "JwtModels": "1.0.0",
           "PolicyModel": "1.0.0",
           "UserModel": "1.0.0"
         },
@@ -19,6 +20,11 @@
       "AdminModel/1.0.0": {
         "runtime": {
           "AdminModel.dll": {}
+        }
+      },
+      "JwtModels/1.0.0": {
+        "runtime": {
+          "JwtModels.dll": {}
         }
       },
       "PolicyModel/1.0.0": {
@@ -40,6 +46,11 @@
       "sha512": ""
     },
     "AdminModel/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "JwtModels/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

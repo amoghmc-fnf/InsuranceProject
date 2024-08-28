@@ -37,3 +37,5 @@ C:\Users\6147952\source\repos\WebApplication1\AdminApp\bin\Debug\net8.0\PolicyMo
 C:\Users\6147952\source\repos\WebApplication1\AdminApp\bin\Debug\net8.0\UserModel.pdb
 C:\Users\6147952\source\repos\WebApplication1\AdminApp\obj\Debug\net8.0\AdminApp.csproj.AssemblyReference.cache
 C:\Users\6147952\source\repos\WebApplication1\AdminApp\obj\Debug\net8.0\AdminApp.csproj.Up2Date
+C:\Users\6147952\source\repos\WebApplication1\AdminApp\bin\Debug\net8.0\JwtModels.dll
+C:\Users\6147952\source\repos\WebApplication1\AdminApp\bin\Debug\net8.0\JwtModels.pdb
