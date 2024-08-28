@@ -65,56 +65,60 @@ namespace AdminApp
             app.Run();
         }
 
-        private static void AddHttpClients(WebApplicationBuilder builder)
+        private static async void AddHttpClients(WebApplicationBuilder builder)
         {
+            var AdminApiUrl = builder.Configuration.GetSection("AdminApiUrl").Value;
+            var PolicyApiUrl = builder.Configuration.GetSection("PolicyApiUrl").Value;
+            var UserApiUrl = builder.Configuration.GetSection("UserApiUrl").Value;
             builder.Services.AddHttpClient<IAdminService, AdminService>(client =>
             {
-                client.BaseAddress = new Uri("http://localhost:5101/api/");
+                client.BaseAddress = new Uri(AdminApiUrl);
+                //    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InNlY3JldFBhc3N3b3JkIiwibmJmIjoxNzI0ODExNTI4LCJleHAiOjE3MjQ4OTc5MjgsImlhdCI6MTcyNDgxMTUyOH0.dmmEpR2OEmuA4YtlZGv0W16yOTAzK8mgazUfPxAWoKY");
             });
 
             builder.Services.AddHttpClient<IHospitalService, HospitalService>(client =>
             {
-                client.BaseAddress = new Uri("http://localhost:5101/api/");
+                client.BaseAddress = new Uri(AdminApiUrl);
             });
 
             builder.Services.AddHttpClient<IClaimService, ClaimService>(client =>
             {
-                client.BaseAddress = new Uri("http://localhost:5133/api/");
+                client.BaseAddress = new Uri(PolicyApiUrl);
             });
 
             builder.Services.AddHttpClient<IInsuranceTypeService, InsuranceTypeService>(client =>
             {
-                client.BaseAddress = new Uri("http://localhost:5133/api/");
+                client.BaseAddress = new Uri(PolicyApiUrl);
             });
 
             builder.Services.AddHttpClient<IInsuredPolicyService, InsuredPolicyService>(client =>
             {
-                client.BaseAddress = new Uri("http://localhost:5133/api/");
+                client.BaseAddress = new Uri(PolicyApiUrl);
             });
 
             builder.Services.AddHttpClient<IPolicyHolderService, PolicyHolderService>(client =>
             {
-                client.BaseAddress = new Uri("http://localhost:5049/api/");
+                client.BaseAddress = new Uri(UserApiUrl);
             });
             builder.Services.AddHttpClient<IInsuranceService, InsuranceService>(client =>
             {
-                client.BaseAddress = new Uri("http://localhost:5133/api/");
+                client.BaseAddress = new Uri(PolicyApiUrl);
             });
             builder.Services.AddHttpClient<IPolicyRequestService, PolicyRequestService>(client =>
             {
-                client.BaseAddress = new Uri("http://localhost:5133/api/");
+                client.BaseAddress = new Uri(PolicyApiUrl);
             });
             builder.Services.AddHttpClient<IInsuredService, InsuredService>(client =>
             {
-                client.BaseAddress = new Uri("http://localhost:5049/api/");
+                client.BaseAddress = new Uri(UserApiUrl);
             });
             builder.Services.AddHttpClient<IPaymentService, PaymentService>(client =>
             {
-                client.BaseAddress = new Uri("http://localhost:5101/api/");
+                client.BaseAddress = new Uri(AdminApiUrl);
             });
             builder.Services.AddHttpClient<IEmailRecordService, EmailRecordService> (client =>
             {
-                client.BaseAddress = new Uri("http://localhost:5101/api/");
+                client.BaseAddress = new Uri(AdminApiUrl);
             });
         }
     }
