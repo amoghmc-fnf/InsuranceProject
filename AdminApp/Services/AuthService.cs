@@ -8,19 +8,22 @@ namespace AdminApp.Services
 {
     public interface IAuthService
     {
-        Task<string> GetJwtToken(string password);
+        Task<string> GetJwtToken();
     }
 
-    public class AuthService : IAuthService
+    public class AuthService : IAuthService 
     {
         private readonly HttpClient http;
-        public AuthService(HttpClient httpClient)
+        private readonly IConfiguration configuration;
+        public AuthService(HttpClient httpClient, IConfiguration configuration)
         {
             http = httpClient;
+            this.configuration = configuration;
         }
 
-        public async Task<string> GetJwtToken(string password)
+        public async Task<string> GetJwtToken()
         {
+            var password = configuration["JwtKey"];
             var userLogin = new UserLogin { key = password };
             var json = System.Text.Json.JsonSerializer.Serialize(userLogin);
             var content = new StringContent(json, Encoding.UTF8, "application/json");

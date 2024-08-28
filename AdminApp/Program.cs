@@ -76,6 +76,7 @@ namespace AdminApp
             {
                 client.BaseAddress = new Uri(JwtApiUrl);
             });
+
             builder.Services.AddHttpClient<IAdminService, AdminService>(client =>
             {
                 client.BaseAddress = new Uri(AdminApiUrl);

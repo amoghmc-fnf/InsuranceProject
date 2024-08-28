@@ -13,6 +13,7 @@ namespace AdminApp.Services
     {
         private readonly HttpClient _httpClient;
         private readonly IAuthService _authService;
+        private string token;
 
         public AdminService(HttpClient httpClient, IAuthService authService) /*IAuthService authService)*/
         {
@@ -22,8 +23,11 @@ namespace AdminApp.Services
 
         public async Task AddTokenJwtTokenHeader()
         {
-            var token = await _authService.GetJwtToken("secretPassword");
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
+            if (token is null)
+            {
+                token = await _authService.GetJwtToken();
+                _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
+            }
         }
 
         public async Task<Admin> GetAdminByIdAsync(int adminId)
