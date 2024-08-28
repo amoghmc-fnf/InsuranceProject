@@ -1,0 +1,142 @@
+﻿@page "/PremiumCalc"
+@using System.Globalization
+@using MyClientApp.Models
+@using Newtonsoft.Json
+@inject NavigationManager Navigation
+<h3>Who Needs Coverage in Your Family?</h3>
+<header>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <img src="/images/CompanyLogo-removebg-preview.png" alt="Logo" class="logo" />
+        </div>
+        <div class="navbar-right">
+
+            <a @onclick="NavigateToHome">Home</a>
+            <a @onclick="NavigateToPlansBefore">Plans</a>
+            <a @onclick="NavigateToLogin">Login/Register</a>
+
+            <a @onclick="NavigateToContact">Contact Us</a>
+            <a @onclick="NavigateToAbout">About Us</a>
+        </div>
+    </nav>
+</header>
+<div class="container">
+    @foreach (var member in familyMembers)
+    {
+        <div class="family-member">
+            <h5>@member.Name</h5>
+            <div class="form-group">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" @bind="member.DOB" class="form-control" />
+                <span class="age-display">Age: @member.Age</span>
+            </div>
+
+            <div class="form-group">
+                <label>Health Factors:</label>
+                @foreach (var factor in healthFactors)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="@factor" value="@factor" @onchange="e => UpdateHealthFactors(member, e)" />
+                        <label class="form-check-label" for="@factor">@factor</label>
+                    </div>
+                }
+            </div>
+        </div>
+        <hr />
+
+    }
+    
+   
+    <br/>
+    <button class="btn btn-primary" @onclick="AddFamilyMember">Add Another Family Member</button>
+    <button class="btn btn-secondary" @onclick="NavigateToAvailPlans" >Check For Plans</button>
+    <style>
+        h3{
+            font-family: 'Poppins', sans-serif; /* Change to a custom font */
+            font-weight: 700; /* Bold font */
+            font-size: 2rem; /* Adjust size */
+            color: #00008B; /* Darker color */
+            letter-spacing: 1px; /* Slight spacing between letters */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-family: 'Roboto', sans-serif; /* Change to a custom font */
+            font-weight: 400; /* Regular weight */
+            font-size: 1.2rem; /* Adjust size */
+            color:chocolate; /* Slightly lighter color */
+            line-height: 1.6; /* Space between lines */
+            letter-spacing: 0.5px; /* Slight spacing between letters */
+            margin-bottom: 20px;
+        }
+
+      
+
+        .age-display{
+            color: purple;
+            font-weight: 700;
+        }
+    </style>
+</div>
+
+@code {
+    private List<FamilyMember> familyMembers = new List<FamilyMember>();
+
+    private List<string> healthFactors = new List<string>
+    {
+        "Diabetes",
+        "Hypertension",
+        "Heart Disease",
+        "Asthma",
+        "None"
+    };
+
+    private void AddFamilyMember()
+    {
+        familyMembers.Add(new FamilyMember
+            {
+                Name = $"Family Member {familyMembers.Count + 1}",
+                DOB = DateTime.Today // Default to today for new members
+            });
+    }
+
+    private void UpdateHealthFactors(FamilyMember member, ChangeEventArgs e)
+    {
+        var selectedFactor = e.Value.ToString();
+        if (member.HealtFactor.Contains(selectedFactor))
+        {
+            member.HealtFactor.Remove(selectedFactor);
+        }
+        else
+        {
+            member.HealtFactor.Add(selectedFactor);
+        }
+    }
+    private void NavigateToAvailPlans()
+
+    {
+
+        // Pass the family member data to the AvailPlans page
+
+        // This could be done via query string, state management, etc.
+
+        var query = System.Web.HttpUtility.UrlEncode(JsonConvert.SerializeObject(familyMembers)); // Convert family member data to query string or other format
+
+        Navigation.NavigateTo($"/AvailPlans");
+
+    }
+
+    protected override void OnInitialized()
+    {
+        // Initialize with one family member by default
+        AddFamilyMember();
+    }
+
+    private void NavigateToHome() => Navigation.NavigateTo("/");
+    private void NavigateToPlansBefore() => Navigation.NavigateTo("/PlansBefore");
+    private void NavigateToContact() => Navigation.NavigateTo("/ContactUs");
+    private void NavigateToAbout() => Navigation.NavigateTo("/AboutUs");
+    private void NavigateToLogin() => Navigation.NavigateTo("/Login");
+}
+

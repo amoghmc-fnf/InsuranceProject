@@ -1,0 +1,162 @@
+﻿@page "/ContactUs"
+@inject NavigationManager Navigation
+<header>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <img src="/images/CompanyLogo-removebg-preview.png" alt="Logo" class="logo" />
+        </div>
+        <div class="navbar-right">
+
+            <a @onclick="NavigateToHome">Home</a>
+            <a @onclick="NavigateToPlansBefore">Plans</a>
+            <a @onclick="NavigateToLogin">Login/Register</a>
+
+            <a @onclick="NavigateToContact">Contact Us</a>
+            <a @onclick="NavigateToAbout">About Us</a>
+        </div>
+    </nav>
+</header>
+<div class="contact-us-container">
+    <h2>Contact Us</h2>
+
+    <div class="contact-info">
+        <h3>Contacts</h3>
+        <ul>
+            <li>
+                <strong>Name 1:</strong> Kusum Shoba <br />
+                <strong>Contact Number:</strong> +91 636425092
+            </li>
+            <li>
+                <strong>Name 2:</strong> Chaithra <br />
+                <strong>Contact Number:</strong> +91  948262062
+            </li>
+            <li>
+                <strong>Name 3:</strong> Nikhil <br />
+                <strong>Contact Number:</strong> +91 879283533
+            </li>
+        </ul>
+    </div>
+
+    <div class="address">
+        <h3>Address</h3>
+        <p>
+            Fnf India <br />
+            Banglore, Karnataka, 560037 <br />
+            USA
+        </p>
+    </div>
+
+    <div class="partners">
+        <h3>Partners</h3>
+        <ul>
+            <li>Partner : PhaniRaj Sir</li>
+        </ul>
+    </div>
+</div>
+
+<style>
+    /* Header */
+    header {
+        background-color: #fff;
+        border-bottom: 1px solid #ddd;
+        padding: 15px 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .navbar-brand img {
+        height: 40px;
+    }
+
+    .navbar-nav {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+        margin: 0;
+    }
+
+        .navbar-nav a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+            .navbar-nav a:hover {
+                color: var(--primary-color);
+            }
+
+    .navbar-right {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .login-button {
+        background-color: var(--secondary-color);
+        color: white;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 50px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+        .login-button:hover {
+            background-color: var(--primary-color);
+        }
+
+    /* Main Section */
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 50px 0;
+        max-width: 1200px;
+        margin: 0 auto;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .contact-us-container {
+        padding: 20px;
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+        .contact-us-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+    .contact-info, .address, .partners {
+        margin-bottom: 20px;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        margin-bottom: 10px;
+    }
+
+    .address p {
+        margin: 0;
+    }
+</style>
+@code{
+    private void NavigateToHome() => Navigation.NavigateTo("/");
+    private void NavigateToPlansBefore() => Navigation.NavigateTo("/PlansBefore");
+    private void NavigateToContact() => Navigation.NavigateTo("/ContactUs");
+    private void NavigateToAbout() => Navigation.NavigateTo("/AboutUs");
+    private void NavigateToLogin() => Navigation.NavigateTo("/Login");
+}

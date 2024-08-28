@@ -1,0 +1,160 @@
+﻿@page "/User/{PolicyHolderId:int}"
+@using MyClientApp.Services
+@inject IPolicyHolderDtoService PolicyHolderService
+@inject NavigationManager Navigation
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit a Claim</title>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <img src="/images/CompanyLogo-removebg-preview.png" alt="Logo" class="logo" />
+        </div>
+        <div class="navbar-right">
+
+
+            <a @onclick="NavigateToProfile">Profile</a>
+            <a @onclick="NavigateToPlans">Plans</a>
+            <a @onclick="NavigateToPolicies">Your Policies</a>
+            <a @onclick="NavigateToClaimStatus">Claim Status</a>
+            <a @onclick="Logout">Logout</a>
+        </div>
+    </nav>
+</head>
+<div class="user-header">
+    <h2>Welcome, @UserName!</h2>
+</div>
+
+<div class="user-info">
+    <div class="info-card">
+        <h3>User Information</h3>
+        <p><strong>Name:</strong> @UserName</p>
+        <p><strong>Address:</strong> @Address</p>
+        <p><strong>Phone:</strong> @Phone</p>
+        <p><strong>Email:</strong> @Email</p>
+        <p><strong>Status:</strong> @Status</p>
+    </div>
+</div>
+
+
+<div class="claims-section">
+    <div class="dropdown-header">
+        <button @onclick="() => NavigateToPoliciesStatus(policyHolderId)"><h3>Your Policies</h3></button>
+    </div>
+</div>
+
+<div class="claims-section">
+    <div class="dropdown-header">
+        <button @onclick="() => NavigateToClaimStatus(policyHolderId)"><h3>Your Claims</h3></button>
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public int policyHolderId { get; set; }
+    private string UserName;
+    private string Address;
+    private string Phone;
+    private string Email;
+    private int Status;
+    private List<PolicyHolderDto> Policies;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Example to fetch data dynamically based on user context or session
+
+        // Fetch the policy holder data by ID
+        var policyHolder = await PolicyHolderService.GetById(policyHolderId);
+
+
+        if (policyHolder != null)
+        {
+            // Assign the fetched data to the fields
+            UserName = policyHolder.Name;
+            Address = policyHolder.Address;
+            Phone = policyHolder.Phone;
+            Email = policyHolder.Email;
+            Status = policyHolder.Status;
+
+            // Fetch all policies for this user
+            Policies = await PolicyHolderService.GetAll();
+        }
+    }
+
+    private void NavigateToClaimStatus(int policyHolderId)
+    {
+        Navigation.NavigateTo($"/ClaimStatus/{policyHolderId}");//Put 8
+    }
+    private void NavigateToPoliciesStatus(int policyHolderId)
+    {
+        Navigation.NavigateTo($"/YourPolicies/{policyHolderId}");
+    }
+    private void NavigateToProfile() => Navigation.NavigateTo($"/User/{policyHolderId}");
+    private void NavigateToPlans() => Navigation.NavigateTo($"/PlansAfter/{policyHolderId}");
+    private void NavigateToPolicies() => Navigation.NavigateTo($"/YourPolicies/{policyHolderId}");
+    private void NavigateToClaimStatus() => Navigation.NavigateTo($"/ClaimStatus/{policyHolderId}");
+    private void NavigateToLogin() => Navigation.NavigateTo($"/Login");
+    public void Logout()
+    {
+
+        Navigation.NavigateTo("/");
+    }
+}
+
+
+<div>
+    <style>
+
+        .user-header {
+            background-color: royalblue;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .info-card, .claims-card, .policy-card, .summary-card, .recent-activities {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        p, li {
+            color: #555;
+            margin: 5px 0;
+        }
+
+        .dropdown-header {
+            cursor: pointer;
+            background-color: #e0e0e0;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+            .dropdown-header:hover {
+                background-color: skyblue;
+            }
+
+        .recent-activities ul {
+            padding-left: 20px;
+        }
+
+        .recent-activities li {
+            margin-bottom: 10px;
+        }
+    </style>
+</div>

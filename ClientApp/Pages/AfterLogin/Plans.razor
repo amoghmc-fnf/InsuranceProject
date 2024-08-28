@@ -1,0 +1,197 @@
+﻿@page "/PlansAfter/{PolicyHolderId:int}"
+@inject NavigationManager Navigation
+@using MyClientApp.Services
+@inject IInsuranceTypeService service;
+
+<header>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit a Claim</title>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <img src="/images/CompanyLogo-removebg-preview.png" alt="Logo" class="logo" />
+        </div>
+        <div class="navbar-right">
+
+
+            <a @onclick="NavigateToProfile">Profile</a>
+            <a @onclick="NavigateToPlans">Plans</a>
+            <a @onclick="NavigateToPolicies">Your Policies</a>
+            <a @onclick="NavigateToClaimStatus">Claim Status</a>
+            <a @onclick="Logout">Logout</a>
+        </div>
+    </nav>
+</header>
+<link href="css/custom.css" rel="stylesheet">
+
+
+<div class="card-carousel-container">
+    <button class="nav-button" @onclick="ShowPreviousCards" disabled="@(CurrentCardIndex == 0)">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <div class="card-carousel">
+        @foreach (var card in VisibleCards)
+        {
+            <div class="card @(IsMiddleCard(card) ? "middle-card" : "")" @onclick="() => NavigateToPlansDetail(card.InsuranceId)">
+                <div class="card-body">
+                    <h5 class="card-title">@card.InsuranceType</h5>
+                    <p class="card-text">@card.Description</p>
+                </div>
+            </div>
+        }
+    </div>
+
+    <button class="nav-button" @onclick="ShowNextCards" disabled="@(CurrentCardIndex >= MaxCardIndex - 1)">
+        <i class="fas fa-arrow-right"></i>
+    </button>
+</div>
+
+<style scoped>
+    .card-carousel-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .nav-button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1.5rem;
+        transition: background-color 0.3s ease;
+    }
+
+        .nav-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+    .card-carousel {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        width: 60%;
+    }
+
+    .card {
+        min-width: 200px;
+        max-width: 200px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+        background-color: white;
+        position: relative;
+    }
+
+    .middle-card {
+        transform: scale(1.2) rotate(5deg);
+        animation: rotateCard 1s infinite alternate ease-in-out;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        color: #007bff;
+        margin-bottom: 10px;
+    }
+
+    .card-text {
+        font-size: 1rem;
+        color: #666;
+    }
+
+    @@keyframes rotateCard {
+        0% {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        100% {
+            transform: scale(1.2) rotate(-5deg);
+        }
+    }
+</style>
+
+@code {
+    [Parameter]
+    public int PolicyHolderId{ get; set; }
+    private List<CardItem> AllCards = new List<CardItem>();
+    private List<CardItem> VisibleCards = new List<CardItem>();
+    private int CurrentCardIndex = 0;
+    private int CardsPerPage = 3;
+    private int MaxCardIndex;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var insuranceTypes = await service.GetAll();
+        AllCards = insuranceTypes.Select(i => new CardItem
+            {
+                InsuranceId = i.InsuranceId,
+                InsuranceType = i.InsuranceType,
+                Description = i.Description
+            }).ToList();
+
+        MaxCardIndex = (AllCards.Count + CardsPerPage - 1) / CardsPerPage;
+        UpdateVisibleCards();
+    }
+
+    private void ShowNextCards()
+    {
+        if (CurrentCardIndex < MaxCardIndex - 1)
+        {
+            CurrentCardIndex++;
+            UpdateVisibleCards();
+        }
+    }
+
+    private void ShowPreviousCards()
+    {
+        if (CurrentCardIndex > 0)
+        {
+            CurrentCardIndex--;
+            UpdateVisibleCards();
+        }
+    }
+
+    private void UpdateVisibleCards()
+    {
+        VisibleCards = AllCards.Skip(CurrentCardIndex * CardsPerPage).Take(CardsPerPage).ToList();
+    }
+
+    private void NavigateToPlansDetail(int cardId)
+    {
+        Navigation.NavigateTo($"/PlansDetailAfter/{PolicyHolderId}/{cardId}");
+    }
+
+    private bool IsMiddleCard(CardItem card)
+    {
+        return VisibleCards.IndexOf(card) == 1; // Middle card in the visible list
+    }
+
+    private class CardItem
+    {
+        public int InsuranceId { get; set; }
+        public string InsuranceType { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+    }
+
+    private void NavigateToProfile() => Navigation.NavigateTo($"/User/{PolicyHolderId}");
+    private void NavigateToPlans() => Navigation.NavigateTo($"/PlansAfter/{PolicyHolderId}");
+    private void NavigateToPolicies() => Navigation.NavigateTo($"/YourPolicies/{PolicyHolderId}");
+    private void NavigateToClaimStatus() => Navigation.NavigateTo($"/ClaimStatus/{PolicyHolderId}");
+    private void NavigateToLogin() => Navigation.NavigateTo($"/Login");
+    public void Logout()
+    {
+
+        Navigation.NavigateTo("/");
+    }
+}

@@ -1,0 +1,263 @@
+﻿@page "/PlansBefore"
+@inject NavigationManager Navigation
+@using MyClientApp.Services
+@inject IInsuranceTypeService service;
+<header>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <img src="/images/CompanyLogo-removebg-preview.png" alt="Logo" class="logo" />
+        </div>
+        <div class="navbar-right">
+
+            <a @onclick="NavigateToHome">Home</a>
+            <a @onclick="NavigateToPlansBefore">Plans</a>
+            <a @onclick="NavigateToLogin">Login/Register</a>
+
+            <a @onclick="NavigateToContact">Contact Us</a>
+            <a @onclick="NavigateToAbout">About Us</a>
+        </div>
+    </nav>
+</header>
+<link href="css/custom.css" rel="stylesheet">
+
+
+<div class="card-carousel-container">
+    <button class="nav-button" @onclick="ShowPreviousCards" disabled="@(CurrentCardIndex == 0)">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <div class="card-carousel">
+        @foreach (var card in VisibleCards)
+        {
+            <div class="card @(IsMiddleCard(card) ? "middle-card" : "")" @onclick="() => NavigateToPlansDetail(card.InsuranceId)">
+                <div class="card-body">
+                    <h5 class="card-title">@card.InsuranceType</h5>
+                    <p class="card-text">@card.Description</p>
+                </div>
+            </div>
+        }
+    </div>
+
+    <button class="nav-button" @onclick="ShowNextCards" disabled="@(CurrentCardIndex >= MaxCardIndex - 1)">
+        <i class="fas fa-arrow-right"></i>
+    </button>
+</div>
+
+<style scoped>
+    .card-carousel-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    /* Header */
+    header {
+        background-color: #fff;
+        border-bottom: 1px solid #ddd;
+        padding: 15px 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .navbar-brand img {
+        height: 40px;
+    }
+
+    .navbar-nav {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+        margin: 0;
+    }
+
+        .navbar-nav a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+            .navbar-nav a:hover {
+                color: var(--primary-color);
+            }
+
+    .navbar-right {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .login-button {
+        background-color: var(--secondary-color);
+        color: white;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 50px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+        .login-button:hover {
+            background-color: var(--primary-color);
+        }
+
+    /* Main Section */
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 50px 0;
+        max-width: 1200px;
+        margin: 0 auto;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+
+    .login-button {
+        background-color: var(--secondary-color);
+        color: white;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 50px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+        .login-button:hover {
+            background-color: var(--primary-color);
+        }
+
+    /* Main Section */
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 50px 0;
+        max-width: 1200px;
+        margin: 0 auto;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-carousel {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        width: 60%;
+    }
+
+    .card {
+        min-width: 200px;
+        max-width: 200px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+        background-color: white;
+        position: relative;
+    }
+
+    .middle-card {
+        transform: scale(1.2) rotate(5deg);
+        animation: rotateCard 1s infinite alternate ease-in-out;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        color: #007bff;
+        margin-bottom: 10px;
+    }
+
+    .card-text {
+        font-size: 1rem;
+        color: #666;
+    }
+
+    @@keyframes rotateCard {
+        0% {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        100% {
+            transform: scale(1.2) rotate(-5deg);
+        }
+    }
+</style>
+
+@code {
+    private List<CardItem> AllCards = new List<CardItem>();
+    private List<CardItem> VisibleCards = new List<CardItem>();
+    private int CurrentCardIndex = 0;
+    private int CardsPerPage = 3;
+    private int MaxCardIndex;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var insuranceTypes = await service.GetAll();
+        AllCards = insuranceTypes.Select(i => new CardItem
+            {
+                InsuranceId = i.InsuranceId,
+                InsuranceType = i.InsuranceType,
+                Description = i.Description
+            }).ToList();
+
+        MaxCardIndex = (AllCards.Count + CardsPerPage - 1) / CardsPerPage;
+        UpdateVisibleCards();
+    }
+
+    private void ShowNextCards()
+    {
+        if (CurrentCardIndex < MaxCardIndex - 1)
+        {
+            CurrentCardIndex++;
+            UpdateVisibleCards();
+        }
+    }
+
+    private void ShowPreviousCards()
+    {
+        if (CurrentCardIndex > 0)
+        {
+            CurrentCardIndex--;
+            UpdateVisibleCards();
+        }
+    }
+
+    private void UpdateVisibleCards()
+    {
+        VisibleCards = AllCards.Skip(CurrentCardIndex * CardsPerPage).Take(CardsPerPage).ToList();
+    }
+
+    private void NavigateToPlansDetail(int cardId)
+    {
+        Navigation.NavigateTo($"/PlansDetailBefore/{cardId}");
+    }
+
+    private bool IsMiddleCard(CardItem card)
+    {
+        return VisibleCards.IndexOf(card) == 1; // Middle card in the visible list
+    }
+
+    private class CardItem
+    {
+        public int InsuranceId { get; set; }
+        public string InsuranceType { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+    }
+
+    private void NavigateToHome() => Navigation.NavigateTo("/");
+    private void NavigateToPlansBefore() => Navigation.NavigateTo("/PlansBefore");
+    private void NavigateToContact() => Navigation.NavigateTo("/ContactUs");
+    private void NavigateToAbout() => Navigation.NavigateTo("/AboutUs");
+    private void NavigateToLogin() => Navigation.NavigateTo("/Login");
+}

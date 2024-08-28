@@ -1,0 +1,37 @@
+﻿@inherits LayoutComponentBase
+
+<div class="fixed-navbar">
+    <NavMenu />
+</div>
+
+<div class="main-content">
+    @Body
+
+</div>
+
+<footer class="footer-bottom">
+    <span class="text-muted">&copy; 2024 Medical Insurance Portal. All Rights Reserved.</span>
+</footer>
+<style>
+    
+    .footer-bottom {
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: transparent;
+        padding: 10px 20px;
+        font-size: 14px;
+        z-index: 1000;
+        width: auto;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+        .footer-bottom p {
+            margin: 0;
+            text-align: center;
+        }
+
+    
+</style>

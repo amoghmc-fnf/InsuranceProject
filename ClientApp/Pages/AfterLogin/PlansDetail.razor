@@ -1,0 +1,269 @@
+﻿@page "/PlansDetailAfter/{HolderId:int}/{Id:int}"
+@using System.Globalization
+@using MyClientApp.Services
+@inject IPolicyService PolicyService
+@inject IInsuranceTypeService InsuranceService
+@inject IInsuredService service
+@inject IInsuredPolicyService InusuredPolicyService
+@inject NavigationManager nav
+@inject IJSRuntime js
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit a Claim</title>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <img src="/images/CompanyLogo-removebg-preview.png" alt="Logo" class="logo" />
+        </div>
+        <div class="navbar-right">
+
+
+            <a @onclick="NavigateToProfile">Profile</a>
+            <a @onclick="NavigateToPlans">Plans</a>
+            <a @onclick="NavigateToPolicies">Your Policies</a>
+            <a @onclick="NavigateToClaimStatus">Claim Status</a>
+            <a @onclick="Logout">Logout</a>
+        </div>
+    </nav>
+</head>
+<div class="card mt-4">
+    <div class="card-header">
+        Insurance Plan
+    </div>
+    <div class="card-body">
+        <EditForm Model="@premiumModel">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <!-- Form Inputs -->
+
+            <div class="form-group">
+                <label for="numMembers">Number of Members: </label>
+                <InputNumber id="numMembers" class="form-control" @bind-Value="premiumModel.NumberOfMembers" />
+                <ValidationMessage For="@(() => premiumModel.NumberOfMembers)" />
+            </div>
+
+            <div class="form-group">
+                <label for="coverageType">Coverage Type: </label>
+                <InputSelect id="coverageType" class="form-control" @bind-Value="premiumModel.CoverageType">
+                    <option value="">Select Coverage Type</option>
+                    <option value="Bronze">Bronze 3 Lakh</option>
+                    <option value="Silver">Silver 6 Lakh</option>
+                    <option value="Gold">Gold 9 Lakh</option>
+                </InputSelect>
+                <ValidationMessage For="@(() => premiumModel.CoverageType)" />
+            </div>
+
+            @if (insuredDetailsList != null && insuredDetailsList.Count > 0)
+            {
+                if (premiumModel.NumberOfMembers > premiumModel.CoverageSize)
+                {
+                    js.InvokeVoidAsync("alert", "Number Of Members Exceeding the coverage size.");
+                }
+                else
+                {
+                    @for (int i = 0; i < premiumModel.NumberOfMembers; i++)
+                    {
+                        var insured = insuredDetailsList.ElementAtOrDefault(i);
+                        if (insured != null)
+                        {
+                            <div class="form-group">
+                                <label for="@($"insuredName_{i}")">Insured Name:</label>
+                                <InputText id="@($"insuredName_{i}")" class="form-control" @bind-Value="insured.Name" />
+                                <ValidationMessage For="@(() => insured.Name)" />
+
+                                <label for="@($"dob_{i}")">Date of Birth: </label>
+                                <InputDate id="@($"dob_{i}")" class="form-control" @bind-Value="insured.Dob" />
+                                <ValidationMessage For="@(() => insured.Dob)" />
+
+                                <label for="@($"gender_{i}")">Gender: </label>
+                                <InputSelect id="@($"gender_{i}")" class="form-control" @bind-Value="insured.Gender">
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </InputSelect>
+                                <ValidationMessage For="@(() => insured.Gender)" />
+
+                               <!-- Health Factors Checklist -->
+                                <div class="form-group">
+                                    <label>Health Factors: </label>
+                                    <div>
+                                        @foreach (var healthFactor in healthFactors)
+                                        {
+                                            <InputCheckbox @bind-Value="healthFactor.IsSelected" /> @healthFactor.Name
+                                        }
+                                    </div>
+                                </div> 
+                            </div>
+                            <hr />
+                        }
+                    }
+                }
+            }
+
+            <!-- Buttons -->
+            <button type="button" class="btn btn-primary" @onclick="() => AddMembers(InsuranceType?.InsuranceId ?? 0)">Add Members</button>
+            <button type="button" class="btn btn-primary" @onclick="() => CalculatePremium()">Calculate Premium</button>
+            <button type="button" class="btn btn-success" @onclick="() => BuyPlanWithPolicyId(InsuranceType?.InsuranceId ?? 0)">Buy Policy</button>
+        </EditForm>
+    </div>
+</div>
+
+@if (premium!=0)
+{
+    <div class="alert alert-info mt-3">
+        Estimated Premium: @premium.ToString("C", new CultureInfo("hi-IN"));
+    </div>
+}
+
+@code {
+    [Parameter] public int Id { get; set; }
+    [Parameter] public int HolderId { get; set; }
+    private PremiumModel premiumModel = new PremiumModel();
+    private InsuranceTypeDto? InsuranceType;
+    private List<InsuredDto> insuredDetailsList = new List<InsuredDto>();
+
+    private List<HealthFactor> healthFactors = new List<HealthFactor>();
+    private PolicyDto policy = new PolicyDto();
+    private decimal premium;
+    private int insuncePolicyId;
+    private int PolicyId;
+    private void NavigateToProfile() => nav.NavigateTo("/User/{PolicyHolderId}");
+    private void NavigateToPlans() => nav.NavigateTo("/PlansAfter/{PolicyHolderId}");
+    private void NavigateToPolicies() => nav.NavigateTo("/YourPolicies/{PolicyHolderId}");
+    private void NavigateToClaimStatus() => nav.NavigateTo("/Claim/{policyHolderId}");
+    private void NavigateToLogin() => nav.NavigateTo("/Login");
+    public void Logout()
+    {
+
+        nav.NavigateTo("/");
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        InsuranceType = await InsuranceService.GetById(Id);
+        if (InsuranceType != null)
+        {
+            premiumModel.BaseRate = InsuranceType.BaseRate;
+            premiumModel.CoverageSize = InsuranceType.CoverageSize;
+            UpdateInsuredDetails();
+            InitializeHealthFactors();
+        }
+    }
+    private void InitializeHealthFactors()
+    {
+        healthFactors = new List<HealthFactor>
+        {
+            new HealthFactor { Name = "Heart Disease", Value = 0.02m },
+            new HealthFactor { Name = "Asthma", Value = 0.02m },
+            new HealthFactor { Name = "Diabetes", Value = 0.02m },
+            new HealthFactor { Name = "Cholesterol", Value = 0.02m },
+            new HealthFactor { Name = "Blood Pressure", Value = 0.02m },
+            new HealthFactor { Name = "Cancer", Value = 0.02m },
+            new HealthFactor { Name = "None", Value = 0.00m }
+        };
+    }
+    private void UpdateInsuredDetails()
+    {
+        insuredDetailsList.Clear();
+        for (int i = 0; i < premiumModel.CoverageSize; i++)
+        {
+            insuredDetailsList.Add(new InsuredDto());
+        }
+    }
+
+    private async Task AddMembers(int insuranceId)
+    {
+        List<int> savedInsuredIds = new();
+        foreach (var insured in insuredDetailsList)
+        {
+            insured.PolicyHolderId = HolderId;
+            insured.RegistrationDate = DateTime.Now;
+            var savedInsured = await service.AddAndGet(insured); // Collect response here with insuredId
+
+            savedInsuredIds.Add(savedInsured.InsuredId);
+        }
+
+
+        await js.InvokeVoidAsync("alert", "All members have been added successfully.");
+
+        if (insuranceId > 0)
+        {
+            policy = new PolicyDto
+                {
+                    PolicyNumber = savedInsuredIds[0].GetHashCode().ToString() + insuranceId.GetHashCode().ToString(),
+                    InsuranceTypeId = insuranceId,
+                    StartDate = DateTime.Today,
+                    EndDate = DateTime.Today.AddYears(1),
+                    PremiumAmount = CalculatePremium()
+                };
+
+            var savedPolicy = await PolicyService.AddAndGet(policy); // Collect response with policyId
+
+            // Add logging to check if savedPolicy and PolicyId are valid
+            Console.WriteLine($"Saved Policy: {savedPolicy}");
+            if (savedPolicy == null || savedPolicy.PolicyId == 0)
+            {
+                throw new Exception("PolicyId is not returned or is invalid.");
+            }
+
+            PolicyId = savedPolicy.PolicyId;
+
+            foreach (var insured in insuredDetailsList)
+                for (int i = 0; i < insuredDetailsList.Count(); i++)
+                {
+                    var insuredPolicy = new InsuredPolicyDto
+                    {
+                        InsuredId = savedInsuredIds[i],
+                        PolicyId = PolicyId,
+                        ApprovalStatus = "Pending",
+                        RenewalStatus = "Pending",
+                        AdminId = 2,
+                        ApprovalDate = DateTime.Now
+                    };
+
+                    var saved= await InusuredPolicyService.AddAndGet(insuredPolicy); // Add insured to policy
+                    insuncePolicyId = saved.InsuredPolicyId;
+                }
+        }
+    }
+
+    private async Task BuyPlanWithPolicyId(int insuranceId)
+    {
+        nav.NavigateTo($"/BuyPlan/{HolderId}/{insuncePolicyId}/{PolicyId}");
+    }
+
+    private decimal CalculatePremium()
+    {
+        decimal coverageAmount = premiumModel.CoverageType switch
+        {
+            "Bronze" => 300m,
+            "Silver" => 60m,
+            "Gold" => 90m,
+            _ => 0m
+        };
+        decimal prem = (((premiumModel.BaseRate + coverageAmount) / 100) + premiumModel.BaseRate) * premiumModel.NumberOfMembers;
+        double premlog = Math.Log10((double)prem);
+        premium = (decimal)premlog*1000;
+        return premium;
+    }
+
+    private string GeneratePolicyNumber(int HolderId, int insuranceId)
+    {
+        return $"{HolderId:D3}{insuranceId:D3}";
+    }
+
+    public class PremiumModel
+    {
+        public decimal BaseRate { get; set; }
+        public int NumberOfMembers { get; set; }
+        public string CoverageType { get; set; } = string.Empty;
+        public int CoverageSize { get; set; }
+    }
+    public class HealthFactor
+    {
+
+        public string Name { get; set; }
+        public decimal Value{ get; set; }
+        public bool IsSelected{ get; set; }
+    }
+}

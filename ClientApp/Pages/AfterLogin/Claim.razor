@@ -1,0 +1,324 @@
+﻿@page "/Claim/{PolicyHolderId:int}"
+
+@using MyClientApp.Services
+@inject IHospitalService hservice
+@inject IClaimService Cservice
+@inject IPolicyHolderDtoService Pservice
+@inject IInsuredPolicyService IPservice
+@inject IInsuredService Iservice
+@inject HttpClient Http
+@inject NavigationManager Navigation
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit a Claim</title>
+    <nav class="navbar">
+    <div class="navbar-left">
+        <img src="/images/CompanyLogo-removebg-preview.png" alt="Logo" class="logo" />
+    </div>
+    <div class="navbar-right">
+       
+
+    <a @onclick="NavigateToProfile">Profile</a>
+    <a @onclick="NavigateToPlans">Plans</a>
+    <a @onclick="NavigateToPolicies">Your Policies</a>
+    <a @onclick="NavigateToClaimStatus">Claim Status</a>
+    <a @onclick="Logout">Logout</a>
+    </div>
+    </nav>
+</head>
+<body>
+    <div class="container mt-5">
+        <h3 class="text-center text-primary mb-4">Submit a Claim</h3>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        @if (isClaimSubmitted)
+                        {
+                            <div class="alert alert-success text-center" role="alert">
+                                <i class="fas fa-check-circle"></i> Claim successfully submitted! Redirecting to your policies...
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-group mb-4">
+                                <label for="policyid">Insured Policy Id:</label>
+                                <InputNumber @bind-Value="enteredPolicyid" id="policyid" class="form-control" @onkeypress="HandleKeyPress" placeholder="Enter Policy Number" />
+                                <button class="btn btn-primary mt-3" @onclick="CheckPolicyHolder">
+                                    <i class="fas fa-search"></i> Verify Policy
+                                </button>
+                            </div>
+
+                            @if (!string.IsNullOrEmpty(errorMessage))
+                            {
+                                <div class="alert alert-danger" role="alert">
+                                    <i class="fas fa-exclamation-circle"></i> @errorMessage
+                                </div>
+                            }
+
+                            @if (isSubmitting)
+                            {
+                                <div class="d-flex justify-content-center">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            }
+
+                            @if (isPolicyHolderValid)
+                            {
+                                <div class="card mt-4">
+                                    <div class="card-header">
+                                        <h5 class="card-title text-center">Claim Details</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p><strong>Verified Insurance Policy Id:</strong> @claim.InsuredPolicyId</p>
+
+                                        <EditForm Model="claim" OnValidSubmit="SubmitClaimAsync">
+                                            <DataAnnotationsValidator />
+                                            <ValidationSummary />
+
+                                            <div class="form-group mb-3">
+                                                <label for="claimdate">Claim Date:</label>
+                                                <InputDate @bind-Value="claim.ClaimDate" id="claimdate" class="form-control" readonly />
+                                            </div>
+
+                                            <div class="form-group mb-3">
+                                                <label for="claimamount">Claim Amount:</label>
+                                                <InputNumber @bind-Value="claim.ClaimAmount" id="claimamount" class="form-control" placeholder="Enter Claim Amount" />
+                                            </div>
+
+                                            <div class="form-group mb-3">
+                                                <label for="documenttype">Document Type:</label>
+                                                <InputText @bind-Value="claim.DocumentType" id="documenttype" class="form-control" placeholder="Enter Document Type" />
+                                            </div>
+
+                                            <div class="form-group mb-3">
+                                                <label for="fileupload">Upload Document:</label>
+                                                <InputFile OnChange="HandleFileSelected" id="fileupload" class="form-control" />
+                                            </div>
+
+                                            @if (!string.IsNullOrEmpty(uploadMessage))
+                                            {
+                                                <div class="alert @((uploadMessage.Contains("successfully")) ? "alert-success" : "alert-danger")" role="alert">
+                                                    <i class="fas fa-info-circle"></i> @uploadMessage
+                                                </div>
+                                            }
+
+                                            <div class="form-group mb-3">
+                                                <label for="hospital">Search and Select Hospital:</label>
+                                                <input type="text" @bind="searchTerm" @oninput="FilterHospitals" class="form-control" placeholder="Search hospitals..." />
+                                                @if (filteredHospitals.Any())
+                                                {
+                                                    <ul class="list-group mt-2">
+                                                        @foreach (var hospital in filteredHospitals)
+                                                        {
+                                                            <li class="list-group-item list-group-item-action" @onclick="() => SelectHospital(hospital)">
+                                                                @hospital.Name - @hospital.Address
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                }
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary btn-block" disabled="@isSubmitting">
+                                                <i class="fas fa-paper-plane"></i> Submit Claim
+                                            </button>
+                                        </EditForm>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+@code {
+    private ClaimDto claim = new ClaimDto();
+    private List<HospitalDto> hospitals = new List<HospitalDto>();
+    private List<HospitalDto> filteredHospitals = new List<HospitalDto>();
+    private List<InsuredPolicyDto> insuredPolicies = new List<InsuredPolicyDto>();
+    private bool isSubmitting = false;
+    private bool isClaimSubmitted = false;
+    private int enteredPolicyid = 0;
+    private bool isPolicyHolderValid = false;
+    private string errorMessage = string.Empty;
+    private string uploadMessage = string.Empty;
+    private string searchTerm = string.Empty;
+    [Parameter]
+    public int PolicyHolderId { get; set; }
+    private void NavigateToProfile() => Navigation.NavigateTo("/User/{PolicyHolderId}");
+    private void NavigateToPlans() => Navigation.NavigateTo("/PlansAfter/{PolicyHolderId}");
+    private void NavigateToPolicies() => Navigation.NavigateTo("/YourPolicies/{PolicyHolderId}");
+    private void NavigateToClaimStatus() => Navigation.NavigateTo("/Claim/{policyHolderId}");
+    private void NavigateToLogin() => Navigation.NavigateTo("/Login");
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            hospitals = (await hservice.GetAll()).ToList();
+            filteredHospitals = new List<HospitalDto>(); // Initialize empty list
+
+            claim.ClaimDate = DateTime.Today;
+
+            var insureds = (await Iservice.GetAll())
+                            .Where(i => i.PolicyHolderId == PolicyHolderId)
+                            .ToList();
+
+            if (insureds.Any())
+            {
+                var insuredIds = insureds.Select(i => i.InsuredId).Distinct().ToList();
+                insuredPolicies = (await IPservice.GetAll())
+                                    .Where(ip => insuredIds.Contains(ip.InsuredId))
+                                    .ToList();
+            }
+            else
+            {
+                errorMessage = "No insured policies found for this policy holder.";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Failed to load hospitals or policies: {ex.Message}";
+        }
+    }
+    public void Logout()
+    {
+        
+        Navigation.NavigateTo("/");
+    }
+    private async Task CheckPolicyHolder()
+    {
+        try
+        {
+            InsuredPolicyDto InsuredPolicy = insuredPolicies.FirstOrDefault(ip => ip.InsuredPolicyId == enteredPolicyid);
+            if (InsuredPolicy != null)
+            {
+                claim.PolicyHolderId = PolicyHolderId;
+                claim.InsuredPolicyId = InsuredPolicy.InsuredPolicyId;
+                claim.ClaimStatus = "pending";
+                claim.DispenseAmount = 0;
+
+                isPolicyHolderValid = true;
+                errorMessage = string.Empty;
+            }
+            else
+            {
+                isPolicyHolderValid = false;
+                errorMessage = "Invalid Policy Number. This policy does not belong to the specified Policy Holder.";
+            }
+        }
+        catch (HttpRequestException ex)
+        {
+            isPolicyHolderValid = false;
+            errorMessage = $"Policy not found. Please check the Policy Number: {ex.Message}";
+        }
+    }
+
+    private void HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            CheckPolicyHolder();
+        }
+    }
+
+    private async Task SubmitClaimAsync()
+    {
+        isSubmitting = true;
+        try
+        {
+            await Cservice.Add(claim);
+
+            isClaimSubmitted = true;
+            errorMessage = string.Empty;
+
+            await Task.Delay(3000);
+
+            Navigation.NavigateTo($"/YourPolicies/{PolicyHolderId}");
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Failed to submit claim: {ex.Message}";
+        }
+        finally
+        {
+            isSubmitting = false;
+        }
+    }
+
+    private void FilterHospitals(ChangeEventArgs e)
+    {
+        searchTerm = e.Value.ToString();
+        if (string.IsNullOrWhiteSpace(searchTerm))
+        {
+            filteredHospitals = new List<HospitalDto>();
+            return;
+        }
+
+        filteredHospitals = hospitals
+            .Where(h => h.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                        h.Address.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+    }
+
+    private void SelectHospital(HospitalDto selectedHospital)
+    {
+        claim.HospitalId = selectedHospital.HospitalId;
+        searchTerm = $"{selectedHospital.Name} - {selectedHospital.Address}";
+        filteredHospitals = new List<HospitalDto>();
+    }
+
+
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        try
+        {
+            var file = e.File;
+
+            if (file != null)
+            {
+                using var content = new MultipartFormDataContent();
+                using var stream = file.OpenReadStream(maxAllowedSize: 10_000_000); // Max size 10 MB
+                var streamContent = new StreamContent(stream);
+
+                streamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(file.ContentType);
+
+                content.Add(streamContent, "file", file.Name);
+
+                var response = await Http.PostAsync("Upload/upload", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseData = await response.Content.ReadFromJsonAsync<Response>();
+                    if (responseData != null)
+                    {
+                        claim.DocumentPath = responseData.FilePath;
+                    }
+                }
+                else
+                {
+                    uploadMessage = "Failed to upload document.";
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            uploadMessage = $"Failed to upload document: {ex.Message}";
+        }
+    }
+    public class Response
+    {
+        public string FilePath { get; set; }
+    }
+    }
+
+}

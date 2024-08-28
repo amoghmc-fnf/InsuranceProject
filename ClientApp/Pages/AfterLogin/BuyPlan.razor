@@ -1,0 +1,108 @@
+﻿@page "/BuyPlan/{HolderId:int}/{insuncePolicyId:int}/{PolicyId:int}"
+@using MyClientApp.Services
+@inject HttpClient Http
+@inject IPaymentService PaymentService
+@inject IPolicyService policyService
+@inject IInsuredPolicyService insuredPolicies
+@inject NavigationManager Navigation
+@inject IJSRuntime js
+
+<h3>Buy Plan</h3>
+
+<div class="card mt-4">
+    <div class="card-body">
+        @if (Policy != null)
+        {
+            <h4>Your payment has been done successfully!</h4>
+            <p>Payment Details:</p>
+            <ul>
+                <li><strong>Policy Holder ID:</strong> @HolderId</li>
+                <li><strong>Insured Policy ID:</strong> @insuncePolicyId</li>
+                <li><strong>Premium Amount:</strong> @Policy.PremiumAmount.ToString("C")</li>
+            </ul>
+        }
+        else
+        {
+            <p>Loading payment details...</p>
+        }
+        <button type="button" class="btn btn-primary btn-sm" @onclick="()=>DownloadPolicy(PolicyId)">Download</button>
+    </div>
+
+   
+</div>
+
+@code {
+    [Parameter] public int HolderId { get; set; }
+    [Parameter] public int insuncePolicyId { get; set; }
+    [Parameter] public int PolicyId { get; set; }
+    private PaymentDto payment = new PaymentDto();
+    private PolicyDto Policyupdate = new PolicyDto();
+    private PolicyDto Policy = new  PolicyDto();
+    public string errorMessage = string.Empty;
+    protected override async Task OnInitializedAsync()
+    {
+        Policy = await policyService.GetById(PolicyId);
+
+        if (Policy != null)
+        {
+            await ProcessPayment();
+        }
+        else
+        {
+            js.InvokeVoidAsync("alert", "Failed to load policy details.");
+        }
+    }
+
+    private async Task ProcessPayment()
+    {
+        // Initialize payment details
+        payment = new PaymentDto
+        {
+            InsuredPolicyId = insuncePolicyId,
+            PolicyHolderId = HolderId,
+            PaymentDate = DateTime.Now,
+            PaymentAmount = Policy.PremiumAmount // Use the premium amount from the policy
+        };
+
+        // Add payment to the database
+        var response= await PaymentService.AddAndGet(payment);
+
+        Policyupdate = new PolicyDto
+            {
+                PolicyId = Policy.PolicyId,
+                PolicyNumber = Policy.PolicyNumber,
+                InsuranceTypeId = Policy.InsuranceTypeId,
+                StartDate=DateTime.Now,
+                EndDate = DateTime.Today.AddYears(1),
+                PremiumAmount =Policy.PremiumAmount
+            };
+
+        await policyService.Update(Policyupdate);
+        if (response!=null)
+        {
+            js.InvokeVoidAsync("alert", "Payment has been processed successfully.");
+        }
+        else
+        {
+            js.InvokeVoidAsync("alert", "There was an error processing your payment.");
+        }
+    }
+    private async Task DownloadPolicy(int policyId)
+    {
+        try
+        {
+
+            var insuredpolicyId = insuncePolicyId;
+         
+            var response = await Http.GetAsync($"pdf/GeneratePolicyPdf?insuredpolicyId={insuredpolicyId}");
+            response.EnsureSuccessStatusCode();
+            var fileName = $"Policy_{policyId}.pdf";
+            var fileBytes = await response.Content.ReadAsByteArrayAsync();
+            await js.InvokeVoidAsync("saveAsFile", fileName, Convert.ToBase64String(fileBytes));
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Failed to download policy: {ex.Message}";
+        }
+    }
+}

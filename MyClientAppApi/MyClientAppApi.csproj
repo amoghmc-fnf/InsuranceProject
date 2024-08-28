@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="itext.bouncy-castle-adapter" Version="8.0.5" />
+    <PackageReference Include="itext7" Version="8.0.5" />
+    <PackageReference Include="itext7.bouncy-castle-fips-adapter" Version="8.0.5" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AdminDbService\AdminDbService.csproj" />
+    <ProjectReference Include="..\AdminDll\AdminModel.csproj" />
+    <ProjectReference Include="..\JwtModels\JwtModels.csproj" />
+    <ProjectReference Include="..\PolicyDbService\PolicyDbService.csproj" />
+    <ProjectReference Include="..\PolicyModel\PolicyModel.csproj" />
+    <ProjectReference Include="..\UserDbService\UserDbService.csproj" />
+    <ProjectReference Include="..\UserModel\UserModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,99 @@
+is_global = true
+build_property.EnableAotAnalyzer = 
+build_property.EnableSingleFileAnalyzer = 
+build_property.EnableTrimAnalyzer = false
+build_property.IncludeAllContentForSelfExtract = 
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = browser
+build_property.RootNamespace = MyClientApp
+build_property.RootNamespace = MyClientApp
+build_property.ProjectDir = C:\Users\6147952\source\repos\WebApplication1\ClientApp\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = false
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\6147952\source\repos\WebApplication1\ClientApp
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/6147952/source/repos/WebApplication1/ClientApp/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/6147952/source/repos/WebApplication1/ClientApp/Pages/AfterLogin/BuyPlan.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWZ0ZXJMb2dpblxCdXlQbGFuLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/6147952/source/repos/WebApplication1/ClientApp/Pages/AfterLogin/Claim.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWZ0ZXJMb2dpblxDbGFpbS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/6147952/source/repos/WebApplication1/ClientApp/Pages/AfterLogin/ClaimStatus.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWZ0ZXJMb2dpblxDbGFpbVN0YXR1cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/6147952/source/repos/WebApplication1/ClientApp/Pages/AfterLogin/Plans.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWZ0ZXJMb2dpblxQbGFucy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/6147952/source/repos/WebApplication1/ClientApp/Pages/AfterLogin/PlansDetail.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWZ0ZXJMb2dpblxQbGFuc0RldGFpbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/6147952/source/repos/WebApplication1/ClientApp/Pages/AfterLogin/User.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWZ0ZXJMb2dpblxVc2VyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/6147952/source/repos/WebApplication1/ClientApp/Pages/AfterLogin/YourPolicies.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWZ0ZXJMb2dpblxZb3VyUG9saWNpZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/6147952/source/repos/WebApplication1/ClientApp/Pages/BeforeLogin/AboutUs.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmVmb3JlTG9naW5cQWJvdXRVcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/6147952/source/repos/WebApplication1/ClientApp/Pages/BeforeLogin/ContactUs.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmVmb3JlTG9naW5cQ29udGFjdFVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/6147952/source/repos/WebApplication1/ClientApp/Pages/BeforeLogin/Home.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmVmb3JlTG9naW5cSG9tZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/6147952/source/repos/WebApplication1/ClientApp/Pages/BeforeLogin/Login.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmVmb3JlTG9naW5cTG9naW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/6147952/source/repos/WebApplication1/ClientApp/Pages/BeforeLogin/Plans.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmVmb3JlTG9naW5cUGxhbnMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/6147952/source/repos/WebApplication1/ClientApp/Pages/BeforeLogin/PlansDetail.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmVmb3JlTG9naW5cUGxhbnNEZXRhaWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/6147952/source/repos/WebApplication1/ClientApp/Pages/BeforeLogin/PremiumCalc.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmVmb3JlTG9naW5cUHJlbWl1bUNhbGMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/6147952/source/repos/WebApplication1/ClientApp/Pages/BeforeLogin/Register.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmVmb3JlTG9naW5cUmVnaXN0ZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/6147952/source/repos/WebApplication1/ClientApp/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/6147952/source/repos/WebApplication1/ClientApp/Layout/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-4cqles2dz3
+
+[C:/Users/6147952/source/repos/WebApplication1/ClientApp/Layout/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-10iz0ayd3i

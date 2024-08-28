@@ -1,0 +1,253 @@
+﻿@page "/Login"
+@inject HttpClient httpClient
+@inject NavigationManager nav
+@inject IJSRuntime js
+@using MyClientApp.Services
+@using MyClientApp.Data
+@inject IPolicyHolderDtoService PolicyHolderService
+
+<header>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <img src="/images/CompanyLogo-removebg-preview.png" alt="Logo" class="logo" />
+        </div>
+        <div class="navbar-right">
+
+            <a @onclick="NavigateToHome">Home</a>
+            <a @onclick="NavigateToPlansBefore">Plans</a>
+            <a @onclick="NavigateToLogin">Login/Register</a>
+
+            <a @onclick="NavigateToContact">Contact Us</a>
+            <a @onclick="NavigateToAbout">About Us</a>
+        </div>
+    </nav>
+</header>
+<h3 class="page-title">Login to Your Account</h3>
+<img src="/images/image.png" alt="Medical Insurance" style="width:60vh; float:left; margin-right:20px" />
+
+
+<div class="form-container">
+    <EditForm Model="loginModel" OnValidSubmit="HandleLogin">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="card-login">
+            <div class="card-body">
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <InputText id="email" class="form-control" @bind-Value="loginModel.Email" />
+                    <ValidationMessage For="@(() => loginModel.Email)" />
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <InputText id="password" type="password" class="form-control" @bind-Value="loginModel.PasswordHash" />
+                    <ValidationMessage For="@(() => loginModel.PasswordHash)" />
+                </div>
+
+               @*  <div class="otp-section mt-4">
+                    <h3>OR</h3>
+                    <h5 class="otp-title">Login with OTP</h5>
+
+                    <div class="form-group">
+                        <label for="otp">Enter 4-Digit OTP</label>
+                        <InputText id="otp" type="otp" class="form-control" maxlength="4" @bind-value="loginModel.otp" />
+                        <validationmessage for="@(() => loginModel.otp)" />
+                    </div>
+                    @* <button type="submit" class="btn btn-secondary">Login with OTP</button> *@
+
+               @*  </div> *@ 
+
+                <button type="submit" class="btn btn-primary mt-4">Login</button>
+              
+                <p class="text-lg-end mt-4">
+                    Don't have an account? <a href="/register">Register here</a>
+                </p>
+
+            </div>
+        </div>
+    </EditForm>
+    @if (errorMessage != null)
+    {
+        <div class="alert alert-danger">@errorMessage</div>
+    }
+
+
+
+
+
+    <style>
+        .login-container {
+            display: flex;
+            align-items: center;
+            justify-content: right;
+            height: 100vh;
+        }
+
+
+        .form-container {
+            flex: 2;
+            display: flex;
+            justify-content: right;
+        }
+
+        .card-carousel {
+            display: flex;
+            align-items: center;
+        }
+
+        .card-wrapper {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            overflow: hidden;
+            width: 80%;
+        }
+
+        .card {
+            width: 28rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .card-login {
+            width: 28rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            justify-content: left;
+        }
+
+        .card:hover {
+            transform: scale(1.1);
+            z-index: 1;
+        }
+
+        .card-body {
+            padding: 15px;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            font-size: 1rem;
+            color: #333;
+        }
+   
+        /* Header */
+        header {
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+            padding: 15px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand img {
+            height: 40px;
+        }
+
+        .navbar-nav {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            margin: 0;
+        }
+
+            .navbar-nav a {
+                text-decoration: none;
+                color: var(--secondary-color);
+                font-weight: bold;
+                transition: color 0.3s;
+            }
+
+                .navbar-nav a:hover {
+                    color: var(--primary-color);
+                }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .login-button {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+            .login-button:hover {
+                background-color: var(--primary-color);
+            }
+
+        /* Main Section */
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+
+
+    </style>
+</div>
+
+@code {
+
+    private LoginDto loginModel = new LoginDto();
+    private string errorMessage;
+    private PolicyHolderDto policyHolder;
+
+    private async Task HandleLogin()
+    {
+        var token = await PolicyHolderService.LoginAsync(loginModel);
+
+        if (!string.IsNullOrEmpty(token))
+        {
+            // Assuming PolicyHolderService.LoginAsync populates the policyHolder object
+            policyHolder = await PolicyHolderService.GetPolicyHolderByEmailAsync(loginModel.Email);
+
+            if (policyHolder != null)
+            {
+                int Id = policyHolder.PolicyHolderId;
+
+                // Save the token or handle session management here if necessary
+
+                nav.NavigateTo($"/PlansAfter/{Id}");
+            }
+            else
+            {
+                errorMessage = "Unable to retrieve policy holder details.";
+            }
+        }
+        else
+        {
+            errorMessage = "Invalid login attempt. Please check your credentials.";
+        }
+    }
+    private void NavigateToHome() => nav.NavigateTo("/");
+    private void NavigateToPlansBefore() => nav.NavigateTo("/PlansBefore");
+    private void NavigateToContact() => nav.NavigateTo("/ContactUs");
+    private void NavigateToAbout() => nav.NavigateTo("/AboutUs");
+    private void NavigateToLogin() => nav.NavigateTo("/Login");
+}

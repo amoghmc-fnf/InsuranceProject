@@ -1,0 +1,132 @@
+﻿@using MyClientApp.Services
+@inject AuthService authService
+@inject NavigationManager Navigation
+@inject HttpClient http
+
+<style>
+    .fixed-navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #f0f0f0; /* Light background color */
+        color: #333; /* Dark font color */
+        z-index: 1000;
+        display: flex;
+        justify-content: flex-end; /* Align the menu to the right */
+        padding: 10px 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: adds a shadow to the navbar */
+    }
+
+    .navbar-left {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        /* Allows the logo container to occupy space on the left */
+    }
+
+    .logo {
+        height: 40px; /* Adjust logo size */
+    }
+
+    .navbar-right {
+        display: flex;
+        gap: 20px; /* Space between the navbar items */
+    }
+
+        .navbar-right a {
+            text-decoration: none;
+            color: #333; /* Dark font color */
+            font-weight: bold;
+            padding: 8px 12px; /* Padding around the links */
+            transition: color 0.3s; /* Smooth transition for hover effect */
+        }
+
+            .navbar-right a:hover {
+                color: #555; /* Slightly lighter color on hover */
+            }
+
+    .main-content {
+        margin-top: 50px; /* Adjust based on navbar height */
+        padding: 10px;
+    }
+
+    .navbar-right {
+        display: flex;
+        gap: 20px; /* Space between the navbar items */
+    }
+
+        .navbar-right a {
+            text-decoration: none;
+            color: #333; /* Dark font color */
+            font-weight: bold;
+            padding: 8px 12px; /* Padding around the links */
+            transition: color 0.3s; /* Smooth transition for hover effect */
+        }
+
+            .navbar-right a:hover {
+                color: #555; /* Slightly lighter color on hover */
+            }
+
+    .main-content {
+        margin-top: 60px; /* Adjust based on navbar height */
+        padding: 10px;
+    }
+</style>
+@code {
+    protected override void OnInitialized()
+    {
+        authService.OnAuthStateChanged += StateHasChanged;
+    }
+    private bool _isAuthenticated;
+
+    public event Action? OnAuthStateChanged;
+    private void NavigateToProfile() => Navigation.NavigateTo("/User/{PolicyHolderId}");
+    private void NavigateToPlans() => Navigation.NavigateTo("/PlansAfter/{PolicyHolderId}");
+    private void NavigateToPolicies() => Navigation.NavigateTo("/YourPolicies/{PolicyHolderId}");
+    private void NavigateToClaimStatus() => Navigation.NavigateTo("/Claim/{policyHolderId}");
+    private void NavigateToLogin() => Navigation.NavigateTo("/Login");
+    private void NavigateToHome() => Navigation.NavigateTo("/");
+    private void NavigateToPlansBefore() => Navigation.NavigateTo("/PlansBefore");
+    private void NavigateToContact() => Navigation.NavigateTo("/ContactUs");
+    private void NavigateToAbout() => Navigation.NavigateTo("/AboutUs");
+
+    public bool IsAuthenticated
+    {
+        get => _isAuthenticated;
+        private set
+        {
+            if (_isAuthenticated != value)
+            {
+                _isAuthenticated = value;
+                OnAuthStateChanged?.Invoke();  // Trigger event on change
+            }
+        }
+    }
+
+
+    public async Task LoginAsync(string email, string password)
+    {
+        var response = await http.PostAsJsonAsync("PolicyHolder/authenticate", new { Email = email, Password = password });
+
+        if (response.IsSuccessStatusCode)
+        {
+            IsAuthenticated = true; 
+            // Set to true on successful login
+            Navigation.NavigateTo("/PlansAfter/{ PolicyHolderId}");
+        }
+    }
+
+    public void Logout()
+    {
+        IsAuthenticated = false;
+        Navigation.NavigateTo("/");
+    }
+    public void Dispose()
+    {
+        authService.OnAuthStateChanged -= StateHasChanged;
+    }
+}
+ 
+
+        

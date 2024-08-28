@@ -1,0 +1,184 @@
+﻿@page "/ClaimStatus/{policyHolderId:int}"
+@using MyClientApp.Services
+
+@inject IPolicyHolderDtoService HolderService
+@inject IClaimService ClaimService
+@inject IInsuredService InsuredService
+@inject IPolicyService PolicyService
+@inject IHospitalService HospitalService
+@inject IInsuranceTypeService InsuranceTypeService
+@inject IInsuredPolicyService InsurancePolicyService
+
+<h3>Claim Status</h3>
+
+@if (UserClaims != null && UserClaims.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Insured Name</th>
+                <th>Plan</th>
+                <th>ClaimId</th>
+                <th>Claim Date</th>
+                <th>Claim Amount</th>
+                <th>Claim Status</th>
+                <th>Dispense Amount</th>
+                <th>Hospital Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var claim in UserClaims)
+            {
+                // Fetch claim-specific details for the row
+                var insuredPerson = isuredperson; // Adjust this based on how you store it
+                var insuranceTypeName = insuranceName; // Adjust this based on how you store it
+
+                <tr>
+                    <td>@insuredPerson</td>
+                    <td>@insuranceTypeName</td>
+                    <td>@claim.ClaimId</td>
+                    <td>@claim.ClaimDate.ToShortDateString()</td>
+                    <td>@claim.ClaimAmount</td>
+                    <td>@claim.ClaimStatus</td>
+                    <td>@claim.DispenseAmount</td>
+                    <td>@HospitalName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else if (!string.IsNullOrEmpty(errorMessage))
+{
+    <p>@errorMessage</p>
+}
+else
+{
+    <p>No claims found for this policy holder.</p>
+}
+
+
+<div>
+    <style>
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 1em;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+            background-color: #f9f9f9;
+        }
+
+        /* Header Styling */
+        thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        /* Row Styling */
+        tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+            tbody tr:nth-of-type(even) {
+                background-color: #f3f3f3;
+            }
+
+            tbody tr:last-of-type {
+                border-bottom: 2px solid #009879;
+            }
+
+        /* Sticky Header */
+        th {
+            position: sticky;
+            top: 0;
+            background-color: #009879;
+            color: #ffffff;
+            z-index: 2;
+        }
+
+        /* Cell Padding */
+        th, td {
+            padding: 12px 15px;
+        }
+
+        /* Responsive Table Wrapper */
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        /* Hover Effects */
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Caption Styling */
+        caption {
+            caption-side: bottom;
+            font-style: italic;
+            text-align: right;
+            margin-top: 10px;
+        }
+    </style>
+</div>
+
+
+@code {
+    [Parameter]
+    public int policyHolderId { get; set; }
+
+    private List<ClaimDto> UserClaims = new List<ClaimDto>();
+    private string insuranceName;
+    private string isuredperson;
+    private string HospitalName;
+    private string errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var user = await HolderService.GetById(policyHolderId);
+            if (user == null)
+            {
+                errorMessage = "Policy holder not found.";
+                return;
+            }
+
+            UserClaims = (await ClaimService.GetAll())
+                        .Where(i => i.PolicyHolderId == user.PolicyHolderId)
+                        .ToList();
+
+            foreach (var claim in UserClaims)
+            {
+                if (claim != null)
+                {
+                    var hospitalid = claim.HospitalId;
+                    var hospital = await HospitalService.GetById(hospitalid);
+                    HospitalName = hospital.Name;
+                    
+                    var insuredPolicy = await InsurancePolicyService.GetById(claim.InsuredPolicyId);
+                    if (insuredPolicy != null)
+                    {
+                        var insured = await InsuredService.GetById(insuredPolicy.InsuredId);
+                        isuredperson = insured.Name;
+
+                        var policy = await PolicyService.GetById(insuredPolicy.PolicyId);
+                        if (policy != null)
+                        {
+                            var insuranceType = await InsuranceTypeService.GetById(policy.InsuranceTypeId);
+                            insuranceName = insuranceType?.InsuranceType;
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error fetching claims: {ex.Message}";
+        }
+    }
+}

@@ -1,0 +1,386 @@
+﻿@page "/"
+@inject NavigationManager Navigation
+<header>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <img src="/images/CompanyLogo-removebg-preview.png" alt="Logo" class="logo" />
+        </div>
+        <div class="navbar-right">
+            
+                <a @onclick="NavigateToHome">Home</a>
+                <a @onclick="NavigateToPlansBefore">Plans</a>
+                <a @onclick="NavigateToLogin">Login/Register</a>
+          
+            <a @onclick="NavigateToContact">Contact Us</a>
+            <a @onclick="NavigateToAbout">About Us</a>
+        </div>
+    </nav>
+</header>
+<main>
+    <div class="content">
+        <div class="health">
+            <h1>Health plans created with you in mind</h1>
+            <p>
+                Together is better. As part of CVS Health®, we're doing more for you. With expert care.
+                Extra support. A simple experience. Find individual & family health insurance benefits
+                just for you.
+            </p>
+            <button @onclick="NavigateToPlansBefore" class="explore-button">Explore plans</button>
+        </div>
+    </div>
+    <div class="content-image">
+        <img src="/images/Fam.jpg" alt="People laughing" />
+    </div>
+
+   <div class="premium-calculation-section">
+
+        <div class="left">
+
+            <!-- Add more images as needed -->
+
+            <img src="/images/MedIn.jpg" />
+
+
+        </div>
+
+        <div class="right">
+
+            <h2>We have the answer to your happy and secure future</h2>
+
+            <p>Health plans for every stage of your life.</p>
+
+
+            <form class="premium-form" method="get">
+
+                <div class="form-group">
+
+                    <label for="name">Name</label>
+
+                    <input type="text" id="name" class="form-control" placeholder="Enter Name">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="mobile">Mobile</label>
+
+                    <input type="tel" id="mobile" class="form-control" placeholder="Enter Mobile Number">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="pincode">Pincode</label>
+
+                    <input type="text" id="pincode" class="form-control" placeholder="Enter Pincode">
+
+                </div>
+
+                <button type="submit" class="btn btn-danger" @onclick="NavigateToPlansBefore">Get Quote</button>
+            </form>
+
+        </div>
+        </div>
+
+</main>
+
+<footer>
+    <div class="footer-links">
+        <div>
+            <h4>Helpful Links</h4>
+            <ul>
+                <li><a href="#">Contact us</a></li>
+                <li><a href="#">FAQs</a></li>
+
+            </ul>
+        </div>
+        <div>
+            <h4>About FNF</h4>
+            <ul>
+                <li><a href="#">About us</a></li>
+
+            </ul>
+        </div>
+
+    </div>
+    
+</footer>
+
+
+
+<div>
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-color: #004a8f;
+            --secondary-color: #0071ce;
+            --accent-color: #003366;
+            --background-color: #f7f7f7;
+            --text-color: #333;
+            --light-text-color: #666;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        /* Header */
+        header {
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+            padding: 15px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand img {
+            height: 40px;
+        }
+
+        .navbar-nav {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            margin: 0;
+        }
+
+            .navbar-nav a {
+                text-decoration: none;
+                color: var(--secondary-color);
+                font-weight: bold;
+                transition: color 0.3s;
+            }
+
+                .navbar-nav a:hover {
+                    color: var(--primary-color);
+                }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .login-button {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+            .login-button:hover {
+                background-color: var(--primary-color);
+            }
+
+        /* Main Section */
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .health {
+            background-color: #fff;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .content h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .content p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .explore-button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: background-color 0.3s;
+        }
+
+            .explore-button:hover {
+                background-color: var(--accent-color);
+            }
+
+        .content-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 40px 50px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .column h4 {
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .column ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .column a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+        }
+
+            .column a:hover {
+                text-decoration: underline;
+            }
+
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 40px 50px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .column h4 {
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .column ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .column a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+        }
+
+            .column a:hover {
+                text-decoration: underline;
+            }
+
+        .premium-calculation-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+
+            .premium-calculation-section .left {
+                width: 50%;
+            }
+
+            .premium-calculation-section .right {
+                width: 45%;
+            }
+
+            .premium-calculation-section h2 {
+                font-size: 1.8rem;
+                margin-bottom: 10px;
+            }
+
+            .premium-calculation-section p {
+                font-size: 1.2rem;
+                margin-bottom: 20px;
+            }
+
+        .plan-options {
+            margin-bottom: 20px;
+        }
+
+            .plan-options .btn {
+                margin-right: 10px;
+            }
+
+        .premium-form .form-group {
+            margin-bottom: 15px;
+        }
+
+        .premium-form .form-control {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+        }
+
+        .premium-form .btn-danger {
+            width: 100%;
+            padding: 10px;
+        }
+
+        .premium-calculation-section h2 {
+            font-family: 'Poppins', sans-serif; /* Change to a custom font */
+            font-weight: 700; /* Bold font */
+            font-size: 2rem; /* Adjust size */
+            color: #00008B; /* Darker color */
+            letter-spacing: 1px; /* Slight spacing between letters */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            margin-bottom: 15px;
+        }
+
+        .premium-calculation-section p {
+            font-family: 'Roboto', sans-serif; /* Change to a custom font */
+            font-weight: 400; /* Regular weight */
+            font-size: 1.2rem; /* Adjust size */
+            color: red; /* Slightly lighter color */
+            line-height: 1.6; /* Space between lines */
+            letter-spacing: 0.5px; /* Slight spacing between letters */
+            margin-bottom:20px;
+        }
+      
+    </style>
+</div>
+@code {
+
+   
+    private void NavigateToHome() => Navigation.NavigateTo("/");
+    private void NavigateToPlansBefore() => Navigation.NavigateTo("/PlansBefore");
+    private void NavigateToContact() => Navigation.NavigateTo("/ContactUs");
+    private void NavigateToAbout() => Navigation.NavigateTo("/AboutUs");
+    private void NavigateToLogin() => Navigation.NavigateTo("/Login");
+
+}

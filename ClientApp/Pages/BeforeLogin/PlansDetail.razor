@@ -1,0 +1,276 @@
+﻿@page "/PlansDetailBefore/{Id:int}"
+@using System.Globalization
+@using MyClientApp.Services
+@inject IInsuranceTypeService InsuranceService
+@inject NavigationManager N
+@inject IJSRuntime js
+<header>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <img src="/images/CompanyLogo-removebg-preview.png" alt="Logo" class="logo" />
+        </div>
+        <div class="navbar-right">
+
+            <a @onclick="NavigateToHome">Home</a>
+            <a @onclick="NavigateToPlansBefore">Plans</a>
+            <a @onclick="NavigateToLogin">Login/Register</a>
+
+            <a @onclick="NavigateToContact">Contact Us</a>
+            <a @onclick="NavigateToAbout">About Us</a>
+        </div>
+    </nav>
+</header>
+<div class="card mt-4">
+    <div class="card-header">
+        Insurance Plan
+    </div>
+    <div class="card-body">
+        <EditForm Model="@premiumModel">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <!-- Form Inputs -->
+
+            <div class="form-group">
+                <label for="numMembers">Number of Members: </label>
+                <InputNumber id="numMembers" class="form-control" @bind-Value="premiumModel.NumberOfMembers" />
+                <ValidationMessage For="@(() => premiumModel.NumberOfMembers)" />
+            </div>
+
+            <div class="form-group">
+                <label for="coverageType">Coverage Type: </label>
+                <InputSelect id="coverageType" class="form-control" @bind-Value="premiumModel.CoverageType">
+                    <option value="">Select Coverage Type</option>
+                    <option value="Bronze">Bronze 3 Lakh</option>
+                    <option value="Silver">Silver 6 Lakh</option>
+                    <option value="Gold">Gold 9 Lakh</option>
+                </InputSelect>
+                <ValidationMessage For="@(() => premiumModel.CoverageType)" />
+            </div>
+
+            @if (insuredDetailsList != null && insuredDetailsList.Count > 0)
+            {
+                if (premiumModel.NumberOfMembers > premiumModel.CoverageSize)
+                {
+                    js.InvokeVoidAsync("alert", "Number Of Members Exceeding the coverage size.");
+                }
+                else
+                {
+                    @for (int i = 0; i < premiumModel.NumberOfMembers; i++)
+                    {
+                        var insured = insuredDetailsList.ElementAtOrDefault(i);
+                        if (insured != null)
+                        {
+                            <div class="form-group">
+                                <label for="@($"insuredName_{i}")">Insured Name:</label>
+                                <InputText id="@($"insuredName_{i}")" class="form-control" @bind-Value="insured.Name" />
+                                <ValidationMessage For="@(() => insured.Name)" />
+
+                                <label for="@($"dob_{i}")">Date of Birth: </label>
+                                <InputDate id="@($"dob_{i}")" class="form-control" @bind-Value="insured.Dob" />
+                                <ValidationMessage For="@(() => insured.Dob)" />
+
+                                <label for="@($"gender_{i}")">Gender: </label>
+                                <InputSelect id="@($"gender_{i}")" class="form-control" @bind-Value="insured.Gender">
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </InputSelect>
+                                <ValidationMessage For="@(() => insured.Gender)" />
+
+                                 <!-- Health Factors Checklist -->
+                <div class="form-group">
+                <label>Health Factors: </label>
+                <div>
+                @foreach (var healthFactor in healthFactors)
+                {
+                <InputCheckbox @bind-Value="healthFactor.IsSelected" /> @healthFactor.Name
+                }
+                </div>
+                </div>
+                            </div>
+                            <hr />
+                        }
+                    }
+                }
+            }
+
+            <!-- Buttons -->
+           @*  <button type="button" class="btn btn-primary" @onclick="() => AddMembers(InsuranceType?.InsuranceId ?? 0)">Add Members</button> *@
+            <button type="button" class="btn btn-primary" @onclick="() => CalculatePremium()">Calculate Premium</button>
+            <button type="button" class="btn btn-success" @onclick="()=>BuyPlanWithPolicyID()">Buy Policy</button>
+        </EditForm>
+    </div>
+</div>
+
+@if (premium != 0)
+{
+    <div class="alert alert-info mt-3">
+        Estimated Premium: @premium.ToString("C", new CultureInfo("hi-IN"));
+    </div>
+}
+<div>
+<style>
+    /* Header */
+    header {
+        background-color: #fff;
+        border-bottom: 1px solid #ddd;
+        padding: 15px 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .navbar-brand img {
+        height: 40px;
+    }
+
+    .navbar-nav {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+        margin: 0;
+    }
+
+        .navbar-nav a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+            .navbar-nav a:hover {
+                color: var(--primary-color);
+            }
+
+    .navbar-right {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .login-button {
+        background-color: var(--secondary-color);
+        color: white;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 50px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+        .login-button:hover {
+            background-color: var(--primary-color);
+        }
+
+    /* Main Section */
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 50px 0;
+        max-width: 1200px;
+        margin: 0 auto;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+</style>
+</div>
+@code {
+    [Parameter] public int Id { get; set; }
+    [Parameter] public int HolderId { get; set; }
+    private PremiumModel premiumModel = new PremiumModel();
+    private InsuranceTypeDto? InsuranceType;
+    private List<InsuredDto> insuredDetailsList = new List<InsuredDto>();
+
+    private List<HealthFactor> healthFactors = new List<HealthFactor>();
+    private decimal premium;
+    private int insuncePolicyId;
+
+    protected override async Task OnInitializedAsync()
+    {
+        InsuranceType = await InsuranceService.GetById(Id);
+        if (InsuranceType != null)
+        {
+            premiumModel.BaseRate = InsuranceType.BaseRate ;
+            premiumModel.CoverageSize = InsuranceType.CoverageSize;
+            UpdateInsuredDetails();
+            InitializeHealthFactors();
+        }
+    }
+    private void InitializeHealthFactors()
+    {
+        healthFactors = new List<HealthFactor>
+        {
+            new HealthFactor { Name = "Heart Disease", Value = 0.02m },
+            new HealthFactor { Name = "Asthma", Value = 0.02m },
+            new HealthFactor { Name = "Diabetes", Value = 0.02m },
+            new HealthFactor { Name = "Cholesterol", Value = 0.02m },
+            new HealthFactor { Name = "Blood Pressure", Value = 0.02m },
+            new HealthFactor { Name = "Cancer", Value = 0.02m },
+            new HealthFactor { Name = "None", Value = 0.00m }
+        };
+    }
+
+  
+
+    private void BuyPlanWithPolicyID()
+    {
+        N.NavigateTo("/Login");
+    }
+
+    private void UpdateInsuredDetails()
+    {
+        insuredDetailsList.Clear();
+        for (int i = 0; i < premiumModel.CoverageSize; i++)
+        {
+            insuredDetailsList.Add(new InsuredDto());
+        }
+    }
+
+    private decimal CalculatePremium()
+    {
+        decimal coverageAmount = premiumModel.CoverageType switch
+        {
+            "Bronze" => 300000m,
+            "Silver" => 600000m,
+            "Gold" => 900000m,
+            _ => 0m
+        };
+
+        decimal prem = (((premiumModel.BaseRate + coverageAmount) / 100) + premiumModel.BaseRate) * premiumModel.NumberOfMembers;
+        double premlog = Math.Log10((double)prem);
+        premium = (decimal)premlog * 1000;
+        return premium;
+    }
+
+    private string GeneratePolicyNumber(int HolderId, int insuranceId)
+    {
+        return $"{HolderId:D3}{insuranceId:D3}";
+    }
+
+    public class PremiumModel
+    {
+        public decimal BaseRate { get; set; }
+        public int NumberOfMembers { get; set; }
+        public string CoverageType { get; set; } = string.Empty;
+        public int CoverageSize { get; set; }
+    }
+    public class HealthFactor
+    {
+
+        public string Name { get; set; }
+        public decimal Value { get; set; }
+        public bool IsSelected { get; set; }
+    }
+
+    private void NavigateToHome() => N.NavigateTo("/");
+    private void NavigateToPlansBefore() => N.NavigateTo("/PlansBefore");
+    private void NavigateToContact() => N.NavigateTo("/ContactUs");
+    private void NavigateToAbout() => N.NavigateTo("/AboutUs");
+    private void NavigateToLogin() => N.NavigateTo("/Login");
+}
