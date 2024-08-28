@@ -14,7 +14,9 @@ namespace MyClientApp.Client
             builder.RootComponents.Add<App>("#app");
             builder.RootComponents.Add<HeadOutlet>("head::after");
             Configuration = builder.Configuration;
-            
+
+            builder.Services.AddTransient(sp => new HttpClient());
+
 
 
 

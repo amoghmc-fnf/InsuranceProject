@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "MyClientApp",
   "resources": {
-    "hash": "sha256-zzQT34gWHFO/LL7BZBJNDjEliEJqTOmA+m/a4eYqPyY=",
+    "hash": "sha256-UZXO5Zw+roF7oihkm1/sRFf2XZwPp+y+YjfDikXuHcQ=",
     "jsModuleNative": {
       "dotnet.native.8.0.8.kegrbw6w9p.js": "sha256-juC5sA7gHTLXFEhAKgdM2/RavswpwCtDfjYGsAz2FXg="
     },
@@ -209,18 +209,18 @@
       "mscorlib.wasm": "sha256-Gz8PyW2/fwihe5ul81OwmRUrU71r+KtbyRw6xlOGD+Q=",
       "netstandard.wasm": "sha256-jMTqIQzoDS810lyhZpMO5eEC36EzntXqSVn+2qwkOMQ=",
       "System.Private.CoreLib.wasm": "sha256-NFj5WE5VLP2LptZIRJCUIc1AMk06FmxpsSILfPISwAw=",
-      "AdminModel.wasm": "sha256-hukg4rN3Pkyy0QRja9wrtLD8csa1F7pltA6O+/fIIrI=",
-      "JwtModels.wasm": "sha256-1lh4k/voqEPeUv+R5bJkOQk1JCBWMsqJIj3rqZibrt0=",
-      "PolicyModel.wasm": "sha256-wTpnjkW/62u3GdXY0VgxOD5+6KBK0cO4XJ9BsimsETE=",
-      "UserModel.wasm": "sha256-QsImBAaL56YRxHglbF6NFKjKZxfWacTijIVKxDWC4l8=",
-      "MyClientApp.wasm": "sha256-FDsWjQHhnjWkosRU8a9zGv5UXRPdorCaqSn8XY/cKW4="
+      "AdminModel.wasm": "sha256-Aqt0RsZSYDW6L6cxP9ZyfhFEDPn7RaBIN+ONnNc7naQ=",
+      "JwtModels.wasm": "sha256-Oy4KE8jIlf+3UUy4fRaCCXo/Eab0Mhiu+2OwB0afaIY=",
+      "PolicyModel.wasm": "sha256-h3jzd56U4RzvOtAbGOdb8CVE2HtdvlLV+EqzGZCTY7M=",
+      "UserModel.wasm": "sha256-BOoUdv/LqkSLh5fW0Zy/wh9ZybmUxYkyEDtE4vKoaq0=",
+      "MyClientApp.wasm": "sha256-eJdf/j9kL+MkJZOFA3Hn4xRhhyz3IFj+zZLPsz9NVco="
     },
     "pdb": {
-      "AdminModel.pdb": "sha256-139iiben9m+Vjux/uea0vx8tFQtNwOpuYvx9kEcjMZA=",
-      "JwtModels.pdb": "sha256-hFL7k+Sf8z8RidOLb9orBBrr3AoCSgoHXKPyWHrO20g=",
-      "PolicyModel.pdb": "sha256-snQyljRqqSRFYd1D/UGxfULMJE7ZZRV+jarG/pkshTQ=",
-      "UserModel.pdb": "sha256-BYz/MHAnt0CfJEuk6Da6N5Gger0t+LFOaD7XELsM5r8=",
-      "MyClientApp.pdb": "sha256-AbHU80fTgnul4w2+PXCFsuLAuQA1LY2TT38EHl5MEnE="
+      "AdminModel.pdb": "sha256-hLgMmCtjiStLViQoIgwWNwUy7K2tv+fnlYNWXkua61Y=",
+      "JwtModels.pdb": "sha256-KhvDYyZVSuO/JdPPBsiLSzmcv5MX/o/OghCpSyc+JYw=",
+      "PolicyModel.pdb": "sha256-EwIw3eblkGWYYZQILyT3v4ykRnStmVv+eLst29XM6iI=",
+      "UserModel.pdb": "sha256-B106ZxAAY7RAUQOkFbJi/uSS96Qmm7dGEh8eAz818I8=",
+      "MyClientApp.pdb": "sha256-ljLtE+2zYcAq1sdSkFigsGgzfTVpdKUc928HvmsLlN8="
     }
   },
   "cacheBootResources": true,
