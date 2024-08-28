@@ -1,12 +1,14 @@
 ﻿using System.Text.Json;
 using System.Text;
 using JwtModels;
+using Newtonsoft.Json;
+using System.Net.Http;
 
 namespace AdminApp.Services
 {
     public interface IAuthService
     {
-        Task<string> GetJwtToken(UserLogin user);
+        Task<string> GetJwtToken(string password);
     }
 
     public class AuthService : IAuthService
@@ -17,13 +19,18 @@ namespace AdminApp.Services
             http = httpClient;
         }
 
-        public async Task<string> GetJwtToken(UserLogin user)
+        public async Task<string> GetJwtToken(string password)
         {
-            var json = JsonSerializer.Serialize(user);
+            var userLogin = new UserLogin { key = password };
+            var json = System.Text.Json.JsonSerializer.Serialize(userLogin);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
+
             var response = await http.PostAsync("Auth", content);
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadAsStringAsync();
+
+            var jsonResult = await response.Content.ReadAsStringAsync();
+            var token = JsonConvert.DeserializeObject<TokenInfo>(jsonResult);
+            return token.Token;
         }
     }
 }

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using AdminApp.Models;
 using JwtModels;
 using AdminApp.Services;
-using Newtonsoft.Json;
 
 namespace AdminApp.Services
 {
@@ -23,12 +22,8 @@ namespace AdminApp.Services
 
         public async Task AddTokenJwtTokenHeader()
         {
-            var result = await _authService.GetJwtToken(new UserLogin { key = "secretPassword" });
-            var tokenInfo = JsonConvert.DeserializeObject<TokenInfo>(result);
-            Console.WriteLine("1" + tokenInfo.Token);
-            Console.WriteLine("2" + tokenInfo);
-            Console.WriteLine("3" + result);
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", tokenInfo.Token);
+            var token = await _authService.GetJwtToken("secretPassword");
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
         }
 
         public async Task<Admin> GetAdminByIdAsync(int adminId)
